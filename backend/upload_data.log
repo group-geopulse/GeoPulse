@@ -1,0 +1,9 @@
+[                       0%                       ][*********************100%***********************]  2 of 2 completed
+YF.download() has changed argument auto_adjust default to True
+Error uploading data: batch op errors occurred, full error: {'writeErrors': [{'index': 0, 'code': 11000, 'errmsg': 'E11000 duplicate key error collection: YfinancePrices.Prices index: _id_ dup key: { _id: "2025-03-12" }', 'keyPattern': {'_id': 1}, 'keyValue': {'_id': '2025-03-12'}, 'op': {'_id': '2025-03-12', 'CL=F Open': 69.33000183105469, 'BZ=F Open': 66.62000274658203, 'CL=F Close': 70.97000122070312, 'BZ=F Close': 67.7699966430664}}], 'writeConcernErrors': [], 'nInserted': 0, 'nUpserted': 0, 'nMatched': 0, 'nModified': 0, 'nRemoved': 0, 'upserted': []}
+C:\Users\vindh\Desktop\grpproject\GeoPulse\backend\news_processing.py:47: UserWarning: This pattern is interpreted as a regular expression, and has match groups. To actually get the groups, use str.extract.
+  relevant_articles = articles[articles['Headline'].str.contains('|'.join(keywords), case=False, regex=True)]
+Number of articles after dropping duplicates: 2
+Number of relevant articles: 2
+Number of irrelevant articles: 0
+Data successfully uploaded to MongoDB collection 'News' in database 'GDELTNews'.

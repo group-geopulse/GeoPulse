@@ -2,28 +2,40 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
 from mongodb_utils import upload_to_mongodb
+import logging
 
-# Define the crude oil ticker symbols
-symbols = ['CL=F', 'BZ=F']
+# Set up logging
+logging.basicConfig(filename='upload_price.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
-# Define the start and end dates
-start_date = datetime.now().strftime('%Y-%m-%d')
-end_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
+logging.info('Starting upload_price.py script')
 
-# Fetch historical data
-data = yf.download(symbols, start=start_date, end=end_date, interval="1d")
+try:
+    # Define the crude oil ticker symbols
+    symbols = ['CL=F', 'BZ=F']
 
-# Select only the required columns
-filtered_data = data[['Open', 'Close']]
-filtered_data.columns = ['CL=F Open', 'BZ=F Open', 'CL=F Close', 'BZ=F Close']
+    # Define the start and end dates
+    start_date = datetime.now().strftime('%Y-%m-%d')
+    end_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
-# Reset index to make Date a column and change date format
-filtered_data = filtered_data.reset_index()
-filtered_data['Date'] = filtered_data['Date'].dt.strftime('%Y-%m-%d')
-filtered_data.rename(columns={'Date': '_id'}, inplace=True)
+    # Fetch historical data
+    data = yf.download(symbols, start=start_date, end=end_date, interval="1d")
 
-# Convert DataFrame to dictionary
-data_dict = filtered_data.to_dict(orient="records")
+    # Select only the required columns
+    filtered_data = data[['Open', 'Close']]
+    filtered_data.columns = ['CL=F Open', 'BZ=F Open', 'CL=F Close', 'BZ=F Close']
 
-# Upload data to MongoDB
-upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices")
+    # Reset index to make Date a column and change date format
+    filtered_data = filtered_data.reset_index()
+    filtered_data['Date'] = filtered_data['Date'].dt.strftime('%Y-%m-%d')
+    filtered_data.rename(columns={'Date': '_id'}, inplace=True)
+
+    # Convert DataFrame to dictionary
+    data_dict = filtered_data.to_dict(orient="records")
+
+    # Upload data to MongoDB
+    upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices")
+
+    logging.info('Successfully uploaded price data to MongoDB')
+
+except Exception as e:
+    logging.error(f'Error in upload_price.py: {e}')
