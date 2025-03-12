@@ -13,7 +13,7 @@ db = client["GDELTNews"]
 collection = db["News"] 
 
 # Load CSV data
-csv_file_path = "gdelt_5_years_filtered_preprocessed.csv"  
+csv_file_path = "gdelt_5_years_filtered_updated.csv"  
 df = pd.read_csv(csv_file_path)
 
 # Convert DataFrame to dictionary
