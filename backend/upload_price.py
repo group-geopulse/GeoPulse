@@ -62,7 +62,7 @@ try:
     data_dict = filtered_data.to_dict(orient="records")
 
     # Upload data to MongoDB
-    upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices")
+    upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="Prices")
 
     logging.info('Successfully uploaded price data to MongoDB')
 
