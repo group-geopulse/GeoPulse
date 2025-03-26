@@ -30,7 +30,7 @@ try:
     filtered_data.rename(columns={'Date': '_id'}, inplace=True)
 
     # Query the last 7 records from MongoDB
-    recent_records = get_recent_records(db_name="YfinancePrices", collection_name="Prices", limit=8)
+    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8)
 
     # Combine recent records with the new data
     if not recent_records.empty:
