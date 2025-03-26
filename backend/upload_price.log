@@ -1,0 +1,12 @@
+2025-03-25 17:00:43,651 Starting upload_price.py script
+2025-03-25 17:00:46,296 Successfully uploaded price data to MongoDB
+2025-03-25 17:02:24,702 Starting upload_price.py script
+2025-03-25 17:02:26,333 Successfully uploaded price data to MongoDB
+2025-03-25 22:03:30,822 Starting upload_price.py script
+2025-03-26 10:24:43,602 
+2 Failed downloads:
+2025-03-26 10:24:43,602 ['CL=F']: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'query1.finance.yahoo.com\', port=443): Max retries exceeded with url: /v1/test/getcrumb (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001CDEDA75BE0>: Failed to resolve \'query1.finance.yahoo.com\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-03-26 10:24:43,634 ['BZ=F']: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'query1.finance.yahoo.com\', port=443): Max retries exceeded with url: /v1/test/getcrumb (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001CDEDA7A5D0>: Failed to resolve \'query1.finance.yahoo.com\' ([Errno 11001] getaddrinfo failed)"))'))
+2025-03-26 10:24:49,451 Error in upload_price.py: All nameservers failed to answer the query _mongodb._tcp.geopulse.oniyq.mongodb.net. IN SRV: Server Do53:10.6.0.4@53 answered [WinError 10065] A socket operation was attempted to an unreachable host; Server Do53:10.6.0.5@53 answered [WinError 10065] A socket operation was attempted to an unreachable host; Server Do53:129.11.159.114@53 answered [WinError 10065] A socket operation was attempted to an unreachable host; Server Do53:129.11.159.122@53 answered [WinError 10065] A socket operation was attempted to an unreachable host
+2025-03-26 13:47:23,067 Starting upload_price.py script
+2025-03-26 13:47:26,538 Successfully uploaded price data to MongoDB

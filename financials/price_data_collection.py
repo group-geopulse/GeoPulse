@@ -21,8 +21,16 @@ filtered_data.columns = ['CL=F Open', 'BZ=F Open', 'CL=F Close', 'BZ=F Close']
 filtered_data = filtered_data.reset_index()
 filtered_data['Date'] = filtered_data['Date'].dt.strftime('%d-%m-%Y')
 
+# Calculate percentage change from the previous day
+filtered_data['CL=F Daily % Change'] = filtered_data['CL=F Close'].pct_change().fillna(0) * 100
+filtered_data['BZ=F Daily % Change'] = filtered_data['BZ=F Close'].pct_change().fillna(0) * 100
+
+# Calculate percentage change from the previous week (7 prices ago)
+filtered_data['CL=F Weekly % Change'] = filtered_data['CL=F Close'].pct_change(periods=7).fillna(0) * 100
+filtered_data['BZ=F Weekly % Change'] = filtered_data['BZ=F Close'].pct_change(periods=7).fillna(0) * 100
+
 # Define the path to save the file
-file_path = os.path.expanduser('wti_brent_crude_oil_prices.csv')
+file_path = os.path.expanduser('wti_brent_crude_oil_prices_1Jan2020_25March2025_with_delta.csv')
 
 # Display first few rows
 print(filtered_data.head())

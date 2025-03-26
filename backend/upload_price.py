@@ -1,7 +1,7 @@
 import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
-from mongodb_utils import upload_to_mongodb
+from mongodb_utils import upload_to_mongodb, get_recent_records
 import logging
 
 # Set up logging
@@ -28,6 +28,35 @@ try:
     filtered_data = filtered_data.reset_index()
     filtered_data['Date'] = filtered_data['Date'].dt.strftime('%Y-%m-%d')
     filtered_data.rename(columns={'Date': '_id'}, inplace=True)
+
+    # Query the last 7 records from MongoDB
+    recent_records = get_recent_records(db_name="YfinancePrices", collection_name="Prices", limit=8)
+
+    # Combine recent records with the new data
+    if not recent_records.empty:
+        # Sort recent records by `_id` (Date) in ascending order
+        recent_records = recent_records.sort_values(by="_id")
+
+        # Append the new data to the recent records for calculation
+        combined_data = pd.concat([recent_records, filtered_data], ignore_index=True)
+
+        # Calculate daily percentage change
+        combined_data['CL=F Daily % Change'] = combined_data['CL=F Close'].pct_change().fillna(0) * 100
+        combined_data['BZ=F Daily % Change'] = combined_data['BZ=F Close'].pct_change().fillna(0) * 100
+
+        # Calculate weekly percentage change (7 records ago)
+        combined_data['CL=F Weekly % Change'] = combined_data['CL=F Close'].pct_change(periods=7).fillna(0) * 100
+        combined_data['BZ=F Weekly % Change'] = combined_data['BZ=F Close'].pct_change(periods=7).fillna(0) * 100
+
+        # Keep only the new data (last row(s) from `filtered_data`)
+        filtered_data = combined_data.iloc[-len(filtered_data):]
+
+    else:
+        # If no recent records exist, initialize percentage changes to 0
+        filtered_data['CL=F Daily % Change'] = 0
+        filtered_data['BZ=F Daily % Change'] = 0
+        filtered_data['CL=F Weekly % Change'] = 0
+        filtered_data['BZ=F Weekly % Change'] = 0
 
     # Convert DataFrame to dictionary
     data_dict = filtered_data.to_dict(orient="records")

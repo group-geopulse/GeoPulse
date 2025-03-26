@@ -32,3 +32,19 @@ def get_existing_dates_from_mongodb(db_name, collection_name, uri=URI):
     dates = collection.distinct('_id')
     client.close()
     return sorted(pd.to_datetime(dates))
+
+def get_recent_records(db_name, collection_name, limit=7, uri=URI):
+    """Fetch the most recent records from the specified collection in MongoDB."""
+    client = get_mongo_client(uri)
+    db = client[db_name]
+    collection = db[collection_name]
+    
+    try:
+        # Fetch the most recent `limit` records sorted by `_id` (Date)
+        recent_records = list(collection.find().sort("_id", -1).limit(limit))
+        return pd.DataFrame(recent_records)  # Convert to DataFrame for easier processing
+    except Exception as e:
+        print(f"Error fetching recent records: {e}")
+        return pd.DataFrame()  # Return an empty DataFrame on error
+    finally:
+        client.close()
