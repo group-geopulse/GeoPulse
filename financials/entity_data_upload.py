@@ -17,7 +17,7 @@ for entity in entities:
     collection = db[entity.title()] 
 
     # Load CSV data
-    csv_file_path = f"20_25_{entity}.csv"
+    csv_file_path = f"../datasets/20_25_{entity}.csv"
     df = pd.read_csv(csv_file_path)
 
     # Convert DataFrame to dictionary
