@@ -19,7 +19,7 @@ filtered_data.columns = ['CL=F Open', 'BZ=F Open', 'CL=F Close', 'BZ=F Close']
 
 # Reset index to make Date a column and change date format
 filtered_data = filtered_data.reset_index()
-filtered_data['Date'] = filtered_data['Date'].dt.strftime('%d-%m-%Y')
+filtered_data['Date'] = filtered_data['Date'].dt.strftime('%Y-%m-%d')
 
 # Calculate percentage change from the previous day
 filtered_data['CL=F Daily % Change'] = filtered_data['CL=F Close'].pct_change().fillna(0) * 100
