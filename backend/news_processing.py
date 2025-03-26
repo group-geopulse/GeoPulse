@@ -46,6 +46,9 @@ def filter_by_keywords(articles):
     for i in range(len(keywords)):
         keywords[i] = f'''( |[^a-z]|[^A-Z]){keywords[i]}( |[^a-z]|[^A-Z])'''
     relevant_articles = articles[articles['Headline'].str.contains('|'.join(keywords), case=False, regex=True)]
+    if len(relevant_articles) == 0:
+        print("No relevant articles found.")
+        exit
     print(f"Number of relevant articles: {len(relevant_articles)}")
     print(f"Number of irrelevant articles: {len(articles) - len(relevant_articles)}")
     return relevant_articles
