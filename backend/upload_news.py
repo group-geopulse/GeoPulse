@@ -36,6 +36,7 @@ try:
 
     # Process articles to fix dates and filter by keywords
     articles = process_articles(articles, existing_dates)
+    articles.to_csv("trial.csv", index=False)
     
     # Convert DataFrame to dictionary
     data_dict = articles.to_dict(orient="records")
