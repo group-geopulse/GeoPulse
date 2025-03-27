@@ -11,6 +11,7 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 # Select database
 db = client["Entities"]
 entities = ["locations", "organizations", "topics", "people", "events"]
+keys = {"locations": "Location", "organizations": "Organization", "topics": "Topic", "people": "Person", "events": "Event"}
 
 for entity in entities:
     # Select collections
@@ -23,12 +24,35 @@ for entity in entities:
     # Convert DataFrame to dictionary
     data = df.to_dict(orient="records")
 
-    # Insert data into MongoDB
     try:
+        # Insert data into MongoDB
         collection.insert_many(data)
-        print("CSV data successfully uploaded to MongoDB.")
+
+        # Identify duplicates (ignoring _id) and keep only one
+        pipeline = [
+            {"$group": {
+                "_id": {
+                    f"{keys[entity]}": f"${keys[entity]}",
+                    "Count": "$Count"
+                },
+                "dupes": {"$addToSet": "$_id"},
+                "count": {"$sum": 1}
+            }},
+            {"$match": {"count": {"$gt": 1}}}  # Only keep duplicates
+        ]        
+
+        duplicates = collection.aggregate(pipeline)
+
+        # Delete duplicate documents (keeping only one)
+        for doc in duplicates:
+            dup_ids = doc["dupes"]
+            dup_ids.pop(0)  # Keep one and delete the rest
+            collection.delete_many({"_id": {"$in": dup_ids}})
+
     except Exception as e:
         print("Error uploading data:", e)
+    
+    print(f"CSV data successfully uploaded to MongoDB for {entity}.")
 
 # Close the connection
 client.close()
