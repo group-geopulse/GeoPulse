@@ -138,6 +138,7 @@ def process_articles(articles, existing_dates):
     articles = remove_duplicates(articles)
     articles = filter_by_keywords(articles)
     articles = analyze_sentiment(articles)
+    articles = extract_entities_from_df(articles) 
     articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link', 'Headline_Sentiment', 'Article_Sentiment', 'Sentiment_Confidence']]
     return articles
     #articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link']]
@@ -174,7 +175,7 @@ def extract_source(url):
 
 
 def fetch_real_time_news():
-    """Fetch real-time news using Google Custom Search API with pagination and source filtering."""
+    
     data = []
     request_count = 0
 
@@ -223,3 +224,41 @@ def fetch_real_time_news():
                 continue
 
     return data
+
+# entity extraction
+
+import spacy
+nlp = spacy.load("en_core_web_lg")
+
+# predefined topic keywords
+TOPIC_KEYWORDS = ["sanctions", "pipeline", "inflation", "OPEC", "trade war", "embargo", "energy crisis"]
+
+def extract_entities(headline):
+
+    doc = nlp(headline)
+
+    locations = [ent.text for ent in doc.ents if ent.label_ == "GPE"]
+    organizations = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
+    people = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
+    events = [ent.text for ent in doc.ents if ent.label_ == "EVENT"]
+
+    topics = [word for word in TOPIC_KEYWORDS if word.lower() in headline.lower()]
+
+    return {
+        "Locations": locations,
+        "Organizations": organizations,
+        "People": people,
+        "Topics": topics,
+        "Events": events
+    }
+
+def extract_entities_from_df(articles):
+    
+    articles["Locations"] = articles["Headline"].apply(lambda x: extract_entities(x)["Locations"])
+    articles["Organizations"] = articles["Headline"].apply(lambda x: extract_entities(x)["Organizations"])
+    articles["People"] = articles["Headline"].apply(lambda x: extract_entities(x)["People"])
+    articles["Topics"] = articles["Headline"].apply(lambda x: extract_entities(x)["Topics"])
+    articles["Events"] = articles["Headline"].apply(lambda x: extract_entities(x)["Events"])
+    
+    return articles
+
