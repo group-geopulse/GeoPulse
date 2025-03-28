@@ -49,7 +49,7 @@ try:
     SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"    
 
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, "crude oil news")
-    processed_real_time_news = process_real_time_news(real_time_news, existing_dates)
+    processed_real_time_news = process_articles(real_time_news, existing_dates)
 
     data_dict = processed_real_time_news.to_dict(orient="records")
     upload_to_mongodb(data_dict, "RealTimeNews", "News")
