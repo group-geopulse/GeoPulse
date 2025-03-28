@@ -5,20 +5,6 @@ import re
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
 
-# api credentials
-API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
-SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"
-
-# news sources
-sources = ["bloomberg.com", "ft.com", "reuters.com"]
-
-# keywords
-keywords = ("tensions OR crude OR oil prices OR oil supply OR disruption OR brent OR "
-            "sanctions OR embargo OR OPEC OR Middle East OR Russia OR Ukraine OR petroleum OR "
-            "fuel OR energy OR climate OR global warming OR conflict OR war OR economy OR inflation")
-
-API_REQUEST_LIMIT = 100
-
 def get_next_available_date(date, existing_dates):
     """Find the next available date in existing_dates."""
     for existing_date in existing_dates:
@@ -30,11 +16,14 @@ def fix_dates(articles, existing_dates):
     """Fix dates in the articles DataFrame."""
     """Process articles DataFrame to fix dates and filter by keywords."""
     # Convert 'seendate' to 'OldDate' in the desired format
-    articles['seendate'] = pd.to_datetime(articles['seendate']).dt.strftime('%Y-%m-%d')
-    articles.rename(columns={'seendate': 'OldDate'}, inplace=True)
+    articles['Date'] = pd.to_datetime(articles['Date']).dt.strftime('%Y-%m-%d')
+    print("hi0")
+    articles.rename(columns={'Date': 'OldDate'}, inplace=True)
+    print("hi1.5")
 
     # Update the dates in articles
     articles['Date'] = pd.to_datetime(articles['OldDate']).apply(lambda x: get_next_available_date(x, existing_dates))
+    print("hi1")
 
     # Drop rows where Date is None (no next available date found)
     articles = articles.dropna(subset=['Date'])
@@ -43,8 +32,9 @@ def fix_dates(articles, existing_dates):
     articles['Date'] = articles['Date'].dt.strftime('%Y-%m-%d')
 
     # Select the required columns and rename them
-    articles = articles[['Date', 'OldDate', 'domain', 'title', 'url']]
-    articles.rename(columns={'domain': 'Source', 'title': 'Headline', 'url': 'Link'}, inplace=True)
+    articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link', 'Snippet']]
+    print("hi2")
+    #articles.rename(columns={'domain': 'Source', 'title': 'Headline', 'url': 'Link'}, inplace=True)
     return articles
 
 def remove_duplicates(articles):
@@ -135,11 +125,20 @@ def analyze_sentiment(articles):
 def process_articles(articles, existing_dates):
     """Process articles DataFrame to fix dates, remove duplicates, filter by keywords, and analyze sentiment."""
     articles = fix_dates(articles, existing_dates)
-    articles = remove_duplicates(articles)
-    articles = filter_by_keywords(articles)
+    #articles = remove_duplicates(articles)
+    #articles = filter_by_keywords(articles)
+    articles.to_csv("real_time_news.csv", index=False)
+    print("Number of articles in real_time_news:", len(articles))
+    
     articles = analyze_sentiment(articles)
+    articles.to_csv("real_time_news_with_sentiment.csv", index=False)
+    print("Number of articles in real_time_news_with_sentiment:", len(articles))
+    
     articles = extract_entities_from_df(articles) 
-    articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link', 'Headline_Sentiment', 'Article_Sentiment', 'Sentiment_Confidence']]
+    articles.to_csv("real_time_news_sentiment_entities.csv", index=False)
+    print("Number of articles in real_time_news_sentiment_entities:", len(articles))
+    
+    articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link', 'Snippet', 'Headline_Sentiment', 'Article_Sentiment', 'Sentiment_Confidence', 'Locations', 'Organizations', 'People', 'Topics', 'Events']]
     return articles
     #articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link']]
     #return articles
@@ -174,7 +173,7 @@ def extract_source(url):
     return domain.replace("www.", "") if domain else "Unknown"
 
 
-def fetch_real_time_news():
+def fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT=100):
     
     data = []
     request_count = 0
@@ -218,11 +217,11 @@ def fetch_real_time_news():
                         "Snippet": snippet,
                         "Date": extracted_date if extracted_date else "Unknown"
                     })
-
+                    
             except requests.exceptions.RequestException as e:
                 print(f"Error fetching results from {site}: {e}")
                 continue
-
+            
     return data
 
 # entity extraction
