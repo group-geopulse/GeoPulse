@@ -14,49 +14,28 @@ def get_next_available_date(date, existing_dates):
 
 def fix_dates(articles, existing_dates):
     """Fix dates in the articles DataFrame."""
-    """Process articles DataFrame to fix dates and filter by keywords."""
-    # Convert 'seendate' to 'OldDate' in the desired format
+    # Step 1: Preserve the original 'Date' column as 'Original_Date'
+    articles['Original_Date'] = articles['Date']
+
+    # Step 2: Convert 'Date' to a standardized format (YYYY-MM-DD)
     articles['Date'] = pd.to_datetime(articles['Date']).dt.strftime('%Y-%m-%d')
-    print("hi0")
-    articles.rename(columns={'Date': 'OldDate'}, inplace=True)
-    print("hi1.5")
 
-    # Update the dates in articles
-    articles['Date'] = pd.to_datetime(articles['OldDate']).apply(lambda x: get_next_available_date(x, existing_dates))
-    print("hi1")
+    # Step 3: Calculate 'Updated_Date' based on the next available date
+    articles['Updated_Date'] = pd.to_datetime(articles['Date']).apply(lambda x: get_next_available_date(x, existing_dates))
 
-    # Drop rows where Date is None (no next available date found)
-    articles = articles.dropna(subset=['Date'])
+    # Step 4: Drop rows where 'Updated_Date' is None (invalid or missing dates)
+    articles = articles.dropna(subset=['Updated_Date'])
 
-    # Convert 'Date' to string format
-    articles['Date'] = articles['Date'].dt.strftime('%Y-%m-%d')
+    # Step 5: Convert 'Updated_Date' back to string format
+    articles['Updated_Date'] = articles['Updated_Date'].dt.strftime('%Y-%m-%d')
 
+    # Debugging: Print the first few rows to verify the changes
+    print(articles[['Original_Date', 'Date', 'Updated_Date']].head())
+    
     # Select the required columns and rename them
-    articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link', 'Snippet']]
-    print("hi2")
-    #articles.rename(columns={'domain': 'Source', 'title': 'Headline', 'url': 'Link'}, inplace=True)
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Date', 'Updated_Date' ]]
+
     return articles
-
-def remove_duplicates(articles):
-    """Remove duplicate headlines from the articles DataFrame."""
-    duplicate_headlines = articles['Headline'].value_counts().loc[lambda x: x > 1]
-    if len(duplicate_headlines) != 0:
-        articles = articles[articles['Headline'].isin(duplicate_headlines.index)]
-        print("Number of articles after dropping duplicates:", len(articles))
-        return articles
-    else:
-        print("No duplicate headlines found.")
-        return articles
-
-def filter_by_keywords(articles):
-    """Filter articles by keywords."""
-    keywords = ['tensions', 'crude', 'oil prices', 'oil supply', 'disruption', 'brent', 'sanctions', 'embargo', 'opec', 'middle east', 'russia', 'ukraine', 'petroleum', 'fuel', 'energy', 'climate', 'global warming']
-    for i in range(len(keywords)):
-        keywords[i] = f'''( |[^a-z]|[^A-Z]){keywords[i]}( |[^a-z]|[^A-Z])'''
-    relevant_articles = articles[articles['Headline'].str.contains('|'.join(keywords), case=False, regex=True)]
-    print(f"Number of relevant articles: {len(relevant_articles)}")
-    print(f"Number of irrelevant articles: {len(articles) - len(relevant_articles)}")
-    return relevant_articles
 
 #Sentiment analysis functions
 # Load FinSentGPT model
@@ -114,7 +93,9 @@ def analyze_sentiment(articles):
     else:
         articles['Article_Sentiment'] = articles['Headline_Sentiment']
         articles['Sentiment_Confidence'] = headline_results.apply(lambda x: x[1])
-
+        
+        
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
     return articles
 
 #def analyze_sentiment(articles):
@@ -125,8 +106,6 @@ def analyze_sentiment(articles):
 def process_articles(articles, existing_dates):
     """Process articles DataFrame to fix dates, remove duplicates, filter by keywords, and analyze sentiment."""
     articles = fix_dates(articles, existing_dates)
-    #articles = remove_duplicates(articles)
-    #articles = filter_by_keywords(articles)
     articles.to_csv("real_time_news.csv", index=False)
     print("Number of articles in real_time_news:", len(articles))
     
@@ -138,10 +117,11 @@ def process_articles(articles, existing_dates):
     articles.to_csv("real_time_news_sentiment_entities.csv", index=False)
     print("Number of articles in real_time_news_sentiment_entities:", len(articles))
     
-    articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link', 'Snippet', 'Headline_Sentiment', 'Article_Sentiment', 'Sentiment_Confidence', 'Locations', 'Organizations', 'People', 'Topics', 'Events']]
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
+    articles.to_csv("real_time_news_FINAL.csv", index=False)
+    print("Number of articles in final:", len(articles))
+    
     return articles
-    #articles = articles[['Date', 'OldDate', 'Source', 'Headline', 'Link']]
-    #return articles
 
 def extract_date_from_snippet(snippet):
     today = datetime.today()
@@ -259,5 +239,6 @@ def extract_entities_from_df(articles):
     articles["Topics"] = articles["Headline"].apply(lambda x: extract_entities(x)["Topics"])
     articles["Events"] = articles["Headline"].apply(lambda x: extract_entities(x)["Events"])
     
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
     return articles
 

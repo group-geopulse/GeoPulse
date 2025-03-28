@@ -64,6 +64,8 @@ try:
 
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT)
     real_time_news = pd.DataFrame(real_time_news)
+    print(real_time_news.head())
+    real_time_news.to_csv("initial.csv", index=False)
     processed_real_time_news = process_articles(real_time_news, existing_dates)
 
     # data_dict = processed_real_time_news.to_dict(orient="records")
