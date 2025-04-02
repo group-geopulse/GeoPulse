@@ -7,10 +7,18 @@ from urllib.parse import urlparse
 
 def get_next_available_date(date, existing_dates):
     """Find the next available date in existing_dates."""
+    """Find the next available date in existing_dates.
+    If today's date is not available, return the closest previous date."""
+    # Check for the closest previous date
+    closest_previous_date = None
     for existing_date in existing_dates:
-        if existing_date >= date:
-            return existing_date
-    return date
+        if existing_date == date:
+            return existing_date  # Return today's date if it exists
+        elif existing_date < date:
+            closest_previous_date = existing_date  # Update closest previous date
+
+    # If today's date is not found, return the closest previous date
+    return closest_previous_date
 
 def fix_dates(articles, existing_dates):
     """Fix dates in the articles DataFrame."""
@@ -28,16 +36,13 @@ def fix_dates(articles, existing_dates):
 
     # Step 5: Convert 'Updated_Date' back to string format
     articles['Updated_Date'] = articles['Updated_Date'].dt.strftime('%Y-%m-%d')
-
-    # Debugging: Print the first few rows to verify the changes
-    print(articles[['Original_Date', 'Date', 'Updated_Date']].head())
     
     # Select the required columns and rename them
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Date', 'Updated_Date' ]]
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Date', 'Updated_Date' ]]
 
     return articles
 
-#Sentiment analysis functions
+# Sentiment analysis functions
 # Load FinSentGPT model
 sentiment_pipeline = pipeline("text-classification", model="ProsusAI/finbert")
 
@@ -95,32 +100,16 @@ def analyze_sentiment(articles):
         articles['Sentiment_Confidence'] = headline_results.apply(lambda x: x[1])
         
         
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
-    return articles
-
-#def analyze_sentiment(articles):
-    """Placeholder for sentiment analysis."""
-    # Add sentiment analysis code here
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet',  'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
     return articles
 
 def process_articles(articles, existing_dates):
     """Process articles DataFrame to fix dates, remove duplicates, filter by keywords, and analyze sentiment."""
     articles = fix_dates(articles, existing_dates)
-    articles.to_csv("real_time_news.csv", index=False)
-    print("Number of articles in real_time_news:", len(articles))
-    
     articles = analyze_sentiment(articles)
-    articles.to_csv("real_time_news_with_sentiment.csv", index=False)
-    print("Number of articles in real_time_news_with_sentiment:", len(articles))
-    
-    articles = extract_entities_from_df(articles) 
-    articles.to_csv("real_time_news_sentiment_entities.csv", index=False)
-    print("Number of articles in real_time_news_sentiment_entities:", len(articles))
-    
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
+    articles = extract_entities_from_df(articles)
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
     articles.to_csv("real_time_news_FINAL.csv", index=False)
-    print("Number of articles in final:", len(articles))
-    
     return articles
 
 def extract_date_from_snippet(snippet):
@@ -134,7 +123,7 @@ def extract_date_from_snippet(snippet):
         try:
             return datetime.strptime(match.group(), "%b %d, %Y").strftime("%Y-%m-%d")
         except ValueError:
-            return None
+            return today.strftime("%Y-%m-%d")
 
     match = re.search(days_ago_pattern, snippet)
     if match:
@@ -145,7 +134,7 @@ def extract_date_from_snippet(snippet):
     if match:
         return today.strftime("%Y-%m-%d")
 
-    return None
+    return today.strftime("%Y-%m-%d")
 
 
 def extract_source(url):
@@ -239,6 +228,6 @@ def extract_entities_from_df(articles):
     articles["Topics"] = articles["Headline"].apply(lambda x: extract_entities(x)["Topics"])
     articles["Events"] = articles["Headline"].apply(lambda x: extract_entities(x)["Events"])
     
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Tone', 'Positive Score', 'Negative Score', 'Polarity', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
     return articles
 

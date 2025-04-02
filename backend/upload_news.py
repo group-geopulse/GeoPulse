@@ -28,7 +28,7 @@ logging.info('Starting upload_news.py script')
 try:
     
     # Fetch existing dates from the price database
-    existing_dates = get_existing_dates_from_mongodb(db_name="YfinancePrices", collection_name="Prices")
+    existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices")
     
     # # Define the date range (Getting yesterday's articles)
     # yesterday = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
@@ -64,13 +64,25 @@ try:
 
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT)
     real_time_news = pd.DataFrame(real_time_news)
-    print(real_time_news.head())
-    real_time_news.to_csv("initial.csv", index=False)
     processed_real_time_news = process_articles(real_time_news, existing_dates)
-
-    # data_dict = processed_real_time_news.to_dict(orient="records")
-    # upload_to_mongodb(data_dict, "RealTimeNews", "News")
-    # logging.info("Real-time news uploaded successfully")
+    logging.info(f"Number of articles after processing today: {len(processed_real_time_news)}")
+    
+    data_dict = processed_real_time_news.to_dict(orient="records")
+    
+    # Testing: Upload to testing db
+    upload_to_mongodb(data_dict, "RealTimeNews", "News")
+    
+    # Production:
+    # Add to daily news db for updating KG
+    # upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
+    # Sending to complete news db
+    # upload_to_mongodb(data_dict, "ProdNewsDB", "News")
+     
+     # TO DO: SIMILARLY, SEND ENTITIES TO RESPECTIVE STAGING DBs
+     # You can either get the entities data from processed_real_time_news or 
+     # create a new function to extract entities from the processed data, in news_processing.py
+    
+    logging.info("Real-time news task completed successfully!")
     
 except Exception as e:
     logging.error(f'Error in upload_news.py: {e}')

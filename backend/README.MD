@@ -59,6 +59,11 @@ This will install the following key dependencies:
 
 Additionally, the en_core_web_lg language model for spaCy will also be installed.
 
+Run the following to check PyTorch version:
+```bash
+> python -c "import torch; print(torch.__version__)"
+```
+
 ## **Debugging**
 
 If you encounter any issues:

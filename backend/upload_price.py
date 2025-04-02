@@ -63,8 +63,10 @@ try:
 
     # Upload data to MongoDB
     upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="Prices")
+    upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="StagingPrices")
 
-    logging.info('Successfully uploaded price data to MongoDB')
+    logging.info('Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).')
+    logging.info(f'Uploaded data: {data_dict}')
 
 except Exception as e:
     logging.error(f'Error in upload_price.py: {e}')
