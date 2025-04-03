@@ -71,29 +71,29 @@ try:
     data_dict = processed_real_time_news.to_dict(orient="records")
     
     # Testing: Upload to testing db
-    upload_to_mongodb(data_dict, "RealTimeNews", "News")
+    # upload_to_mongodb(data_dict, "RealTimeNews", "News")
     
     # Production:
     # Add to daily news db for updating KG
-    # upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
+    upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
     # Sending to complete news db
-    # upload_to_mongodb(data_dict, "ProdNewsDB", "News")
+    upload_to_mongodb(data_dict, "ProdNewsDB", "News")
 
 
     # Testing: process entity records to update/create new nodes in KG
-    entity_cols_test = {"Locations": "LocationsTEST", "Organizations": "OrganizationsTEST", "People": "PeopleTEST", "Topics": "TopicsTEST", "Events": "EventsTEST"}
-    print(update_entity_db_and_nodes("RealTimeNews", "Entities", "StagingNewsTEST", entity_cols_test, use_testKG=True))
+    # entity_cols_test = {"Locations": "LocationsTEST", "Organizations": "OrganizationsTEST", "People": "PeopleTEST", "Topics": "TopicsTEST", "Events": "EventsTEST"}
+    # print(update_entity_db_and_nodes("RealTimeNews", "Entities", "StagingNewsTEST", entity_cols_test, use_testKG=True))
 
     # Testing: process news records and add nodes to KG
-    print(update_news_nodes("RealTimeNews", "StagingNewsTEST", use_testKG=True))
+    # print(update_news_nodes("RealTimeNews", "StagingNewsTEST", use_testKG=True))
 
     # Production:
     # Update entity collections and create/update entity nodes in knowledge graph
-    # entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
-    # logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
+    entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
+    logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
 
     # Create daily news nodes on KG with relationships and clear 'StagingNews'
-    # logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
+    logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
     
     logging.info("Real-time news task completed successfully!")
     
