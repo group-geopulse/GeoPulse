@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 from mongodb_utils import upload_to_mongodb, get_existing_dates_from_mongodb
 from news_processing import fetch_real_time_news, process_articles
+from kg_updating import update_entity_db_and_nodes, update_news_nodes
 import logging
 
 # api credentials
@@ -77,10 +78,22 @@ try:
     # upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
     # Sending to complete news db
     # upload_to_mongodb(data_dict, "ProdNewsDB", "News")
-     
-     # TO DO: SIMILARLY, SEND ENTITIES TO RESPECTIVE STAGING DBs
-     # You can either get the entities data from processed_real_time_news or 
-     # create a new function to extract entities from the processed data, in news_processing.py
+
+
+    # Testing: process entity records to update/create new nodes in KG
+    entity_cols_test = {"Locations": "LocationsTEST", "Organizations": "OrganizationsTEST", "People": "PeopleTEST", "Topics": "TopicsTEST", "Events": "EventsTEST"}
+    print(update_entity_db_and_nodes("RealTimeNews", "Entities", "StagingNewsTEST", entity_cols_test, use_testKG=True))
+
+    # Testing: process news records and add nodes to KG
+    print(update_news_nodes("RealTimeNews", "StagingNewsTEST", use_testKG=True))
+
+    # Production:
+    # Update entity collections and create/update entity nodes in knowledge graph
+    # entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
+    # logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
+
+    # Create daily news nodes on KG with relationships and clear 'StagingNews'
+    # logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
     
     logging.info("Real-time news task completed successfully!")
     

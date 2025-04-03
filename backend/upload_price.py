@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
 from mongodb_utils import upload_to_mongodb, get_recent_records
+from kg_updating import update_oilprice_nodes
 import logging
 
 # Set up logging
@@ -67,6 +68,11 @@ try:
 
     logging.info('Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).')
     logging.info(f'Uploaded data: {data_dict}')
+
+    # Upload data as nodes to KG
+    # SWITCH FOR PRODUCTION
+    logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPricesTEST", use_testKG=True))
+    # logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPrices", use_testKG=False))    
 
 except Exception as e:
     logging.error(f'Error in upload_price.py: {e}')
