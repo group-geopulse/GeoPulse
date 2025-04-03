@@ -1,16 +1,9 @@
-2025-03-25 17:00:43,651 Starting upload_price.py script
-2025-03-25 17:00:46,296 Successfully uploaded price data to MongoDB
-2025-03-25 17:02:24,702 Starting upload_price.py script
-2025-03-25 17:02:26,333 Successfully uploaded price data to MongoDB
-2025-03-25 22:03:30,822 Starting upload_price.py script
-2025-03-26 10:24:43,602 
-2 Failed downloads:
-2025-03-26 10:24:43,602 ['CL=F']: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'query1.finance.yahoo.com\', port=443): Max retries exceeded with url: /v1/test/getcrumb (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001CDEDA75BE0>: Failed to resolve \'query1.finance.yahoo.com\' ([Errno 11001] getaddrinfo failed)"))'))
-2025-03-26 10:24:43,634 ['BZ=F']: ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'query1.finance.yahoo.com\', port=443): Max retries exceeded with url: /v1/test/getcrumb (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001CDEDA7A5D0>: Failed to resolve \'query1.finance.yahoo.com\' ([Errno 11001] getaddrinfo failed)"))'))
-2025-03-26 10:24:49,451 Error in upload_price.py: All nameservers failed to answer the query _mongodb._tcp.geopulse.oniyq.mongodb.net. IN SRV: Server Do53:10.6.0.4@53 answered [WinError 10065] A socket operation was attempted to an unreachable host; Server Do53:10.6.0.5@53 answered [WinError 10065] A socket operation was attempted to an unreachable host; Server Do53:129.11.159.114@53 answered [WinError 10065] A socket operation was attempted to an unreachable host; Server Do53:129.11.159.122@53 answered [WinError 10065] A socket operation was attempted to an unreachable host
-2025-03-26 13:47:23,067 Starting upload_price.py script
-2025-03-26 13:47:26,538 Successfully uploaded price data to MongoDB
-2025-03-26 15:33:10,256 Starting upload_price.py script
-2025-03-26 15:33:12,441 Successfully uploaded price data to MongoDB
-2025-03-26 16:09:47,670 Starting upload_price.py script
-2025-03-26 16:09:49,480 Successfully uploaded price data to MongoDB
+2025-04-01 14:26:56,759 Starting upload_price.py script
+2025-04-01 14:27:01,413 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
+2025-04-01 14:27:01,413 Uploaded data: [{'_id': '2025-04-01', 'CL=F Open': 74.62999725341797, 'BZ=F Open': 71.38999938964844, 'CL=F Close': 74.86000061035156, 'BZ=F Close': 71.62000274658203, 'CL=F Daily % Change': 3.2979154814277267, 'BZ=F Daily % Change': 2.69573406997361, 'CL=F Weekly % Change': 5.764342895479224, 'BZ=F Weekly % Change': 6.640855928048306}]
+2025-04-02 10:18:01,758 Starting upload_price.py script
+2025-04-02 10:18:04,409 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
+2025-04-02 10:18:04,410 Uploaded data: [{'_id': '2025-04-02', 'CL=F Open': 74.4000015258789, 'BZ=F Open': 71.19999694824219, 'CL=F Close': 74.4000015258789, 'BZ=F Close': 71.13999938964844, 'CL=F Daily % Change': -0.6144791353488777, 'BZ=F Daily % Change': -0.6702085151155668, 'CL=F Weekly % Change': 3.333335452609587, 'BZ=F Weekly % Change': 4.219157871794654}]
+2025-04-02 10:21:18,785 Starting upload_price.py script
+2025-04-02 10:21:22,527 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
+2025-04-02 10:21:22,527 Uploaded data: [{'_id': '2025-04-02', 'CL=F Open': 74.4000015258789, 'BZ=F Open': 71.19999694824219, 'CL=F Close': 73.68000030517578, 'BZ=F Close': 71.1500015258789, 'CL=F Daily % Change': -0.9677435563663073, 'BZ=F Daily % Change': 0.014059792404119698, 'CL=F Weekly % Change': 2.1064253962400192, 'BZ=F Weekly % Change': 4.2032847069297885}]

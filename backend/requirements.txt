@@ -1,0 +1,13 @@
+pandas
+yfinance
+numpy==1.23.5
+spacy
+gdeltdoc
+pymongo
+transformers
+requests
+python-dotenv
+en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.6.0/en_core_web_lg-3.6.0.tar.gz
+torch --index-url https://download.pytorch.org/whl/cpu
+torchvision --index-url https://download.pytorch.org/whl/cpu
+torchaudio --index-url https://download.pytorch.org/whl/cpu

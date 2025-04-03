@@ -1,0 +1,9 @@
+2025-04-01 15:02:19,842 Starting upload_news.py script
+2025-04-01 15:02:28,863 Error in upload_news.py: time data "Unknown" doesn't match format "%Y-%m-%d", at position 4. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-02 10:18:54,727 Starting upload_news.py script
+2025-04-02 10:19:31,560 Real-time news uploaded successfully!
+2025-04-02 10:21:43,917 Starting upload_news.py script
+2025-04-02 10:22:34,097 Real-time news uploaded successfully!
