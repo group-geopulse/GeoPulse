@@ -1,9 +1,4 @@
-2025-04-01 14:26:56,759 Starting upload_price.py script
-2025-04-01 14:27:01,413 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
-2025-04-01 14:27:01,413 Uploaded data: [{'_id': '2025-04-01', 'CL=F Open': 74.62999725341797, 'BZ=F Open': 71.38999938964844, 'CL=F Close': 74.86000061035156, 'BZ=F Close': 71.62000274658203, 'CL=F Daily % Change': 3.2979154814277267, 'BZ=F Daily % Change': 2.69573406997361, 'CL=F Weekly % Change': 5.764342895479224, 'BZ=F Weekly % Change': 6.640855928048306}]
-2025-04-02 10:18:01,758 Starting upload_price.py script
-2025-04-02 10:18:04,409 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
-2025-04-02 10:18:04,410 Uploaded data: [{'_id': '2025-04-02', 'CL=F Open': 74.4000015258789, 'BZ=F Open': 71.19999694824219, 'CL=F Close': 74.4000015258789, 'BZ=F Close': 71.13999938964844, 'CL=F Daily % Change': -0.6144791353488777, 'BZ=F Daily % Change': -0.6702085151155668, 'CL=F Weekly % Change': 3.333335452609587, 'BZ=F Weekly % Change': 4.219157871794654}]
-2025-04-02 10:21:18,785 Starting upload_price.py script
-2025-04-02 10:21:22,527 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
-2025-04-02 10:21:22,527 Uploaded data: [{'_id': '2025-04-02', 'CL=F Open': 74.4000015258789, 'BZ=F Open': 71.19999694824219, 'CL=F Close': 73.68000030517578, 'BZ=F Close': 71.1500015258789, 'CL=F Daily % Change': -0.9677435563663073, 'BZ=F Daily % Change': 0.014059792404119698, 'CL=F Weekly % Change': 2.1064253962400192, 'BZ=F Weekly % Change': 4.2032847069297885}]
+2025-04-04 23:45:05,237 Starting upload_price.py script
+2025-04-04 23:45:13,535 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
+2025-04-04 23:45:13,535 Uploaded data: [{'_id': '2025-04-04', 'CL=F Open': 69.19000244140625, 'BZ=F Open': 66.63999938964844, 'CL=F Close': 65.33999633789062, 'BZ=F Close': 62.31999969482422, 'CL=F Daily % Change': -7.213862486714651, 'BZ=F Daily % Change': -7.08215300672882, 'CL=F Weekly % Change': -10.493155701519697, 'BZ=F Weekly % Change': -9.824918037275076}]
+2025-04-04 23:45:18,452 Created 4 new OilPrice nodes & emptied 'StagingPrices'
