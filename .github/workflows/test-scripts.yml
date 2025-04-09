@@ -1,6 +1,9 @@
-name: Test Upload Scripts
+name: Test Upload Scripts on debug-automation branch
 
 on:
+  push:
+    branches:
+      - debug-automation
   schedule:
     - cron: '0 20 * * *'  # Runs daily at 8:00 PM UTC
   workflow_dispatch:       # Allows manual triggering
@@ -29,8 +32,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Run upload_price.py
-        run: python backend/upload_price.py
+      - name: Run upload_price.py in Test Mode
+        run: |
+          source venv/bin/activate
+          python backend/upload_price.py >> backend/upload_data.log 2>&1
 
-      - name: Run upload_news.py
-        run: python backend/upload_news.py
+      - name: Run upload_news.py in Test Mode
+        run: |
+          source venv/bin/activate
+          python backend/upload_news.py >> backend/upload_data.log 2>&1
+
+      - name: Upload Log File
+        uses: actions/upload-artifact@v4
+        with:
+          name: upload-data-log
+          path: backend/upload_data.log
