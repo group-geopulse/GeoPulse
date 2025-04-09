@@ -16,6 +16,8 @@ load_dotenv()
 #API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
 #SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"
 
+# Get MongoDB connection URI from environment variable
+URI = os.getenv("URI")
 API_KEY = os.getenv("API_KEY")
 SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
 API_REQUEST_LIMIT = int(os.getenv("API_REQUEST_LIMIT", 100))
@@ -38,7 +40,7 @@ logging.info('Starting upload_news.py script')
 try:
     
     # Fetch existing dates from the price database
-    existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices")
+    existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices", uri=URI)
     
     # # Define the date range (Getting yesterday's articles)
     # yesterday = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
@@ -84,13 +86,13 @@ try:
     data_dict = processed_real_time_news.to_dict(orient="records")
     
     # Testing: Upload to testing db
-    upload_to_mongodb(data_dict, "GDELTNews", "News")
+    upload_to_mongodb(data_dict, "GDELTNews", "News", uri=URI)
     
     # Production:
     # Add to daily news db for updating KG
-    #upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
+    #upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews", uri=URI)
     # Sending to complete news db
-    #upload_to_mongodb(data_dict, "ProdNewsDB", "News")
+    #upload_to_mongodb(data_dict, "ProdNewsDB", "News", uri=URI)
 
 
     # Testing: process entity records to update/create new nodes in KG

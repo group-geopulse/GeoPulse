@@ -4,6 +4,14 @@ from datetime import datetime, timedelta
 from mongodb_utils import upload_to_mongodb, get_recent_records
 from kg_updating import update_oilprice_nodes
 import logging
+from dotenv import load_dotenv
+import os
+
+# Load .env file
+load_dotenv()
+
+# Get MongoDB connection URI from environment variable
+URI = os.getenv("URI")
 
 # Set up logging
 logging.basicConfig(filename='upload_price.log', level=logging.INFO, format='%(asctime)s %(message)s')
@@ -31,7 +39,7 @@ try:
     filtered_data.rename(columns={'Date': '_id'}, inplace=True)
 
     # Query the last 7 records from MongoDB
-    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8)
+    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8, uri=URI)
 
     # Combine recent records with the new data
     if not recent_records.empty:
@@ -63,8 +71,8 @@ try:
     data_dict = filtered_data.to_dict(orient="records")
 
     # Upload data to MongoDB
-    upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices")
-    #upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="StagingPrices")
+    upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices", uri=URI)
+    #upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
 
     #logging.info('Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).')
     logging.info(f'Uploaded data: {data_dict}')

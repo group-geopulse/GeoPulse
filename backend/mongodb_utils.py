@@ -2,9 +2,13 @@ import pandas as pd
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
+from dotenv import load_dotenv
+import os
 
-# MongoDB connection details
-#URI = "mongodb+srv://geopulse5530:x1GJ55GaO0p87U2I@geopulse.oniyq.mongodb.net/?retryWrites=true&w=majority&appName=GeoPulse"
+# Load .env file
+load_dotenv()
+
+# Get MongoDB connection URI from environment variable
 URI = os.getenv("URI")
 
 def get_mongo_client(uri=URI):

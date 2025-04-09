@@ -109,7 +109,6 @@ def process_articles(articles, existing_dates):
     articles = analyze_sentiment(articles)
     articles = extract_entities_from_df(articles)
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
-    articles.to_csv("real_time_news_FINAL.csv", index=False)
     return articles
 
 def extract_date_from_snippet(snippet):
@@ -206,16 +205,16 @@ TOPIC_KEYWORDS = ["sanctions", "pipeline", "inflation", "OPEC", "trade war", "em
     "trade tariffs", "tensions", "crude", "oil prices", "oil supply", "disruption", "brent", 
     "petroleum", "fuel", "energy", "climate", "global warming"]
 
-def extract_entities(headline):
+def extract_entities(snippet):
 
-    doc = nlp(headline)
+    doc = nlp(snippet)
 
     locations = [ent.text for ent in doc.ents if ent.label_ == "GPE"]
     organizations = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
     people = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
     events = [ent.text for ent in doc.ents if ent.label_ == "EVENT"]
 
-    topics = [word for word in TOPIC_KEYWORDS if word.lower() in headline.lower()]
+    topics = [word for word in TOPIC_KEYWORDS if word.lower() in snippet.lower()]
 
     return {
         "Locations": locations,
@@ -227,11 +226,11 @@ def extract_entities(headline):
 
 def extract_entities_from_df(articles):
     
-    articles["Locations"] = articles["Headline"].apply(lambda x: extract_entities(x)["Locations"])
-    articles["Organizations"] = articles["Headline"].apply(lambda x: extract_entities(x)["Organizations"])
-    articles["People"] = articles["Headline"].apply(lambda x: extract_entities(x)["People"])
-    articles["Topics"] = articles["Headline"].apply(lambda x: extract_entities(x)["Topics"])
-    articles["Events"] = articles["Headline"].apply(lambda x: extract_entities(x)["Events"])
+    articles["Locations"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Locations"])
+    articles["Organizations"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Organizations"])
+    articles["People"] = articles["Snippet"].apply(lambda x: extract_entities(x)["People"])
+    articles["Topics"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Topics"])
+    articles["Events"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Events"])
     
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
     return articles
