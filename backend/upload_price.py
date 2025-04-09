@@ -14,7 +14,7 @@ load_dotenv()
 URI = os.getenv("URI")
 
 # Set up logging
-logging.basicConfig(filename='upload_price.log', level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='upload_data.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 logging.info('Starting upload_price.py script')
 

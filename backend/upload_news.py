@@ -33,7 +33,7 @@ keywords = ("tensions OR crude OR oil prices OR oil supply OR disruption OR bren
 #API_REQUEST_LIMIT = 100
 
 # Set up logging
-logging.basicConfig(filename='upload_news.log', level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='upload_data.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 logging.info('Starting upload_news.py script')
 
