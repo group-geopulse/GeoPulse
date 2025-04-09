@@ -4,7 +4,8 @@ from pymongo.server_api import ServerApi
 import certifi
 
 # MongoDB connection details
-URI = "mongodb+srv://geopulse5530:x1GJ55GaO0p87U2I@geopulse.oniyq.mongodb.net/?retryWrites=true&w=majority&appName=GeoPulse"
+#URI = "mongodb+srv://geopulse5530:x1GJ55GaO0p87U2I@geopulse.oniyq.mongodb.net/?retryWrites=true&w=majority&appName=GeoPulse"
+URI = os.getenv("URI")
 
 def get_mongo_client(uri=URI):
     """Create a MongoDB client connection."""

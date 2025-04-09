@@ -6,10 +6,19 @@ from mongodb_utils import upload_to_mongodb, get_existing_dates_from_mongodb
 from news_processing import fetch_real_time_news, process_articles
 from kg_updating import update_entity_db_and_nodes, update_news_nodes
 import logging
+from dotenv import load_dotenv
+import os
+
+# Load .env file
+load_dotenv()
 
 # api credentials
-API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
-SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"
+#API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
+#SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"
+
+API_KEY = os.getenv("API_KEY")
+SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
+API_REQUEST_LIMIT = int(os.getenv("API_REQUEST_LIMIT", 100))
 
 # news sources
 sources = ["bloomberg.com", "ft.com", "reuters.com"]
@@ -19,7 +28,7 @@ keywords = ("tensions OR crude OR oil prices OR oil supply OR disruption OR bren
             "sanctions OR embargo OR OPEC OR Middle East OR Russia OR Ukraine OR petroleum OR "
             "fuel OR energy OR climate OR global warming OR conflict OR war OR economy OR inflation")
 
-API_REQUEST_LIMIT = 100
+#API_REQUEST_LIMIT = 100
 
 # Set up logging
 logging.basicConfig(filename='upload_news.log', level=logging.INFO, format='%(asctime)s %(message)s')
@@ -60,24 +69,28 @@ try:
     # upload_to_mongodb(data_dict, db_name="GDELTNews", collection_name="News")
     # logging.info('Successfully uploaded historical news data to MongoDB')
 
-    API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
-    SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"    
+    #API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
+    #SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"    
 
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT)
     real_time_news = pd.DataFrame(real_time_news)
+    
     processed_real_time_news = process_articles(real_time_news, existing_dates)
     logging.info(f"Number of articles after processing today: {len(processed_real_time_news)}")
+    
+    # Save to file for testing
+    processed_real_time_news.to_csv("processed_real_time_news_TESTING.csv", index=False)
     
     data_dict = processed_real_time_news.to_dict(orient="records")
     
     # Testing: Upload to testing db
-    # upload_to_mongodb(data_dict, "RealTimeNews", "News")
+    upload_to_mongodb(data_dict, "GDELTNews", "News")
     
     # Production:
     # Add to daily news db for updating KG
-    upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
+    #upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews")
     # Sending to complete news db
-    upload_to_mongodb(data_dict, "ProdNewsDB", "News")
+    #upload_to_mongodb(data_dict, "ProdNewsDB", "News")
 
 
     # Testing: process entity records to update/create new nodes in KG
@@ -89,13 +102,13 @@ try:
 
     # Production:
     # Update entity collections and create/update entity nodes in knowledge graph
-    entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
-    logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
+    #entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
+    #logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
 
     # Create daily news nodes on KG with relationships and clear 'StagingNews'
-    logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
+    #logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
     
-    logging.info("Real-time news task completed successfully!")
+    #logging.info("Real-time news task completed successfully!")
     
 except Exception as e:
     logging.error(f'Error in upload_news.py: {e}')
