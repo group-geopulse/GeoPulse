@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import the graph to avoid SSR issues
-const ForceGraph2D = dynamic(() => import("react-force-graph").then(mod => mod.ForceGraph2D), { ssr: false });
+const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), { ssr: false });
 
 export default function GraphPage() {
   const [graphData, setGraphData] = useState<{ nodes: any[]; links: any[] }>({ nodes: [], links: [] });

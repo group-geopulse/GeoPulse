@@ -12,9 +12,8 @@ export async function GET() {
   try {
     const query = `
       MATCH (n)-[r]->(m)
-      RETURN n, r, m LIMIT 100
+      RETURN n, r, m LIMIT 500
     `;
-
     const result = await session.run(query);
 
     const nodesMap = new Map();
@@ -25,23 +24,16 @@ export async function GET() {
       const endNode = record.get("m");
       const relationship = record.get("r");
 
-      if (!nodesMap.has(startNode.identity.toString())) {
-        nodesMap.set(startNode.identity.toString(), {
-          id: startNode.identity.toString(),
-          label: startNode.labels[0],
-          properties: startNode.properties,
-        });
-      }
+      [startNode, endNode].forEach((node) => {
+        if (!nodesMap.has(node.identity.toString())) {
+          nodesMap.set(node.identity.toString(), {
+            id: node.identity.toString(),
+            label: node.labels[0],
+            properties: node.properties,
+          });
+        }
+      });
 
-      if (!nodesMap.has(endNode.identity.toString())) {
-        nodesMap.set(endNode.identity.toString(), {
-          id: endNode.identity.toString(),
-          label: endNode.labels[0],
-          properties: endNode.properties,
-        });
-      }
-
-      // Adding the relationship
       links.push({
         source: startNode.identity.toString(),
         target: endNode.identity.toString(),
