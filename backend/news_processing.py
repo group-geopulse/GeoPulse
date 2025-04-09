@@ -86,21 +86,21 @@ def analyze_sentiment(articles):
     """Apply FinSentGPT to headlines (and snippets if available)."""
     # Always analyze headlines
     headline_results = articles['Headline'].apply(analyze_text_sentiment)
-    articles['Headline_Sentiment'] = headline_results.apply(lambda x: x[0])
+    articles['Headline Sentiment'] = headline_results.apply(lambda x: x[0])
 
     # Try using snippet if it exists, else copy from headline
     if 'Snippet' in articles.columns:
         snippet_results = articles['Snippet'].apply(analyze_text_sentiment)
-        articles['Article_Sentiment'] = snippet_results.apply(lambda x: x[0])
-        articles['Sentiment_Confidence'] = [
+        articles['Article Sentiment'] = snippet_results.apply(lambda x: x[0])
+        articles['Sentiment Confidence'] = [
             max(h[1], s[1]) for h, s in zip(headline_results, snippet_results)
         ]
     else:
-        articles['Article_Sentiment'] = articles['Headline_Sentiment']
-        articles['Sentiment_Confidence'] = headline_results.apply(lambda x: x[1])
+        articles['Article Sentiment'] = articles['Headline Sentiment']
+        articles['Sentiment Confidence'] = headline_results.apply(lambda x: x[1])
         
         
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet',  'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet',  'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
     return articles
 
 def process_articles(articles, existing_dates):
@@ -108,7 +108,7 @@ def process_articles(articles, existing_dates):
     articles = fix_dates(articles, existing_dates)
     articles = analyze_sentiment(articles)
     articles = extract_entities_from_df(articles)
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
     articles.to_csv("real_time_news_FINAL.csv", index=False)
     return articles
 
@@ -198,8 +198,13 @@ def fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUE
 import spacy
 nlp = spacy.load("en_core_web_lg")
 
-# predefined topic keywords
-TOPIC_KEYWORDS = ["sanctions", "pipeline", "inflation", "OPEC", "trade war", "embargo", "energy crisis"]
+# FINAL LIST of predefined topic keywords
+TOPIC_KEYWORDS = ["sanctions", "pipeline", "inflation", "OPEC", "trade war", "embargo", "energy crisis",
+                  "oil production", "geopolitical tension", "oil demand", "export restrictions",
+    "climate policy", "war", "oil spill", "energy transition", "supply chain",
+    "price volatility", "fracking", "global economy", "petroleum reserves", "terrorism",
+    "trade tariffs", "tensions", "crude", "oil prices", "oil supply", "disruption", "brent", 
+    "petroleum", "fuel", "energy", "climate", "global warming"]
 
 def extract_entities(headline):
 
@@ -228,6 +233,6 @@ def extract_entities_from_df(articles):
     articles["Topics"] = articles["Headline"].apply(lambda x: extract_entities(x)["Topics"])
     articles["Events"] = articles["Headline"].apply(lambda x: extract_entities(x)["Events"])
     
-    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline_Sentiment', 'Sentiment_Confidence', 'Article_Sentiment', 'Date', 'Updated_Date']]
+    articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
     return articles
 
