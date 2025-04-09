@@ -1,9 +1,6 @@
 name: Test Upload Scripts on debug-automation branch
 
 on:
-  push:
-    branches:
-      - debug-automation
   schedule:
     - cron: '0 20 * * *'  # Runs daily at 8:00 PM UTC
   workflow_dispatch:       # Allows manual triggering
