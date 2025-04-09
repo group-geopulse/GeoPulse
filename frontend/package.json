@@ -9,10 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.8.4",
+    "d3": "^7.9.0",
+    "d3-array": "^3.2.4",
+    "d3-binarytree": "^1.0.2",
+    "d3-dispatch": "^3.0.1",
+    "d3-drag": "^3.0.0",
+    "d3-interpolate": "^3.0.1",
+    "d3-octree": "^1.1.0",
+    "d3-quadtree": "^3.0.1",
+    "d3-selection": "^3.0.0",
+    "d3-transition": "^3.0.1",
+    "d3-zoom": "^3.0.0",
     "geo-pulse-frontend": "file:",
-    "next": "15.1.7",
+    "neo4j-driver": "^5.28.1",
+    "next": "^15.1.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-force-graph": "^1.47.6",
+    "react-force-graph-2d": "^1.27.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
