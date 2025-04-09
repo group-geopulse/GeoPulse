@@ -1,4 +1,0 @@
-2025-04-04 23:45:05,237 Starting upload_price.py script
-2025-04-04 23:45:13,535 Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).
-2025-04-04 23:45:13,535 Uploaded data: [{'_id': '2025-04-04', 'CL=F Open': 69.19000244140625, 'BZ=F Open': 66.63999938964844, 'CL=F Close': 65.33999633789062, 'BZ=F Close': 62.31999969482422, 'CL=F Daily % Change': -7.213862486714651, 'BZ=F Daily % Change': -7.08215300672882, 'CL=F Weekly % Change': -10.493155701519697, 'BZ=F Weekly % Change': -9.824918037275076}]
-2025-04-04 23:45:18,452 Created 4 new OilPrice nodes & emptied 'StagingPrices'

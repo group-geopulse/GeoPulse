@@ -1,7 +1,10 @@
 from mongodb_utils import get_mongo_client
 from neo4j import GraphDatabase
 import pandas as pd
+import logging
 
+# Suppress only informational messages from Neo4j, but allow warnings and errors
+logging.getLogger("neo4j").setLevel(logging.WARNING)
 
 def get_neo4j_driver(test=True):
     # Set Neo4j Connection
@@ -150,8 +153,8 @@ def update_news_nodes(database, collection, use_testKG=True):
                     n.sentiment_confidence = $sentiment_confidence
                 """,
                 headline=news["Headline"], updated_date=news["Updated_Date"], source=news["Source"],
-                link=news["Link"], headline_sentiment=news["Headline_Sentiment"],
-                article_sentiment=news["Article_Sentiment"], sentiment_confidence=news["Sentiment_Confidence"]
+                link=news["Link"], headline_sentiment=news["Headline Sentiment"],
+                article_sentiment=news["Article Sentiment"], sentiment_confidence=news["Sentiment Confidence"]
             )
 
             # Link to OilPrice (if exists)
