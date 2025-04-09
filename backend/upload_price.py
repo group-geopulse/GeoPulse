@@ -28,7 +28,8 @@ try:
 
     # Fetch historical data
     data = yf.download(symbols, start=start_date, end=end_date, interval="1d")
-
+    logging.info('Data fetched from Yahoo Finance')
+    
     # Select only the required columns
     filtered_data = data[['Open', 'Close']]
     filtered_data.columns = ['CL=F Open', 'BZ=F Open', 'CL=F Close', 'BZ=F Close']
@@ -38,9 +39,12 @@ try:
     filtered_data['Date'] = filtered_data['Date'].dt.strftime('%Y-%m-%d')
     filtered_data.rename(columns={'Date': '_id'}, inplace=True)
 
+    logging.info('Data collected has been filtered and formatted.')
+    
     # Query the last 7 records from MongoDB
     recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8, uri=URI)
-
+    logging.info('Fetched recent records from MongoDB.')
+    
     # Combine recent records with the new data
     if not recent_records.empty:
         # Sort recent records by `_id` (Date) in ascending order
@@ -67,6 +71,8 @@ try:
         filtered_data['CL=F Weekly % Change'] = 0
         filtered_data['BZ=F Weekly % Change'] = 0
 
+    logging.info('Daily and weekly percentage changes calculated.')
+    
     # Convert DataFrame to dictionary
     data_dict = filtered_data.to_dict(orient="records")
 

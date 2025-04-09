@@ -27,14 +27,17 @@
             run: |
               python -m pip install --upgrade pip
               pip install -r backend/requirements.txt
-          - name: Run upload_price.py in Test Mode
+          - name: Upload Price
             run: |
               python backend/upload_price.py >> backend/upload_data.log 2>&1
-          - name: Run upload_news.py in Test Mode
+          - name: Upload News
             run: |
               python backend/upload_news.py >> backend/upload_data.log 2>&1
-          - name: Upload Log File
+          - name: Save Log File
             uses: actions/upload-artifact@v4
             with:
               name: upload-data-log
               path: backend/upload_data.log
+          - name: Check upload_data.log for errors
+            run: |
+              cat backend/upload_data.log

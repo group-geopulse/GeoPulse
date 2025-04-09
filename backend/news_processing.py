@@ -30,6 +30,7 @@ def fix_dates(articles, existing_dates):
 
     # Step 3: Calculate 'Updated_Date' based on the next available date
     articles['Updated_Date'] = pd.to_datetime(articles['Date']).apply(lambda x: get_next_available_date(x, existing_dates))
+    logging.info('Updated_Date calculated based on existing dates.')
 
     # Step 4: Drop rows where 'Updated_Date' is None (invalid or missing dates)
     articles = articles.dropna(subset=['Updated_Date'])
@@ -40,6 +41,7 @@ def fix_dates(articles, existing_dates):
     # Select the required columns and rename them
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Date', 'Updated_Date' ]]
 
+    logging.info('Dates fixed and unnecessary columns removed.')
     return articles
 
 # Sentiment analysis functions
@@ -101,6 +103,7 @@ def analyze_sentiment(articles):
         
         
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet',  'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
+    logging.info('Sentiment analysis completed.')
     return articles
 
 def process_articles(articles, existing_dates):
@@ -109,6 +112,7 @@ def process_articles(articles, existing_dates):
     articles = analyze_sentiment(articles)
     articles = extract_entities_from_df(articles)
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
+    logging.info('Articles processed: duplicates removed, dates fixed, sentiment analyzed.')
     return articles
 
 def extract_date_from_snippet(snippet):
@@ -190,6 +194,7 @@ def fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUE
                 print(f"Error fetching results from {site}: {e}")
                 continue
             
+    logging.info(f"Fetched {len(data)} articles from Google News API.")        
     return data
 
 # entity extraction
@@ -233,5 +238,6 @@ def extract_entities_from_df(articles):
     articles["Events"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Events"])
     
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
+    logging.info('Entities extracted from snippets.')
     return articles
 
