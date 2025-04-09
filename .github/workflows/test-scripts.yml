@@ -31,12 +31,10 @@ jobs:
 
       - name: Run upload_price.py in Test Mode
         run: |
-          source venv/bin/activate
           python backend/upload_price.py >> backend/upload_data.log 2>&1
 
       - name: Run upload_news.py in Test Mode
         run: |
-          source venv/bin/activate
           python backend/upload_news.py >> backend/upload_data.log 2>&1
 
       - name: Upload Log File
