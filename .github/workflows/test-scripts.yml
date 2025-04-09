@@ -33,11 +33,11 @@
           - name: Upload News
             run: |
               python backend/upload_news.py >> backend/upload_data.log 2>&1
-          - name: Save Log File
+          - name: Save the logfile
             uses: actions/upload-artifact@v4
             with:
               name: upload-data-log
               path: backend/upload_data.log
-          - name: Check upload_data.log for errors
+          - name: Show contents of logfile here for debugging
             run: |
               cat backend/upload_data.log
