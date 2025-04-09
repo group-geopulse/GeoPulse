@@ -21,6 +21,7 @@ data = df.to_dict(orient="records")
 
 # Insert data into MongoDB
 try:
+    collection.delete_many({})
     collection.insert_many(data)
     print("Opinion historical CSV data successfully uploaded to MongoDB.")
 except Exception as e:
