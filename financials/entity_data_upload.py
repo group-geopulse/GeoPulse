@@ -18,7 +18,7 @@ for entity in entities:
     collection = db[entity.title()] 
 
     # Load CSV data
-    csv_file_path = f"../datasets/20_25_{entity}.csv"
+    csv_file_path = f"20_25_{entity}.csv"
     df = pd.read_csv(csv_file_path)
 
     # Convert DataFrame to dictionary
@@ -26,6 +26,8 @@ for entity in entities:
 
     try:
         # Insert data into MongoDB
+        collection.delete_many({})  # Clear existing data
+        # Insert new data
         collection.insert_many(data)
 
         # Identify duplicates (ignoring _id) and keep only one
