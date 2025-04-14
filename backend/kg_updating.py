@@ -3,6 +3,8 @@ from neo4j import GraphDatabase
 import pandas as pd
 
 
+URI = os.getenv("URI")
+
 def get_neo4j_driver(test=True):
     # Set Neo4j Connection
 
@@ -20,7 +22,7 @@ def get_neo4j_driver(test=True):
 # logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPricesTEST"))
 def update_oilprice_nodes(database, collection, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
-    mongo_client = get_mongo_client()
+    mongo_client = get_mongo_client(URI)
     prices_db = mongo_client[database]
 
     # Extract new oil prices
@@ -71,7 +73,7 @@ def update_oilprice_nodes(database, collection, use_testKG=True):
 # logging.info(update_entity_db_and_nodes("RealTimeNews", "Entities", "StagingNewsTEST", entity_cols))
 def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entity_cols, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
-    mongo_client = get_mongo_client()
+    mongo_client = get_mongo_client(URI)
     news_db = mongo_client[news_db_name]
     entities_db = mongo_client[entitities_db_name]
 
@@ -128,7 +130,7 @@ def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entit
 # logging.info(update_news_nodes("RealTimeNews", "StagingNewsTEST"))
 def update_news_nodes(database, collection, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
-    mongo_client = get_mongo_client()
+    mongo_client = get_mongo_client(URI)
     news_db = mongo_client[database]
 
     # Find new news articles
