@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 import os
 
 # Load .env file
-#load_dotenv()
+load_dotenv()
 
 # api credentials
 #API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
@@ -21,7 +21,7 @@ URI = os.getenv("URI")
 API_KEY = os.getenv("API_KEY")
 SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
 API_REQUEST_LIMIT = int(os.getenv("API_REQUEST_LIMIT", 100))
-print(f"uri: {URI}")
+
 # news sources
 sources = ["bloomberg.com", "ft.com", "reuters.com"]
 
@@ -36,12 +36,12 @@ keywords = ("tensions OR crude OR oil prices OR oil supply OR disruption OR bren
 logging.basicConfig(filename='upload_news.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 logging.info('Starting upload_news.py script')
-print('Starting upload_news.py script')
+
 try:
     
     # Fetch existing dates from the price database
     existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices", uri=URI)
-    print(f"Existing dates from MongoDB")
+    
     # # Define the date range (Getting yesterday's articles)
     # yesterday = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
     # day_before_yesterday = (datetime.now() - timedelta(days=4)).strftime('%Y-%m-%d')
@@ -76,10 +76,10 @@ try:
 
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT)
     real_time_news = pd.DataFrame(real_time_news)
-    print(f"articles fetched")
+    
     processed_real_time_news = process_articles(real_time_news, existing_dates)
     logging.info(f"Number of articles after processing today: {len(processed_real_time_news)}")
-    print(f"articles processed")
+    
     # Save to file for testing
     processed_real_time_news.to_csv("processed_real_time_news_TESTING.csv", index=False)
     
@@ -87,7 +87,7 @@ try:
     
     # Testing: Upload to testing db
     upload_to_mongodb(data_dict, "GDELTNews", "News", uri=URI)
-    print(f"articles uploaded")
+    
     # Production:
     # Add to daily news db for updating KG
     #upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews", uri=URI)
@@ -114,5 +114,4 @@ try:
     
 except Exception as e:
     logging.error(f'Error in upload_news.py: {e}')
-    print(f"error in upload_news.py: {e}")
 

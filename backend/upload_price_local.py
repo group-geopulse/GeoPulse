@@ -8,16 +8,16 @@ from dotenv import load_dotenv
 import os
 
 # Load .env file
-#load_dotenv()
+load_dotenv()
 
 # Get MongoDB connection URI from environment variable
 URI = os.getenv("URI")
-print(f"uri: {URI}")
+
 # Set up logging
 logging.basicConfig(filename='upload_price.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 logging.info('Starting upload_price.py script')
-print('Starting upload_price.py script')
+
 try:
     # Define the crude oil ticker symbols
     symbols = ['CL=F', 'BZ=F']
@@ -29,7 +29,7 @@ try:
     # Fetch historical data
     data = yf.download(symbols, start=start_date, end=end_date, interval="1d")
     logging.info('Data fetched from Yahoo Finance')
-    print(f"data fetched")
+    
     # Select only the required columns
     filtered_data = data[['Open', 'Close']]
     filtered_data.columns = ['CL=F Open', 'BZ=F Open', 'CL=F Close', 'BZ=F Close']
@@ -40,11 +40,11 @@ try:
     filtered_data.rename(columns={'Date': '_id'}, inplace=True)
 
     logging.info('Data collected has been filtered and formatted.')
-    print(f"data filtered")
+    
     # Query the last 7 records from MongoDB
     recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8, uri=URI)
     logging.info('Fetched recent records from MongoDB.')
-    print(f"recent data fetched")
+    
     # Combine recent records with the new data
     if not recent_records.empty:
         # Sort recent records by `_id` (Date) in ascending order
@@ -63,7 +63,6 @@ try:
 
         # Keep only the new data (last row(s) from `filtered_data`)
         filtered_data = combined_data.iloc[-len(filtered_data):]
-        print(f"daily and weekly percentage changes calculated")
 
     else:
         # If no recent records exist, initialize percentage changes to 0
@@ -71,7 +70,6 @@ try:
         filtered_data['BZ=F Daily % Change'] = 0
         filtered_data['CL=F Weekly % Change'] = 0
         filtered_data['BZ=F Weekly % Change'] = 0
-        print(f"daily and weekly percentage changes calculated")
 
     logging.info('Daily and weekly percentage changes calculated.')
     
@@ -84,7 +82,7 @@ try:
 
     #logging.info('Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).')
     logging.info(f'Uploaded data: {data_dict}')
-    print(f"data uploaded")
+
     # Upload data as nodes to KG
     # SWITCH FOR PRODUCTION
     # Testing:
@@ -95,4 +93,3 @@ try:
 
 except Exception as e:
     logging.error(f'Error in upload_price.py: {e}')
-    print(f"error in upload_price.py: {e}")

@@ -3,13 +3,6 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
 from dotenv import load_dotenv
-import os
-
-# Load .env file
-load_dotenv()
-
-# Get MongoDB connection URI from environment variable
-URI = os.getenv("URI")
 
 def get_mongo_client(uri=URI):
     """Create a MongoDB client connection."""
