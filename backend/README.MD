@@ -32,12 +32,12 @@ It is recommended to use a virtual environment to isolate dependencies:
 Activate the virtual environment:
 - On Windows:
     ```bash
-    > python -m venv venv
+    > venv\Scripts\activate
     ```
 
 - On macOS/Linux: 
     ```bash
-    > python -m venv venv
+    > source venv/bin/activate
     ```
 
 ### **3. Install Dependencies**
@@ -66,7 +66,7 @@ Run the following to check PyTorch version:
 
 ### **4. Set up Environment Variables**
 
-Place the following in a file called .env in the root of the repository:
+Place the following in a file called .env in the backend folder:
 
 ```bash
 # MongoDB connection string

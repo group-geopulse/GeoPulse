@@ -35,6 +35,8 @@ try:
     # Fetch existing dates from the price database
     existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices", uri=URI)
     print(f"Existing dates from MongoDB")
+    
+    # GDELT code (deprecated)
     # # Define the date range (Getting yesterday's articles)
     # yesterday = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
     # day_before_yesterday = (datetime.now() - timedelta(days=4)).strftime('%Y-%m-%d')
@@ -69,46 +71,46 @@ try:
 
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT)
     real_time_news = pd.DataFrame(real_time_news)
-    print(f"articles fetched")
+    print(f"Articles fetched.")
     
     processed_real_time_news = process_articles(real_time_news, existing_dates)
     logging.info(f"Number of articles after processing today: {len(processed_real_time_news)}")
-    print(f"articles processed")
+    print(f"Articles processed.")
     
     # Save to file for testing
     processed_real_time_news.to_csv("processed_real_time_news_TESTING.csv", index=False)
     
     data_dict = processed_real_time_news.to_dict(orient="records")
     
-    # Testing: Upload to testing db
-    upload_to_mongodb(data=data_dict, db_name="GDELTNews", collection_name="News", uri=URI)
-    print(f"articles uploaded")
+    # Testing Data Upload: Upload to testing db
+    #upload_to_mongodb(data=data_dict, db_name="GDELTNews", collection_name="News", uri=URI)
     
-    # Production:
-    # Add to daily news db for updating KG
-    #upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="StagingNews", uri=URI)
-    # Sending to complete news db
-    #upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="News", uri=URI)
-
-
-    # Testing: process entity records to update/create new nodes in KG
+    # Testing Entities: process entity records to update/create new nodes in KG
     # entity_cols_test = {"Locations": "LocationsTEST", "Organizations": "OrganizationsTEST", "People": "PeopleTEST", "Topics": "TopicsTEST", "Events": "EventsTEST"}
     # print(update_entity_db_and_nodes("RealTimeNews", "Entities", "StagingNewsTEST", entity_cols_test, use_testKG=True))
 
     # Testing: process news records and add nodes to KG
     # print(update_news_nodes("RealTimeNews", "StagingNewsTEST", use_testKG=True))
+    
+    # Production Data Upload: Upload to production db
+    # Add to daily news db for updating KG
+    upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="StagingNews", uri=URI)
+    # Sending to complete news db
+    upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="News", uri=URI)
 
-    # Production:
+    logging.info('Successfully uploaded real-time news data to MongoDB.')
+    print(f"Articles uploaded to MongoDB at {datetime.now()}.")
+
+    # Production Entities: process entity records to update/create new nodes in KG
     # Update entity collections and create/update entity nodes in knowledge graph
-    #entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
-    #logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
+    entity_cols = {"Locations": "Locations", "Organizations": "Organizations", "People": "People", "Topics": "Topics", "Events": "Events"}
+    logging.info(update_entity_db_and_nodes("ProdNewsDB", "Entities", "StagingNews", entity_cols, use_testKG=False))
 
     # Create daily news nodes on KG with relationships and clear 'StagingNews'
-    #logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
-    
-    #logging.info("Real-time news task completed successfully!")
+    logging.info(update_news_nodes("ProdNewsDB", "StagingNews", use_testKG=False))
+    logging.info("Real-time news task completed successfully!")
     
 except Exception as e:
     logging.error(f'Error in upload_news.py: {e}')
-    print(f"error in upload_news.py: {e}")
+    print(f"Error in upload_news.py: {e}")
 

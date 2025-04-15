@@ -1,12 +1,9 @@
 ---
     name: Test Upload Scripts on debug-automation branch
     on:
-      push:
+      workflow_dispatch: # Manual trigger only on debug automation
         branches:
-          - debug-automation  # Trigger only on this branch
-      schedule:
-        - cron: 0 20 * * *
-      workflow_dispatch: null
+          - debug-automation # Trigger on push to debug-automation branch
     jobs:
       test-scripts:
         runs-on: ubuntu-latest
