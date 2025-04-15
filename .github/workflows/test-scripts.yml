@@ -37,15 +37,19 @@
             run: |
               python -m pip install --upgrade pip
               pip install -r backend/requirements.txt
+
           - name: Upload Price
             run: |
               python backend/upload_price.py 
-          - name: Upload News
-            run: |
-              python backend/upload_news.py 
-          - name: Show contents of logfile here for debugging
+
+          - name: Display Price Log
             run: |
               cat backend/upload_price.log
-          - name: Show contents of logfile here for debugging
+
+          - name: Upload News
+            run: |
+              python backend/upload_news.py
+
+          - name: Display News Log
             run: |
               cat backend/upload_news.log

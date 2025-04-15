@@ -4,11 +4,7 @@ from datetime import datetime, timedelta
 from mongodb_utils import upload_to_mongodb, get_recent_records
 from kg_updating import update_oilprice_nodes
 import logging
-from dotenv import load_dotenv
 import os
-
-# Load .env file
-load_dotenv()
 
 # Get MongoDB connection URI from environment variable
 URI = os.getenv("URI")

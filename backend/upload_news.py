@@ -6,15 +6,7 @@ from mongodb_utils import upload_to_mongodb, get_existing_dates_from_mongodb
 from news_processing import fetch_real_time_news, process_articles
 from kg_updating import update_entity_db_and_nodes, update_news_nodes
 import logging
-from dotenv import load_dotenv
 import os
-
-# Load .env file
-#load_dotenv()
-
-# api credentials
-#API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
-#SEARCH_ENGINE_ID = "127bf9dbecbe84e04" # "707f9db5f58494409"
 
 # Get MongoDB connection URI from environment variable
 URI = os.getenv("URI")
