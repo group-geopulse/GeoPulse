@@ -21,7 +21,7 @@ URI = os.getenv("URI")
 API_KEY = os.getenv("API_KEY")
 SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
 API_REQUEST_LIMIT = int(os.getenv("API_REQUEST_LIMIT", 100))
-print(f"uri: {URI}")
+
 # news sources
 sources = ["bloomberg.com", "ft.com", "reuters.com"]
 
@@ -37,6 +37,7 @@ logging.basicConfig(filename='upload_news.log', level=logging.INFO, format='%(as
 
 logging.info('Starting upload_news.py script')
 print('Starting upload_news.py script')
+
 try:
     
     # Fetch existing dates from the price database
@@ -68,7 +69,7 @@ try:
     # data_dict = articles.to_dict(orient="records")
 
     # # Upload data to MongoDB
-    # upload_to_mongodb(data_dict, db_name="GDELTNews", collection_name="News")
+    # upload_to_mongodb(data=data_dict, db_name="GDELTNews", collection_name="News", uri=URI)
     # logging.info('Successfully uploaded historical news data to MongoDB')
 
     #API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
@@ -77,22 +78,25 @@ try:
     real_time_news = fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUEST_LIMIT)
     real_time_news = pd.DataFrame(real_time_news)
     print(f"articles fetched")
+    
     processed_real_time_news = process_articles(real_time_news, existing_dates)
     logging.info(f"Number of articles after processing today: {len(processed_real_time_news)}")
     print(f"articles processed")
+    
     # Save to file for testing
     processed_real_time_news.to_csv("processed_real_time_news_TESTING.csv", index=False)
     
     data_dict = processed_real_time_news.to_dict(orient="records")
     
     # Testing: Upload to testing db
-    upload_to_mongodb(data_dict, "GDELTNews", "News", uri=URI)
+    upload_to_mongodb(data=data_dict, db_name="GDELTNews", collection_name="News", uri=URI)
     print(f"articles uploaded")
+    
     # Production:
     # Add to daily news db for updating KG
-    #upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews", uri=URI)
+    #upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="StagingNews", uri=URI)
     # Sending to complete news db
-    #upload_to_mongodb(data_dict, "ProdNewsDB", "News", uri=URI)
+    #upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="News", uri=URI)
 
 
     # Testing: process entity records to update/create new nodes in KG

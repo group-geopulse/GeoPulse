@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import os
 
 # Load .env file
-#load_dotenv()
+load_dotenv()
 
 # Get MongoDB connection URI from environment variable
 URI = os.getenv("URI")
@@ -41,10 +41,12 @@ try:
 
     logging.info('Data collected has been filtered and formatted.')
     print(f"data filtered")
+    
     # Query the last 7 records from MongoDB
-    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8, uri=URI)
+    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", uri=URI, limit=8)
     logging.info('Fetched recent records from MongoDB.')
     print(f"recent data fetched")
+    
     # Combine recent records with the new data
     if not recent_records.empty:
         # Sort recent records by `_id` (Date) in ascending order
@@ -79,8 +81,8 @@ try:
     data_dict = filtered_data.to_dict(orient="records")
 
     # Upload data to MongoDB
-    upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices", uri=URI)
-    #upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
+    upload_to_mongodb(data=data_dict, db_name="YfinancePrices", collection_name="Prices", uri=URI)
+    #upload_to_mongodb(data=data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
 
     #logging.info('Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).')
     logging.info(f'Uploaded data: {data_dict}')

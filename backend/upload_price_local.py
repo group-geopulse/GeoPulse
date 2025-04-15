@@ -42,7 +42,7 @@ try:
     logging.info('Data collected has been filtered and formatted.')
     
     # Query the last 7 records from MongoDB
-    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", limit=8, uri=URI)
+    recent_records = get_recent_records(db_name="ProdPricesDB", collection_name="Prices", uri=URI, limit=8)
     logging.info('Fetched recent records from MongoDB.')
     
     # Combine recent records with the new data
@@ -77,8 +77,8 @@ try:
     data_dict = filtered_data.to_dict(orient="records")
 
     # Upload data to MongoDB
-    upload_to_mongodb(data_dict, db_name="YfinancePrices", collection_name="Prices", uri=URI)
-    #upload_to_mongodb(data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
+    upload_to_mongodb(data=data_dict, db_name="YfinancePrices", collection_name="Prices", uri=URI)
+    #upload_to_mongodb(data=data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
 
     #logging.info('Successfully uploaded price data to both MongoDB collections (Prices and StagingPrices).')
     logging.info(f'Uploaded data: {data_dict}')

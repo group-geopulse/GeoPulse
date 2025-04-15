@@ -2,6 +2,7 @@ import pandas as pd
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
+import logging
 
 def get_mongo_client(uri):
     """Create a MongoDB client connection."""
@@ -30,7 +31,7 @@ def get_existing_dates_from_mongodb(db_name, collection_name, uri):
     client.close()
     return sorted(pd.to_datetime(dates))
 
-def get_recent_records(db_name, collection_name, limit=7, uri):
+def get_recent_records(db_name, collection_name, uri, limit=7):
     """Fetch the most recent records from the specified collection in MongoDB."""
     client = get_mongo_client(uri)
     db = client[db_name]

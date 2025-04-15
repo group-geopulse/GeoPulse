@@ -4,6 +4,7 @@ import requests
 import re
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
+import logging
 
 def get_next_available_date(date, existing_dates):
     """Find the next available date in existing_dates."""

@@ -68,7 +68,7 @@ try:
     # data_dict = articles.to_dict(orient="records")
 
     # # Upload data to MongoDB
-    # upload_to_mongodb(data_dict, db_name="GDELTNews", collection_name="News")
+    # upload_to_mongodb(data=data_dict, db_name="GDELTNews", collection_name="News", uri=URI)
     # logging.info('Successfully uploaded historical news data to MongoDB')
 
     #API_KEY = "AIzaSyD9IvPQAHwQMLVfiAv2CxgKZpR9-yWGhMI" # "AIzaSyCH6MfgENpREBBEtbM-h0IbpNyPK_G5_CE"
@@ -86,13 +86,13 @@ try:
     data_dict = processed_real_time_news.to_dict(orient="records")
     
     # Testing: Upload to testing db
-    upload_to_mongodb(data_dict, "GDELTNews", "News", uri=URI)
+    upload_to_mongodb(data=data_dict, db_name="GDELTNews", collection_name="News", uri=URI)
     
     # Production:
     # Add to daily news db for updating KG
-    #upload_to_mongodb(data_dict, "ProdNewsDB", "StagingNews", uri=URI)
+    #upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="StagingNews", uri=URI)
     # Sending to complete news db
-    #upload_to_mongodb(data_dict, "ProdNewsDB", "News", uri=URI)
+    #upload_to_mongodb(data=data_dict, db_name="ProdNewsDB", collection_name="News", uri=URI)
 
 
     # Testing: process entity records to update/create new nodes in KG
@@ -114,4 +114,5 @@ try:
     
 except Exception as e:
     logging.error(f'Error in upload_news.py: {e}')
+    print(f"error in upload_news.py: {e}")
 
