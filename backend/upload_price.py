@@ -12,7 +12,13 @@ load_dotenv()
 
 # Get MongoDB connection URI from environment variable
 URI = os.getenv("URI")
+
+# Test if uri has been set in GitHub Actions
+if URI is None:
+    print("URI is not set in the environment variables! Oh no.")
+
 print(f"uri: {URI}")
+
 # Set up logging
 logging.basicConfig(filename='upload_price.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
