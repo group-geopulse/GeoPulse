@@ -147,9 +147,16 @@ def transfer_data():
         # Optimized OilPrice Date Linking
         session.run(
             """
-            MATCH (o1:OilPrice), (o2:OilPrice)
-            WHERE o2.date = o1.date + duration({days: 1})
-            MERGE (o1)-[:NEXT_DAY]->(o2);
+            MATCH (o1:OilPrice)
+            WHERE NOT EXISTS { (o1)-[:NEXT_DAY]->() }  // Find nodes without NEXT_DAY outgoing links
+            WITH o1
+            MATCH (o2:OilPrice)
+            WHERE date(o2.date) > date(o1.date)  // Find a future OilPrice node
+            WITH o1, o2
+            ORDER BY date(o2.date) ASC  // Order future nodes by closest date
+            WITH o1, collect(o2)[0] AS closest_future // Pick the closest future node
+            WHERE closest_future IS NOT NULL  // Ensure a match exists
+            MERGE (o1)-[:NEXT_DAY]->(closest_future)
             """
         )
 

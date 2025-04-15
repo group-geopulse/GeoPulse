@@ -19,8 +19,14 @@ export default function Home() {
         Your browser does not support the video tag.
       </video>
 
-      {/* Placeholder for the circle image */}
-      <div className="w-32 h-32 border-4 border-gray-300 rounded-full mb-8 bg-white opacity-90 z-10"></div>
+      {/* Button */}
+      <button
+        onClick={() => router.push("/pages/graph")}
+        className="w-32 h-32 border-4 border-gray-300 rounded-full mb-8 bg-white opacity-90 z-10"
+      >
+        <span>KG</span>
+        <span className="text-2xl"></span>
+      </button>
 
       {/* Button */}
       <button

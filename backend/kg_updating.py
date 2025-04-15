@@ -5,6 +5,8 @@ import os
 import logging
 
 URI = os.getenv("URI")
+# Suppress only informational messages from Neo4j, but allow warnings and errors
+logging.getLogger("neo4j").setLevel(logging.WARNING)
 
 def get_neo4j_driver(test=True):
     # Set Neo4j Connection

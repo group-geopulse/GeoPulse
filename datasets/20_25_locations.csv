@@ -1,828 +1,2136 @@
 Location,Count
-Russia,3772
-Ukraine,2093
-U.S.,1429
-China,1178
-US,958
-UK,544
-Iran,360
-India,304
-Germany,241
-Australia,193
-Brazil,189
-CANADA,189
-France,170
-Japan,166
-Turkey,159
-Canada,155
-Belarus,150
-Israel,146
-Saudi Arabia,133
-Poland,131
-Venezuela,118
-Mexico,113
-Britain,107
-Iraq,101
-Indonesia,101
-Italy,94
-Hungary,82
-Kyiv,80
-Texas,79
-Moscow,79
-Norway,75
-Libya,67
-Singapore,67
-North Korea,65
-Nigeria,62
-Spain,60
-Taiwan,59
-Myanmar,59
-Egypt,58
-Hong Kong,58
-Syria,53
-Qatar,51
-Lebanon,51
-South Africa's,49
-California,43
-South Africa,42
-Vietnam,40
-Kuwait,40
-Denmark,40
-Malaysia,38
-Sweden,37
-Dubai,37
-South Korea,35
-Crimea,35
-Gaza,34
-Moldova,34
-Pakistan,33
-Argentina,33
-London,31
-Nifty,31
-Paris,30
-Finland,29
-Kazakhstan,29
-Algeria,29
-Guyana,28
-Azerbaijan,28
-Alberta,26
-Oman,25
-Washington,24
-Angola,23
-Sudan,23
-Glasgow,22
-Kenya,22
-Colombia,21
-Cuba,21
-North Korea's,21
-Saudi Arabia's,20
-Lithuania,19
-Zimbabwe,19
-Beijing,18
-Bangladesh,18
-Bulgaria,18
-New York,17
-Switzerland,17
-Putin,17
-U.S,17
-Estonia,16
-UAE,16
-Serbia,16
-Philippines,16
-New Zealand,16
-Greece,16
-Netherlands,15
-Afghanistan,15
-Portugal,15
-Senegal,15
-Louisiana,15
-Chile,14
-Brookfield,14
-Thailand,14
-Ecuador,14
-Austria,14
-Slovakia,14
-Georgia,14
-BOE,14
-Kosovo,13
-South Korea's,13
-Q4,13
-Armenia,13
-Trafigura,12
-Romania,12
-Toronto,12
-Uganda,12
-EU,11
-Zaporizhzhia,11
-Ethiopia,10
-NZ,10
-Florida,10
-S.Korea,10
-Haiti,10
-Peru,10
-Latvia,10
-Ghana,9
-Yemen,9
-Berlin,9
-Xinjiang,9
-Pennsylvania,9
-Lavrov,9
-Belgium,9
-Colorado,8
-Zambia,8
-Focus,8
-Sri Lanka,8
-NWE,8
-Montana,8
-Somalia,8
-Ugandan,8
-Ireland,8
-Iceland,8
-Bahrain,7
-North Korea-,7
-Jordan,7
-United States,7
-New Zealand's,7
-Wyoming,7
-Tehran,7
-Alaska,7
-Kherson,7
-Tunisia,7
-Tripoli,6
-Congo,6
-Ohio,6
-Croatia,6
-Tokyo,6
-Davos,6
-Vienna,6
-Kremlin,6
-Cyprus,6
-Shanghai,6
-Bakhmut,6
-S.Africa,6
-Chesapeake,6
-Formosa,5
-Jeddah,5
-Keystone,5
-Mozambique,5
-Vitol,5
-Bolivia,5
-Pyongyang,5
-Prigozhin,5
-COVID-19,5
-Morocco,5
-Abu Dhabi,5
-Q3,5
-Olympic,5
-Guinea,5
-Barbados,5
-Draghi,5
-North Africa,5
-Odesa,4
-Donetsk,4
-BRICS,4
-Ottawa,4
-Rwanda,4
-Coal,4
-Yuan,4
-Mali,4
-San Francisco,4
-Counter Russia,4
-Huizhou,4
-Uzbekistan,4
-U.K.,4
-Hawaii,4
-Hong Kong's,4
-Oklahoma,4
-Vilnius,4
-North Dakota,4
-Houston,4
-D.C.,4
-NY,4
-Naftogaz,4
-Munich,4
-America,4
-Kuwaiti,4
-Brussels,4
-Woodside,4
-Uruguay,3
-Talks,3
-Vatican,3
-Calgary,3
-Baghdad,3
-Engie,3
-Gabon,3
-Namibia,3
-Scarborough,3
-War,3
-Hiroshima,3
-Massachusetts,3
-Europe,3
-Lviv,3
-USD,3
-Borrell,3
-Mongolia,3
-Eurovision,3
-Africa,3
-Milan,3
-Korea,3
-Zhejiang,3
-Fukushima,3
-Michel,3
-Cameroon,3
-Gokhran,3
-Madagascar,3
-Baltimore,3
-Nicaragua,3
-Tuvalu,3
-Minsk,3
-Rome,3
-New Mexico,3
-Virginia,3
-N.Ireland,3
-Turkmenistan,3
-Ofgem,3
-Basra,3
-Elysee,3
-Sibur,3
-Bosnia,3
-Kerry,3
-Cambodia,3
-Beaumont,3
-Berkshire,3
-Scotland,3
-HK,3
-Botswana,3
-England,2
-Baton Rouge,2
-Arizona,2
-Paraguay,2
-Stoltenberg,2
-Covid,2
-El,2
-South Sudan,2
-New Guinea,2
-Leyen,2
-West Bank,2
-Luhansk,2
-Wisconsin,2
-Oriente,2
-Malta,2
-Permian,2
-New York City's,2
-Durban,2
-U.S. Gulf,2
-Midland,2
-Botas,2
-Equatorial Guinea,2
-Murmansk,2
-Panama,2
-Chad,2
-Ukraine - Zelenskiy,2
-Wuhan,2
-Suriname,2
-West Africa Bloc,2
-Beirut,2
-Izmail,2
-Burkina Faso,2
-Mississippi,2
-Bakken,2
-Chernobyl,2
-Niger,2
-Cushing,2
-Alabama,2
-Sao Paulo,2
-Brexit,2
-Freeport,2
-Ecopetrol,2
-Danube,2
-New Jersey,2
-Pompeo,2
-Philly,2
-Stockholm,2
-Asean,2
-Clash,2
-Kimmeridge,2
-Rhode Island,2
-Zama,2
-EXCLUSIVE Germany,2
-Lula,2
-East Jerusalem,2
-Seoul,2
-Geneva,2
-Baku,2
-Erdogan,2
-Phoenix,2
-Illinois,2
-Idlib,2
-New York City,2
-South Africa Seeks,2
-Dominican Republic,2
-Novorossiisk,2
-Quebec,2
-Los Angeles,2
-Amsterdam,2
-Chicago,2
-Eletrobras,2
-Tanzania,2
-Kharkiv,2
-Delhi,2
-Puerto Rico,2
-Costa Rica,2
-Ithaca,2
-Nevada,2
-Wake,2
-Istanbul,2
-Zhenhai,2
-Cement,2
-Utah,2
-Acciona,2
-Bonga,2
-the West Bank,2
-Aid,2
-Guatemala,2
-CNA,2
-New Delhi,2
-Novatek,2
-Nepal,2
-Eni,2
-Papua New Guinea,2
-Greenland,2
-West Africa,2
-Maoming,2
-Alibaba,2
-Kurdistan,2
-Puerto Rico's,2
-Dalian,2
-New START,2
-Sahel,1
-Meeting,1
-Exit,1
-Tshabalala,1
-Get Germany,1
-Matsuno,1
-Demilitarized Islands,1
-Saudi Arabia Seeks,1
-Bucharest,1
-Andaman,1
-Odesa - Ukraine's,1
-Krasnodar,1
-South Africa Probing US,1
-Ukraine Strained,1
-Taipei,1
-Seattle,1
-Oregon,1
-Antigua,1
-North Korea Launch Spy,1
-Shoigu,1
-Yoon,1
-War With Ukraine,1
-Nabiullina,1
-Austin,1
-Vladivostok,1
-Dombrovskis,1
-Medvedev,1
-Bulgaria Levy,1
-South Africa Risks Losing,1
-Lanterns,1
-Ozon,1
-NYC,1
-San Jose,1
-Exclusive-Baghdad,1
-S. Africa,1
-Hainan,1
-boe,1
-Cisco,1
-South Africa Invest Conference,1
-Yacht,1
-Stand,1
-Bryansk,1
-Bryansk region,1
-Snake Island,1
-KS,1
-Voronezh,1
-PRC,1
-Kentucky,1
-North Korea Satellites With Sanctions After Missile Launches,1
-the Netherlands Slows,1
-South Africa Ties,1
-Kinzhal,1
-Western Ukraine's,1
-Havre,1
-Barcelona,1
-Algonquin,1
-South Africa Self-Generation of Power,1
-Palo Alto Gas-Electric,1
-Cold,1
-pro-Russia,1
-Berdyansk,1
-Bulawayo,1
-San Antonio,1
-Kiev,1
-New York Harbor,1
-Mizushima,1
-Sarmat,1
-San Francisco -,1
-Vale,1
-Guinea Bissau,1
-Irkutsk,1
-Karachi,1
-Jakarta,1
-El Nino,1
-South Africa Needs,1
-South Korea Braces,1
-Targets Kyiv,1
-Liverpool,1
-Topix,1
-Hormuz,1
-Amman,1
-The Hague,1
-Ukraine Crops,1
-St. Petersburg,1
-Fight Against,1
-Ukraine Join,1
-Marshall Islands,1
-Dagestan,1
-Nord Stream,1
-Bundestag,1
-Lithium,1
-New Caledonia Unrest: Tensions,1
-Sri Lanka's,1
-Ivory Coast,1
-Hwange,1
-Doha,1
-East Ukraine's,1
-South Africa Denies,1
-Constanta,1
-Sao Paulo Amid,1
-Marcos,1
-Scholz,1
-New,1
-Ukraine Set to Swap,1
-New Iran,1
-Helsinki,1
-Dominican Republic Seeks,1
-Buy Carlyle's,1
-Bonn,1
-Backing Russia's,1
-Seach,1
-Oxford,1
-South Africa Wants Biodiversity Sector,1
-Holland,1
-Stop Enabling Russia's,1
-Backfoot,1
-Gloomy,1
-Sight,1
-North Korea Delivered Arms,1
-Tbilisi,1
-Aid Ukraine,1
-Latham,1
-Las Vegas,1
-ex-Sudan,1
-Gujara,1
-Opens Africa's,1
-Ukraine Close,1
-Denver,1
-Boulder County,1
-Nickel Plant,1
-North Korea Means,1
-New China,1
-Gulf,1
-Rehn,1
-Bondi,1
-G-20,1
-Line,1
-Madhya Pradesh,1
-Tatarstan Region,1
-Halkbank,1
-Tatarstan,1
-Bonaire,1
-Hengli,1
-Kochi,1
-New City,1
-Texas City,1
-Far,1
-Iowa,1
-Zilkens,1
-Hollywood,1
-Bombs City Near Ukraine,1
-Ukraine - Kyiv,1
-South Africa Beats,1
-Nigeriens,1
-Winter,1
-Luxembourg,1
-Limbo,1
-Kupiansk,1
-Hague,1
-Discuss Sweden,1
-Kishida,1
-German Village,1
-Branson,1
-Hamburg,1
-Southwest,1
-N. Korea,1
-Andriivka,1
-Africa Empire,1
-South,1
-Aid Over,1
-Kamchatka,1
-San Francisco Lands,1
-Tunisia Hikes,1
-South Africa Investor Risk Grows,1
-Exclusive-Belgium,1
-Autumn,1
-summit city,1
-Sinai,1
-Laos,1
-New York Apartments Use Solar Panels,1
-S. Korea,1
-Virgin Atlantic,1
-Malpass,1
-Peace,1
-Snam,1
-Watch Germany,1
-New York's,1
-Malawi,1
-Belgorod City Center,1
-Honolulu,1
-Kyrgyzstan,1
-Lobby,1
-Tamar,1
-Liberia,1
-Nov.9,1
-St Petersburg,1
-Meet Ukraine's,1
-New York State Over,1
-EXCLUSIVE-Kazakhstan,1
-Caucasus,1
-Benin,1
-Ukraine Arms,1
-Avdiyivka,1
-Biden,1
-Maine,1
-VC,1
-Wales,1
-Basel,1
-Us,1
-Mauritius,1
-Seraya,1
-Prison,1
-North Korea:,1
-Hawaii State,1
-Latam,1
-Ukrainian,1
-Ukraine - Germany's,1
-Jurong Island,1
-Neutral Zone,1
-Attock,1
-MOSCOW,1
-Petroamazonas,1
-Anadolu,1
-Trinidad,1
-Exclusive - Russia,1
-BoCom,1
-Cesar province -,1
-Whitehaven Coal,1
-Venezuela - Pompeo,1
-Luoyang,1
-Sarawak,1
-Luhansk village,1
-Frankfurt,1
-Boston,1
-Covid-19,1
-U.S.-Iraq,1
-Dakota,1
-Paulsboro,1
-New Mexico's,1
-Lukashenko - Germany's,1
-Santos,1
-La.,1
-Mubadala,1
-Saudi Arabia -,1
-Salt Lake City,1
-Macquarie,1
-Slovenia,1
-Inpex,1
-Guangdong province,1
-eagles,1
-Parana,1
-N.D.,1
-Minnesota,1
-Kamco,1
-Riyadh,1
-United States - RIA,1
-NJ,1
-Zurich,1
-Covaxin,1
-Mariupol,1
-Mobile,1
-Whitehorse,1
-Post,1
-Bern,1
-Coronado,1
-Philadelphia,1
-Oilfield,1
-Delaware Basin,1
-Primexx,1
-North Macedonia,1
-Hayat,1
-Karish,1
-Tibet,1
-Michigan,1
-Navalny,1
-Brent,1
-Belene,1
-Kinross,1
-Columbus,1
-Milazzo,1
-Ukraine U,1
-Uighur,1
-Orsted,1
-Ceyhan,1
-West Africa - Energy,1
-Ukraine Attack,1
-Conakry,1
-Tours,1
-Kuwait City,1
-Yerevan,1
-Russia Guns,1
-Jail,1
-Leaks,1
-Ceasefire,1
-LA,1
-Kozloduy,1
-Russia Meet,1
-East Ukraine City,1
-Moldova Accession,1
-Balearic,1
-Khmelnytskyi,1
-United,1
-Gutul,1
-Perth,1
-North Korea Boosts,1
-Rebuilding Ukraine,1
-Darien,1
-Mini-Greenwich,1
-Secure Russia,1
-Penn,1
-Lansdowne,1
-Ukraine Firing,1
-Gambia,1
-Buzios,1
-Statkraft Ireland,1
-Kaniyat,1
-Dominican Republic - Energy,1
-Venezuela - Pompeo - Energy & Oil,1
-Eurasia,1
-Sign,1
-Grid Upgrade,1
-Mailiao,1
-Kashagan,1
-Vizag,1
-Saudi Arabia ',1
-Qatargas,1
-Kozmino,1
-Breakingviews,1
-Sovcomflot IPO,1
-South Carolina,1
-Wall St,1
-non-OPEC,1
-Odessa,1
-Cochan,1
-N.Y.,1
-Isfahan,1
-Natanz,1
-Kansas,1
-Hengyuan,1
-al-Hamra,1
-Tengiz,1
-Hariga,1
-BoE,1
-North Africa -,1
-Occupied Ukraine,1
-Izyum,1
-Exit Russia Market,1
-Saudi UAE,1
-Treasuries,1
-Ukraine Port City,1
-Mykolayiv,1
-Blow,1
-Athens,1
-City,1
-Ukraine Invasion,1
-Miami,1
-Standstill,1
-Chill,1
-Falklands,1
-Halliburton,1
-Jackson Hole,1
-New York Voters,1
-Haynesville,1
-Draft Nord Stream,1
-King County,1
-Jazan - SPA,1
-Kigali,1
-Fessenheim,1
-Grubhub,1
-Prague,1
-Fiji,1
-Sydney,1
-Mexico City,1
-Warsaw,1
-Indiana,1
-the Baltic States,1
-USSR,1
-Donbas Back,1
-First Republic,1
-South Africa Negotiating,1
-Ukraine Strike,1
-Metals,1
-Forbes Russia,1
-Taiwan Strait:,1
-the Donbas Region Matter,1
-Yen,1
-Annexed Zones',1
-Tech Drive,1
-Call,1
-South Africa Unveils,1
-US West,1
-Lake Charles,1
-Sharjah,1
-Bontang LNG,1
-Mechel,1
-Exit Russia's,1
-South Africa Firms,1
-Counter Kyiv's,1
-Cape,1
-Stoke,1
-Saudi Arabia Urges,1
-Sham Ukraine ',1
-Dhaka,1
-Britons,1
-Rush,1
-the Soviet Union,1
-Ukraine Retakes Kherson,1
-Marib,1
-MSCI,1
-Sub-Saharan Africa,1
-Normandy,1
-Nairobi,1
-Thunberg,1
-Firtash,1
-Merkel,1
-Nord Stream 2,1
-Tianjin,1
-FEATURE-Jamaica,1
-U.S. Southeast,1
-MiG-29,1
-Eyes China,1
-Campania,1
-United Arab Emirates,1
-Ida,1
-Sheremetyevo,1
-Hanul,1
-Moorburg,1
-Nawara,1
-1-Germany's,1
-Eco Atlantic,1
-Jan U.S.,1
-Rajasthan,1
-Meraux,1
-Ecopetrol Q1,1
-YouTube,1
-Vermont,1
-Olympics,1
-ROC,1
-Cannes,1
-Rhine,1
-East Africa,1
-Aleppo province,1
-Saudi Arabia',1
-Brunel,1
-Nanjing,1
-Roman Empire,1
-Czech Republic's,1
-New Britain,1
-Duma,1
-Sinopec,1
-Vanuatu,1
-Atacama,1
-San Marino,1
-Volnovakha,1
-Villeroy,1
-Kabul,1
-British Columbia,1
-Hokkaido,1
-Komi,1
-Dover,1
-Tervita,1
-Tennessee,1
-Detroit,1
-Fairytale,1
-Northern Ireland,1
-N.America,1
-Sinaloa,1
-Navalny  ,1
-Xinhua,1
+-2.89,1
 1-Germany,1
-Hezbollah,1
+1-Germany's,1
+2022.The United States,1
+2C,1
+50%of Germany,2
+70%of Finland,1
+"73,000MW",1
+A.M.lower,1
+AAAsaidon,1
+AC,1
+ADMARESsaidit,1
+ADSs,1
+AI,1
+AUS,2
+AUs,1
+Abadan,1
+Abai,1
+Aberdeen,1
+Abkhazia,1
+Abu Dhabi,51
+Abu Dhabi s,1
+Abu Dhabi's,1
+Acciona,2
+Achilleas,1
+Adelaide,1
+Afghanistan,35
+Afreximbank,1
+Africa,4
+Africa Empire,1
+AfterRussia,2
+Agrawala,1
+Aid,2
+Aid Over,1
+Aid Ukraine,1
+Aksungur,1
+Aktau,1
+Akwa Ibom State,1
+Alabama,4
+Alameda,1
+Alameda County,9
+Alaska,89
+Alaskais,1
+Albemarle,17
+Alberta,226
+Albertadue,3
+Albertan,4
+Albertaplan,3
+Albuquerque,5
+Aleppo,2
+Aleppo province,1
+Algeciras,1
+Algeria,99
+Algiers,1
+Algonquin,1
+Aliaga,1
+Alibaba,3
+Aliyevsignaledthat Azerbaijan,1
+Almaty,3
+Alphabet,1
+Alps,1
+Alrai,1
+Amarillo,2
+Amazonas,2
+Amazonas Basin,1
+Ambani,1
+Ambarnaya,1
+America,187
+Americahave,1
+Americawere,2
+Amerruss,1
+Amiens,1
+Amman,1
+Amsterdam,14
+Amu Darya,3
+Amur,2
+Anadolu,1
+Anchorage,1
+Andaman,1
+Andhra Pradesh,1
+Andriivka,1
+Anew,1
+Angola,125
+Angostura,1
+Ankara,14
+Annexed Zones',1
+Antalya,1
+Antigua,1
+Antofagasta,1
+Antwerp,2
+Appalachia,2
+Aprilto,2
+Aqaba,1
+Arabia,3
+Argaamreportedon,1
+Argentina,112
+Argentinainauguratedon,1
+Argusreportedearlier,1
+Arizona,16
+Arkansas,7
+Armenia,37
+Aruba,3
+Asean,2
+Ashkelon,1
+Asiaas,1
+Asiain,1
+Astana,4
+Atacama,1
+Athens,1
+Atlantica,1
+Attock,1
+Atyrau,1
+Auger,1
+Augustafter,1
+Austin,10
+Austin Green,1
+Australia,479
+Austria,85
+Autumn,1
+Avdiyivka,1
+Awtad,1
+Azerbaijan,134
+Azerbaijanin,1
+B.C.,6
+BBCreportedon,1
+BESS)is,1
+BOE,14
+BOTAS,3
+BP,2
+BP Azerbaijan,1
+BRICS,7
+Backfoot,1
+Backing Russia's,1
+Baden-W,1
+Badenoch,1
+Badra,2
+Baghdad,69
+Bahamas,2
+Bahrain,30
+Bakhmut,6
+Bakken,7
+Baku,26
+Balasch,1
+Bald Hill,1
+Balearic,1
+Bali,2
+Baltimore,8
+Banchero Costa,2
+Bangalore,1
+Bangladesh,24
+Bangor,1
+Banyu Urip,1
+Barbados,7
+Barcelona,4
+Baringa,1
+Basel,1
+Basra,8
+Bassein,1
+Baton Rouge,10
+Bayelsa State,1
+Bayon,2
+Bayou Choctaw,2
+Baytown,4
+Bayu-Undan,1
+Beaumont,8
+Beijing,121
+Beijingsaidon,1
+Beirut,5
+Bel,1
+Belarus,255
+Belene,1
+Belgium,51
+Belgorod City Center,1
+Belgrade,3
+Belkania,1
+Bengaluru,2
+Benin,9
+Berdyansk,1
+Berkeley,1
+Berkley,1
+Berkshire,6
+Berkshire Hathawayadded,1
+Berlin,59
+Bermuda,1
+Bern,1
+Berwick,1
+Biden,1
+Birch Grove,1
+Blagoveshchensk-Heihe,1
+Blocks 10BB,1
+Bloomberg,1
+Bloomberghas,6
+Bloombergnoteda,1
+Bloombergnotes,2
+Bloombergquoted,1
+Bloombergreport,1
+Bloombergreported,4
+Bloombergreportedat,2
+Bloombergreportedon,61
+Bloombergreports,39
+Bloombergshowedon,2
+Blow,1
+BoCom,1
+BoE,3
+Boca Chica,1
+Bolivar,1
+Bolivia,8
+Bologna,2
+Bombs City Near Ukraine,1
+Bonaire,2
+Bondi,1
+Bonga,4
+Bonn,1
+Bontang LNG,1
+Borrell,3
+Bosnia,5
+Boston,3
+Botas,3
+Botswana,3
+Boulder County,1
+Bournemouth,1
+Bowland,1
+Braemar,1
+Braintree,1
+Brandenburg,4
+Branson,1
+Brazil,478
+Brazoria County,1
+Brazos Valley,1
+Breakingviews,1
+Breidablikk,4
+Bremen,3
+Brent,58
+Brexit,3
+Britain,220
+British Columbia,47
+Britons,2
+Brookfield,26
+Brunei,4
+Brunel,4
+Brussels,47
+Bryansk,5
+Bryansk region,1
+Buccino,1
+Buccinosaidthat Libya,1
+Bucharest,9
+Budapest,3
+Buenos Aires,7
+Bulawayo,1
+Bulgaria,69
+Bulgaria Levy,1
+Bundesnetzagentursaidon,1
+Bundestag,1
+Bundesverband,1
+Burkina Faso,2
+Burnaby,6
+Busan,1
+Bushehr,7
+Buy Carlyle's,1
+Buzios,3
+C2C,2
+CAISOreiteratedon,1
+CANADA,189
+CCS,11
+CEOHF,2
+CNA,2
+CNPCsigned,1
+COVID-19,7
+CPYYF,1
+Cabo Delgado,6
+Cairo,2
+Calgary,7
+Calgary Heraldreports,1
+California,210
+Californiahave,1
+Call,1
+Cambodia,3
+Cambofield,1
+Cambridge,1
+Cameroon,5
+Camp Springs,1
+Campania,1
+Canada,738
+Canadais,1
+Canberra,1
+Cangrejera,1
+Cannes,1
+Canonsburg,2
+Cape,1
+Caracas,37
+Cardon,2
+Carlyle,5
+Carolinas,4
+Cartagena,1
+Catamarca,1
+Caucasus,1
+Ceasefire,2
+Cement,2
+Central Africa,1
+Century City,1
+Cepsa,1
+Ceres,2
+Cesar province -,1
+Ceuta,1
+Ceyhan,60
+Chad,4
+Chalco,1
+Charlotte,1
+Charlotte Harbor,1
+Chechnya,1
+Chemchemal,2
+Cheniere,3
+Cherkasy,2
+Chernobyl,8
+Chesapeake,8
+Chevronsaidon,1
+Chicago,13
+Chile,40
+Chill,1
+China,4253
+Chinadue,1
+Chinahave,1
+Chinaimporting,1
+Chinain,2
+Chinato,1
+Chinawere,1
+Chisinau,5
+Chongqing,2
+Chornobyl,1
+Cirilo,2
+Cirium,1
+Cisco,1
+City,1
+City A.M.understands,1
+City AMreportedin,1
+Ciudad PEMEX,1
+Civaux,2
+Clark County,1
+Clash,2
+Clearwater,2
+Coal,5
+Cochan,1
+CofE,3
+Cold,1
+Cologne,4
+Colombia,81
+Colombo,2
+Colorado,29
+Columbus,1
+Commercesaidon,1
+Commissionsaidon,1
+Computex,1
+Conakry,1
+Congo,20
+Congressin,1
+Connecticut,5
+Constanta,2
+Coolidge,1
+Coos Bay,1
+Copenhagen,3
+Corentyne,2
+Cornwall,1
+Coronado,1
+Corporationhas,1
+Corpus,1
+Corpus Christi,15
+Costa,3
+Costa Rica,4
+Costa Samaras,1
+Cote d Ivoire,1
+Cotonou,1
+Counter Kyiv's,1
+Counter Russia,4
+Covaxin,1
+Covid,34
+Covid-19,1
+Crete,3
+Crevedia,1
+Crimea,74
+Cristobal,3
+Croatia,20
+Crown Prince,1
+Cuba,42
+Cumbria County Council,1
+Cushing,39
+Cyprus,38
+Czech Republic,3
+Czech Republic's,1
+Czechia,1
+D.C.,10
+DC,4
+DRC,4
+DVN,1
+Dagestan,1
+Dakota,1
+Dalenov,1
+Dalia,1
+Dalian,9
+Dallas,6
+Dalmeny,1
+Damascus,11
+Dammam,3
+Danube,2
+Dar,2
+Dar es Salaam,1
+Dardanelles,1
+Darien,1
+Datang,2
+Dated Brent,7
+Davos,16
+Dayton,1
+Dbeibah,6
+De Haanadded,1
+Debrecen,2
+Decarbonising,1
+Decemb,1
+Decembe,1
+Deir Ezzor,2
+Delaware,12
+Delaware Basin,1
+Delhi,4
+Delta,1
+Demilitarized Islands,1
+Demin,1
+Demre,1
+Denmark,88
+Denver,4
+Detriot,1
+Detroit,13
+Deutschland,1
+Dhahran,2
+Dhaka,1
+Dhanteras,1
+Diablo Canyon,1
+Discuss Sweden,1
+Djibouti,3
+Dnipropetrovsk,4
+Dodik,1
+Doha,5
+Dombrovskis,1
+Dominican Republic,2
+Dominican Republic - Energy,1
+Dominican Republic Seeks,1
+Donbas,4
+Donbas Back,1
+Donbass,1
+Donetsk,14
+Dos Bocas,15
+Dover,1
+Draft Nord Stream,1
+Draghi,5
+Dubai,178
+Dublin,1
+Duma,1
+Durban,2
+Dushanbe,1
+Dussehra,1
+Dyukovsaidon,1
+E&P Norway,1
+E.U.,4
+EI,2
+EIAsupported,1
+EU,18
+EV,3
+EXCLUSIVE Germany,2
+EXCLUSIVE-Kazakhstan,1
+Ealing,1
+Earthjustice,1
+East Africa,2
+East Jerusalem,2
+East Palestine,1
+East Ukraine City,1
+East Ukraine's,1
+East Yorkshire,1
+EastMed,1
+Eastern Germany,1
+Eastern Province,1
+Eco Atlantic,1
+Ecopetrol,7
+Ecopetrol Q1,1
+Ecuador,42
+Eddy County,1
+Edinburgh,2
+Edmonton,3
+Egypt,155
+Egypt Germany,1
+Egyptstartedin,1
+Eilat,4
+El,6
+El Hamra,2
+El Nino,1
+El Sharara,8
+Elba Island,1
+Electrifying Africa,1
+Eletrobras,2
+Elysee,3
+Emirates,3
+Emissions Reduction Alberta,1
+Empire Wind 1project,1
+Enbridgesaidon,1
+Encevo,1
+Energias de Portugal,1
+Energoatomsaidon,1
+Energy Ministrysaidlast week,1
+Engie,12
+England,22
+Eni,15
+Enverus,5
+Equatorial Guinea,20
+Equinor,6
+Equinorannouncedon,1
+Equinorsaidon,2
+Erbil,21
+Erdogan,3
+Eritrea,1
+Es Sidra,1
+Escondida,1
+Escravos,1
+Essex,3
+Estonia,39
+Ethiopia,13
+Eurasia,3
+Europe,3
+Europe Germany,1
+Europeas,1
+Europefellearly,1
+Europehave,2
+Europein,2
+Europen,1
+Europesaidon,1
+Europeunveiledon,1
+Europewill,1
+Eurovision,3
+Exclusive - Russia,1
+Exclusive-Baghdad,1
+Exclusive-Belgium,1
+Exit,1
+Exit Russia Market,1
+Exit Russia's,1
+Expansionreportedon,1
+Exxonsaidit,1
+Eyes China,1
+FC,1
+FEATURE-Jamaica,1
+FII,1
+Facebooka,1
+Fairytale,1
+Falklands,1
+Far,1
+Fayetteville,1
+Februaryfrom,1
+Fessenheim,1
+Fife,1
+Fight Against,1
+Fiji,1
+Finland,135
+Finlandsaidon,1
+First Republic,1
+Firtash,1
+Fitch,2
+Flamingo,1
+Florence,3
+Florida,40
+Focus,9
+Forbes Russia,1
+Formosa,6
+Forrestsaidon,1
+Fort Hills,4
+Fort McMurray,1
+Fort McMurrayissuedan,2
+Forties,5
+Fortuna,1
+Foster City,1
+Foxconn,1
+Foz,2
+France,470
+Francehave,1
+Francisco C. Robles Hernandez,1
+Frankfurt,6
+Freeport,31
+Freeport LNG,7
+Freetown,1
+Fremont,14
+Frisco,1
+Fujairah,11
+Fukushima,21
+G-20,1
+G-7,1
+G7,1
+GB,1
+GETI)showedon,1
+GLEN,1
+Gabon,24
+Gadabay,1
+Galena,1
+Galveston,2
+Galveston Refinery,1
+Gambia,1
+Gansu,2
+Garyville,1
+Gaza,87
+Gaza Strip,3
+Gazpromcut offRussian,1
+Gazpromhas,1
+Gdansk,4
+Geelong,1
+Gelsenkirchen,1
+Geneva,18
+Gentari,1
+Georgetown,1
+Georgia,29
+German Village,1
+Germany,1365
+Germanysaidthat Russia,1
+Germanysuspended,2
+Get Germany,1
+Ghana,35
+Gibraltar,2
+Giga,1
+Gippsland,1
+Glasgow,44
+Glen Canyon,2
+Glencoresaidin,1
+Gloomy,1
+Goa,2
+Godorf,1
+Goimar,1
+Gokhran,3
+Golden Ocean,1
+Goleta,1
+Gonfreville,3
+Gorban,1
+Gorda Springs,1
+Gothenburg,1
+Governmentsaidin,1
+Gran Tierra,1
+Graveney,1
+Great Britain,8
+Great Lakes,1
+Greater Houston,1
+Greater London,2
+Greater Manchester,2
+Greece,91
+Green Zone,1
+Greenland,14
+Greenlandsays,1
+Greensboro,1
+Greifswald,1
+Gretna,1
+Grid Upgrade,1
+Groningen,3
+Grouphas,1
+Grubhub,1
+Gruenheide,1
+Guangdong,1
+Guangdong province,1
+Guangxi,1
+Guardianreportciting,1
+Guatemala,2
+Guinea,6
+Guinea Bissau,1
+Gujara,1
+Gujarat,3
+Gulf,1
+Gunvor,1
+Gutul,1
+Guyana,247
+HK,3
+Haaland,1
+Habeck,2
+Hackberry,1
+Hague,3
+Haifa,7
+Hainan,1
+Haiti,11
+Halkbank,1
+Halliburton,4
+Halliburtonannouncedit,2
+Hamburg,4
+Hammerfest,1
+Hampshire,1
+Hamtramck,1
+Handelsblatt,1
+Hangzhou,1
+Hannover,1
+Hanul,1
+Haoye,1
+Hardeep Puri,1
+Hardisty,3
+Hariga,17
+Harris County,1
+Hatfield,1
+Hauts-de-France,1
+Havre,2
+Hawaii,5
+Hawaii State,1
+Hay'at,2
+Hayat,1
+Haynesville,10
+Hebei,2
+Hegarsaidon,1
+Helsinki,2
+Hengli,1
+Hengyuan,1
+Hertzsaidon,1
+Hessen,1
+Hezbollah,3
+Hillingdon,1
+Himachal Pradesh,1
+Hindi,1
+Hiroshima,4
+Hizballah,1
+Hokkaido,2
+Holland,2
+Hollub,2
+Hollywood,1
+Hong Kong,78
+Hong Kong's,4
+Honolulu,5
+Honshu,1
+Hormuz,4
+Horse Hill,1
+Hounslow,1
+Houston,84
+Houthi,2
+Houthistrikeon,1
+Hubei,1
+Huizhou,4
+Humber,1
+Hungary,206
+Huntington Beach,2
+Huntington Beach City Council,1
+Hwange,1
+IAEAsaidin,1
+INGAA,1
+Iceland,11
+Ida,1
+Idaho,1
+Idlib,2
+Illinois,19
+Imperial Beach,1
+Independentreportedon,1
+India,2185
+Indiahit,1
+Indiain,4
+Indiana,8
+Indonesia,228
+Inner Mongolia's,1
+Inpex,7
+Interfax,2
+Internatio,1
+Iowa,3
+Iran,1812
+Iraq,744
+Iraqactually,1
+Ireland,12
+Irkutsk,7
+Irving,1
+Isfahan,3
+Iskanders,1
+Islamabad,1
+Islamic Republic,1
+Islas Malvinas,1
+Ismaael,2
+Israel,551
+Istanbul,7
+Italy,341
+Italyto,1
+Ithaca,9
+Itochu,4
+Ivory Coast,2
+Izmail,2
+Izyum,1
+Jackson Hole,2
+Jacksonville,1
+Jail,1
+Jakarta,4
+Jammu,1
+Jamnagar,4
+Jan U.S.,1
+Januaryfellby,1
+Japan,541
+Jarand Rystad,1
+Jask,1
+Jazan - SPA,1
+Jeddah,14
+Jerusalem,1
+Jiyang,2
+Jizan,1
+Jogmec,5
+Johor,2
+Joliet,2
+Jomoro,1
+Jordan,14
+Jose,3
+Jubail,4
+Julyfrom,1
+Julyto,1
+Jun-21E,1
+Junea,3
+Junecompared,1
+Jurong Island,1
+KHI,1
+KS,1
+Kabul,2
+Kaduna,1
+Kakula,1
+Kalimantan,1
+Kaluga,1
+Kamchatka,1
+Kamco,1
+Kamloops,1
+Kamoa,1
+Kaniyat,1
+Kano,1
+Kansas,6
+Karachaganak,1
+Karachi,2
+Karaj,1
+Karawang,1
+Karbala,1
+Kareemsaidat,1
+Kariba,2
+Karish,1
+Karnataka,2
+Kashagan,5
+Kashgar,2
+Kaskida,1
+Kassai,1
+Kaub,1
+KazTransOil,2
+Kazakhstan,331
+Kazakhstanstarted,1
+Kazakstan,4
+Kazan,2
+Kearl,1
+Kemmerer,1
+Kentucky,8
+Kenya,39
+Kern County,4
+Kerry,3
+Keystone,18
+Kharkiv,2
+Khartoum,8
+Kherson,11
+Khmelnitskyi,1
+Khmelnytskyi,1
+Khuzestan,2
+Kiala,1
+Kiev,2
+Kigali,1
+Kimmeridge,2
+King County,1
+Kingdom,130
+Kinross,1
+Kinzhal,1
+Kirkuk,19
+Kisanfu,1
+Kishida,1
+Kitimat,1
+Kochi,1
+Komi,1
+Kona,1
+Kontrolmatiksaidon,1
+Korea,10
+Kosovo,24
+Kosovohas,1
+Kotamobagu,1
+Kozloduy,1
+Kozmino,16
+Kpler,2
+Kplerpredictedrecently,1
+Krabdagu,1
+Krasnodar,3
+Krasnodaroverturnedon,1
+Kremlin,7
+Kremlinblamedon,1
+Kristiansand,1
+Krk,1
+Kuibyshev,1
+Kuleba,1
+Kupiansk,1
+Kurdistan,186
+Kurdistan Region,1
+Kurdistanhas,1
+Kurdistanpledgedon,1
+Kutch,1
+Kuwait,150
+Kuwait City,2
+Kuwaiti,9
+Kvanefjeld,4
+Kwinana,1
+Kyiv,172
+Kyrgyzstan,10
+Kyushu,1
+L pez Obrador,2
+LA,2
+LA County,1
+LE1bn,1
+La Concepcion,2
+La La Land,1
+La Salinas,1
+La.,1
+Labrador,3
+Lagos,4
+Lake Albert,1
+Lake Chad,1
+Lake Charles,6
+Lake Maracaibo,1
+Lancashire,3
+Lansdowne,1
+Lanterns,1
+Laos,1
+Las Vegas,5
+Latam,1
+Latham,1
+Latvia,24
+Lausanne,1
+Lavrov,9
+Lea County,1
+Leaks,1
+Lebanon,122
+Lebanonare,1
+Legosaidon,1
+Leipzig,1
+Lemont,1
+Leviathan,1
+Leyen,17
+Liaoning,1
+Liberalsvowingbefore,1
+Liberia,7
+Libya,469
+Ligera,1
+Lima,1
+Limbo,1
+Lincs,1
+Linden,1
+Line,1
+LinkedIn,1
+Liontown,3
+Lisbon,2
+Lithium,1
+Lithuania,55
+Liverpool,1
+Livorno,4
+Lobby,1
+Lochab,1
+London,119
+Longzhong,1
+Lopez Obrador,4
+Los Angeles,14
+Los Angeles County,1
+Los Patos River,1
+Louis,1
+Louisiana,94
+Lousiana,1
+Lower Saxony,3
+Ludwigshafen,1
+Lugansk,1
+Luhansk,11
+Luhansk village,1
+Lukashenko - Germany's,1
+Lula,2
+Luoyang,1
+Lustenau,1
+Luxembourg,7
+Lviv,4
+Lyash,1
+Lytton,1
+MInsk,1
+MOSCOW,1
+MSCI,1
+MT,2
+Macquarie,2
+Madagascar,4
+Madhya Pradesh,1
+Madrid,6
+Maduro,2
+Maharashtra,1
+Mailiao,1
+Maine,7
+Makoko,4
+Malawi,1
+Malaysia,115
+Mali,8
+Maloob,1
+Malpass,1
+Malta,5
+Maluku province,1
+Manali,1
+Manchester,1
+Mandan,1
+Mangalore,3
+Manhattan,2
+Manheim,2
+Manila Bay,1
+Manitoba,1
+Mannar,1
+Manono,1
+Maoming,2
+Maputo,2
+Marcellus,2
+Marchfollowing,1
+Marcos,1
+Marib,2
+Mariupol,1
+Marjan,1
+Mars US,1
+Marsa el-Hariga,1
+Marshall,1
+Marshall Islands,3
+Martinez,1
+Maryland,4
+Masela,1
+Massachusetts,11
+Mathura,1
+Matsuno,1
+Mauritania,7
+Mauritius,2
+Mauritiusin,1
+Mayby Azerbaijan's,1
+Mechel,1
+Medvedev,1
+Meet Ukraine's,1
+Meeting,1
+Mehr,1
+Melbourne,1
+Mellitah,2
+Member States,1
+Mendota,1
+Meraux,1
+Merkel,1
+Mersin,1
+Metals,1
+Metsamor,1
+Mexico,480
+Mexico City,6
+Mexico City s,1
+Mexico totaled$55.8,1
+MiG-29,1
+Miami,5
+Mianyang,1
+Michel,3
+Michigan,55
+Micronesia,1
+Midland,46
+Midland County,2
+Midwest U.S.,1
+Milan,9
+Milazzo,1
+Mina Al Ahmadi,2
+Mini-Greenwich,1
+Ministrysaidon,1
+Minneapolis,1
+Minnesota,12
+Minsk,5
+Mississippi,14
+Missouri,3
+Mitsuisaidon,1
+Mizushima,1
+Mobile,1
+Moc,2
+Mokha,1
+Moldova,78
+Moldova Accession,1
+Mombasa,1
+Monaco,1
+Mondaya,1
+Mongolia,14
+Montana,13
+Monticello,1
+Moon,1
+Moorburg,1
+Morocco,18
+Moroccosignedon,1
+Moscow,619
+Mozambique,42
+Mubadala,2
+Multnomah County,2
+Mumbai,7
+Munich,8
+Murmansk,8
+Murmansk LNG,2
+Musktweetedearly,1
+Musktweetedon,2
+Myanmar,61
+Mykolaiv,1
+Mykolayiv,2
+N. Korea,1
+N.America,1
+N.D.,1
+N.Ireland,3
+N.Y.,1
+NASAsignedon,1
+NEE)has,1
+NEV,1
+NJ,1
+NOC)saidon,4
+NRW,2
+NS,2
+NWE,8
+NY,4
+NYC,1
+NZ,10
+Nabiullina,1
+Naftogaz,5
+Nairobi,1
+Najaf,1
+Nakhchivan,1
+Namibia,30
+Nanjing,2
+Nantucket,2
+Naples,1
+Natanz,1
+Navalny,1
+Navalny  ,1
+Navoi,1
+Nawara,3
+Nayara,1
+Nebraska,5
+Nepal,2
+Netherlands,100
+Neuquen,2
+Neutral Zone,1
+Nevada,21
+New,2
+New Britain,1
+New Brunswick,1
+New Caledonia,1
+New Caledonia Unrest: Tensions,1
+New China,1
+New City,1
+New Delhi,11
+New England,1
+New Guinea,2
+New Iran,1
+New Jersey,28
+New Jersey's,1
+New Mexico,42
+New Mexico s,1
+New Mexico's,2
+New Orleans,1
+New START,2
+New South Wales,1
+New York,76
+New York Apartments Use Solar Panels,1
+New York City,15
+New York City's,2
+New York Harbor,1
+New York State,4
+New York State Over,1
+New York Voters,1
+New York's,1
+New Zealand,30
+New Zealand's,7
+Newcastle,2
+Newfoundland,4
+Ngtweetedabout,1
+Nicaragua,4
+Nickel Plant,1
+Niederau,2
+Nifty,31
+Niger,5
+Nigeria,521
+Nigeriens,1
+Ningbo,1
+Nio,1
+Niobrara,1
+Nishtun,1
+Nizhny,1
+Nizhny Novgorod,10
+Nohoch,1
+Nord Stream,16
+Nord Stream 2,1
+Nordland county,1
+Norfolk,1
+Norilsk,1
+"Normal, Illinois",1
+Normandy,2
+Norte,1
+North,6
+North Africa,35
+North Africa -,1
+North Africahas,1
+North Africahave,1
+North Americabegan,1
+North Beach,1
+North Carolina,17
+North Carolina s,1
+North Dakota,50
+North Dakota s,8
+North Dakota's,1
+North El Fayrouz,1
+North El Tabya,1
+North Korea,91
+North Korea Boosts,1
+North Korea Delivered Arms,1
+North Korea Launch Spy,1
+North Korea Means,1
+North Korea Satellites With Sanctions After Missile Launches,1
+North Korea's,23
+North Korea-,7
+North Korea:,1
+North Macedonia,1
+North Vancouver,1
+North Yorkshire,2
+North and South Carolina,1
+Northern Ireland,1
+Northvolt,1
+Norway,464
+Nov.30,1
+Nov.9,1
+Novak,1
+Novatek,5
+Novemberextendingfinancial,1
+Novgorod,2
+Novorossiisk,3
+Novorossiysk,1
+Novoshakhtinsk,1
+Novosti,2
+Nuland,1
+Nwoya,1
+OPEC,1
+OPECrepeatedit,1
+Oakland,3
+Oakville,1
+Occidental,4
+Occupied Ukraine,1
+Octoberas,1
+Octoberby,1
+Octoberby 67%compared,1
+Octoberfor,2
+Odesa,7
+Odesa - Ukraine's,1
+Odessa,14
+Ofgem,20
+Ofgemannouncedon,1
+Ofgemapproved,1
+Ofgemhas,1
+Ofgemwrotein,1
+Ohio,22
+Oilfield,5
+Oilprices.ie,1
+Okinawa,1
+Oklahoma,70
+Oklahoma City,1
+Olympic,5
+Olympics,1
+Omaha,1
+Oman,137
+Onkalo,3
+Ontario,7
+Opens Africa's,1
+Ordos City,1
+Oregon,10
+Oriente,3
+Orion,1
+Orlando,3
+Orsted,1
+Oseberg,7
+Oslo,6
+Ottawa,14
+Oxford,6
+Ozon,1
+P?tn,1
+PERNsaidon,1
+PRC,3
+Padur,3
+Pakistan,101
+Palestine,5
+Palladium Russia,1
+Palma,7
+Palo Alto Gas-Electric,1
+Pan America,1
+Panama,15
+Panipat,1
+Panjin,1
+Papua,2
+Papua New Guinea,2
+Papua New Guinea s,1
+Papua New Guineahas,1
+Paradip,2
+Paraguana,1
+Paraguay,3
+Parana,1
+Paris,98
+Parison,1
+Parliamentadoptedon,1
+Parliamentapprovedon,1
+Parsippany,1
+Pascagoula,3
+Paulsboro,1
+Payara,1
+Peace,1
+Pembina,1
+Pemexand Mexico,1
+Pengerang,2
+Penn,1
+Pennsylvania,25
+Pensacola,1
+People s Republic of China,1
+Perevalnoye,1
+Permian,31
+Permian Basin,2
+Perth,3
+Peru,17
+Petroamazonas,1
+Petrobel,1
+Petrobrasreporteda,2
+Philadelphia,3
+Philippines,30
+Phillip Nova,1
+Phillippines,1
+Philly,2
+Phoenix,4
+Piau,1
+Pillswood,1
+Piombino,1
+Pirc,2
+Pittsburgh,1
+Pivdennoukrainsk,1
+Plaquemines,2
+Plaquemines Parish,1
+Platts Dubai,2
+Poland,365
+Polands Gdansk,1
+Poltava,1
+Pompeo,2
+Port Allen,1
+Port Arthur,5
+Port Harcourt,2
+Port Sudan,4
+Portland,1
+Portovaya,6
+Portugal,32
+Portugalhave,1
+Post,1
+Prague,11
+Prates,1
+Prayagraj,2
+Prigozhin,5
+Primexx,1
+Prince Mohammed's,1
+Prison,1
+Pristina,2
+Pudong Xinqu,1
+Puebla,2
+Puerto Rico,2
+Puerto Rico's,2
+Pulau Bukom,1
+Putin,18
+Pyongyang,7
+Pyrenees,2
+Q1,1
+Q3,35
+Q4,57
+Qatar,199
+QatarEnergy,3
+Qatargas,1
+Qingdao,4
+Quebec,3
+Queensland,7
+Quinnipiac,1
+Quiriquire,1
+RIGI,1
+ROC,1
+RT Balkan,1
+Rafah,1
+Raizen,1
+Rajasthan,1
+Rebuilding Ukraine,1
+Red El,1
+Reddit,1
+Redruth,1
+Rehn,1
+Republic of Congo,1
+Republika Srpska,1
+Reutersreportedafter,1
+Reutersreportedearlier,2
+Reutersreportedexclusively,5
+Reutersreportedon,41
+Reutersreporton,1
+Reuterssaid,1
+Reuterssays,1
+Reutersshowedon,4
+Rhine,1
+Rhode Island,10
+Richmond,1
+Rio de Janeiro,2
+Riyadh,50
+Rockies,1
+Roman Empire,1
+Romania,24
+Rome,11
+Roraima,1
+Rosatom,3
+Rosneftunder,2
+Rostov,1
+Rotherham,2
+Rotterdam,10
+Routledge,1
+Rumaila,1
+Ruper,1
+Rush,1
+Russia,11012
+Russia Guns,1
+Russia Meet,1
+Russian Federation,2
+Russianattacksin,1
+Russiareboundedin,1
+Ruwais,1
+Rwanda,5
+Rynning,1
+Rystad,2
+S. Africa,1
+S. Korea,1
+S.A.,3
+S.Africa,6
+S.Korea,10
+SECfiling,1
+SK,1
+SSP126,1
+SSP245,1
+Sabah,2
+Sabine Pass,1
+Saffron Walden,1
+Sahel,1
+Saint Louis,1
+Salt Lake City,1
+Samara,1
+Samarkand,1
+Samarkandsaidon,1
+Samoa,1
+San Antonio,2
+San Francisco,12
+San Francisco -,1
+San Francisco Lands,1
+San Jose,1
+San Marino,1
+Sanaa,5
+Sangomar,1
+Santa Barbara,2
+Santa Barbara County,1
+Santa Monica,1
+Santos,1
+Sao Paulo,3
+Sao Paulo Amid,1
+Sarawak,3
+Sardinia,2
+Sarir,1
+Sarir Tobruk,2
+Sarmat,1
+Saskachewan,1
+Saskatchewan,5
+Saudi Arabia,1422
+Saudi Arabia ',1
+Saudi Arabia -,1
+Saudi Arabia Seeks,1
+Saudi Arabia Urges,1
+Saudi Arabia s,13
+Saudi Arabia',1
+Saudi Arabia's,34
+Saudi Arabiaagreed,1
+Saudi Arabiakept,1
+Saudi Arabiaremoved,1
+Saudi Arabiasaidthey,1
+Saudi UAE,1
+Sawan,2
+Scarborough,4
+Schallenberg,1
+Scholz,1
+Schwedt,27
+Scotland,37
+Seach,1
+Seattle,2
+Secure Russia,1
+Sefe,18
+Senatorshas,1
+Senegal,34
+Seoul,8
+Seplat,4
+Septemberfell,1
+Septemberfor,1
+Seraya,1
+Serbia,32
+Seychelles,1
+Shaanxi,1
+Shah Deniz,1
+Shahbazovsaid,1
+Shakhtinsk,1
+Sham Ukraine ',1
+Shandong,34
+Shanghai,40
+Shanxi,3
+Shanxiorderedin,1
+Sharara,1
+Sharjah,1
+Sharm El Sheikh,3
+Sharm el-Sheikh,1
+Sheffield,17
+Shellsaidin,3
+Sheremetyevo,1
+Shipping,1
+Shoigu,1
+Shorouk,1
+Sibur,3
+Sichuan,11
+Sicily,4
+Sight,1
+Sign,1
+Silver Lake,1
+Simcoe,1
+Sinai,1
+Sinaloa,1
+Sindh,1
+Singapore,143
+Singapore LNG,1
+Sinopec,23
+Skolkovo,1
+Slatternoted,1
+Slavutych,1
+Slovakia,95
+Slovenia,1
+Slovnaft,1
+Snake Island,1
+Snam,5
+Sokhranivka,1
+SolarPower Europe,4
+Solong,1
+Somalia,15
+Somerset,1
+South,1
+South Africa,151
+South Africa Beats,1
+South Africa Denies,1
+South Africa Firms,1
+South Africa Invest Conference,1
+South Africa Investor Risk Grows,1
+South Africa Needs,1
+South Africa Negotiating,1
+South Africa Probing US,1
+South Africa Risks Losing,1
+South Africa Seeks,2
+South Africa Self-Generation of Power,1
+South Africa Ties,1
+South Africa Unveils,1
+South Africa Wants Biodiversity Sector,1
+South Africa s,14
+South Africa's,49
+South Africahas,1
+South Carolina,5
+South Crete,1
+South Dakota,2
+South Khorasan,1
+South Korea,159
+South Korea Braces,1
+South Korea s,7
+South Korea's,16
+South KoreanYonhapnews,1
+South Portland,2
+South Stream,2
+South Sudan,94
+South Sudan s,3
+South Sudan's,1
+South Ukraine,1
+South Yorkshire,1
+Southampton,1
+Southeast United States,1
+Southwest,1
+Sovcomflot,20
+Sovcomflot IPO,1
+Soviet Union,5
+Spain,221
+Sri Lanka,19
+Sri Lanka's,1
+St Petersburg,2
+St. John,1
+St. Petersburg,2
+Stand,1
+Standstill,1
+States,6
+Statessaidon,1
+Statkraft Ireland,1
+Staunovoon,1
+Stockholm,3
+Stoke,2
+Stoltenberg,4
+Stop Enabling Russia's,1
+Strasbourg,1
+Strathcona,5
+Strubeck,1
+Sub-Saharan Africa,3
+Sudan,75
+Sudandiscussedin Sudan,1
+Sudzha,2
+Suez Rajan,1
+Suffolk,2
+Sulawesi,2
+Sumy,1
+Sun Jianan,1
+Sunacrip,1
+Sunderland,2
+Superior,1
+Surgutneftgas,7
+Suriname,55
+Surmont,2
+Sweden,111
+Switzerland,69
+Switzerlandis,1
+Sydney,4
+Sylva,2
+Syria,151
+TAFOUK1,1
+TASSreportedearlier,1
+TSLA,4
+Tabas,1
+Tabasco,7
+Tadawul,4
+Taipei,5
+Taishan,2
+Taiwan,104
+Taiwan Strait:,1
+Taiwanon,1
+Tajikistan,13
+Takanami,1
+Talks,3
+Tamar,11
+Tamarack,1
+Tamil Nadu,2
+Tampa,7
+Tampa Bay,1
+Tanga,6
+Tangguh,1
+Tanzania,29
+Taranaki,1
+Targets Kyiv,1
+Tashkent,3
+Tatarstan,5
+Tatarstan Region,1
+Tatneft,1
+Taymyr,3
+Tbilisi,4
+Tech Drive,1
+Tehran,119
+Tehranto,1
+Tekirdag,1
+Tel Aviv,4
+Teli,2
+Tellurian,1
+Temelin,1
+Temirtau,1
+Tengiz,2
+Tennessee,4
+Tennet Germany,1
+Tervita,1
+Tesla,3
+Teslaratireportedon,1
+Teslas,2
+Texas,443
+Texas City,4
+Texas Intermediateposting,1
+Texas Intermediateremain,1
+Texashas,1
+Texasin,1
+Texason,1
+Texassaid,1
+Texasvotedon,1
+Thailand,21
+The Czech Republic,6
+The Czech Republic s,1
+The Czech Republic's,1
+The Democratic Republic of Congo,1
+The Hague,2
+The Hague District,1
+The Hindureported,1
+The Islamic Republic of Iran,1
+The Kingdom,1
+The Kingdom of Saudi Arabia,2
+The Kurdistan Region Government,1
+The Marshall Islands,2
+The Niger Delta,2
+The Panama Canal,2
+The Republic of Venezuela,1
+The United Arab Emirates,1
+The United Arab Emirates (UAE,7
+The United Arab Emirates',1
+The United Kingdom,6
+The United States,225
+The United States Central Command,1
+The United States Department,2
+The United States Department of Energy,1
+The United States District Court,1
+The United States Office of Foreign Assets Control,1
+The United States Oil ETF,2
+The United States Oil Fund,2
+The United States Oil Fund LP,3
+The United States Strategic Petroleum Reserve,1
+The United States Treasury Department,1
+The United Statesimposedin,1
+Thestudy,1
+Thispremium,1
+Thunberg,1
+Thursdayannounceda,1
+Thursdayformally,1
+Thursdayhigher,1
+Thursdaysanctionedan,1
+Tianjin,1
+Tibet,1
+Tilenga,2
+Timesin,3
+Timipre Sylva,1
+Tobago,7
+Tobruk,2
+Togo,1
+Tokyo,16
+Topix,1
+Toronto,18
+Toulouse,2
+Tours,1
+Trafford,1
+Trafigura,70
+Transadria,1
+Travis County,3
+Treasuries,1
+Treasuryimposedon,1
+Triangle,1
+Tribunesuggestedthat,1
+Trieste,1
+Trinidad,9
+Tripoli,54
+Trumpappliedto Venezuela,1
+Trumptweetedon,1
+Trumpwroteon,1
+Tshabalala,1
+Tuapse,3
+Tuesdaysigneda,1
+Tula,1
+Tulsa,1
+Tunisia,12
+Tunisia Hikes,1
+Turin,2
+Turkey,528
+Turkmenistan,13
+Tuvalu,3
+Twitteron,1
+Tyrving,4
+U.K.,19
+U.S,34
+U.S.,6371
+U.S. Atlantic,2
+U.S. Colombia,1
+U.S. District,1
+U.S. Gulf,2
+U.S. LNG,1
+U.S. Shale,3
+U.S. Southeast,1
+U.S. West Coast,2
+U.S.-Iraq,1
+U.S.assassinationof,1
+U.S.banned,1
+U.S.respondedby,1
+U.S.sanctioned,1
+U.S.told,1
+U.S.warnedit,1
+UAE,98
+UK,1892
+UNsaysthere,1
+US,1280
+US Shale,1
+US West,1
+"US,""Bloomberg",1
+USA,5
+USD,3
+USSR,1
+Uara,1
+Uber,1
+Uganda,50
+Ugandafall,1
+Ugandan,11
+Ugandawill,1
+Uighur,1
+Uk,3
+Ukrain,1
+Ukraine,4871
+Ukraine - Germany's,1
+Ukraine - Kyiv,1
+Ukraine - Zelenskiy,2
+Ukraine Arms,1
+Ukraine Attack,1
+Ukraine Close,1
+Ukraine Crops,1
+Ukraine Firing,1
+Ukraine Germany's,1
+Ukraine Invasion,1
+Ukraine Join,1
+Ukraine Nickel,1
+Ukraine Port City,1
+Ukraine Retakes Kherson,1
+Ukraine Set to Swap,1
+Ukraine Strained,1
+Ukraine Strike,1
+Ukraine U,1
+Ukraine de-,1
+Ukrainecould,1
+Ukraineon,2
+Ukrainian,4
+Ukrenergo,1
+Ukrenerho,2
+Ulanqab,1
+Union Territories,2
+Uniper,1
+Uniperwarnedthat Germany,1
+United,1
+United Arab Emirates,3
+United Kingdom,1
+United States,51
+United States - RIA,1
+Upstream Norway AS,1
+Upstreamreportedon,2
+Urals,1
+Uralsin,1
+Urgewald,1
+Uruguay,3
+Us,1
+Ust-Luga,4
+Utah,6
+Utica,2
+Uttar Pradesh,1
+Uzbekistan,23
+VC,1
+Vaca Muerta,10
+Vale,1
+Vancouver,5
+Vanuatu,2
+Vatican,3
+Venezuela,931
+Venezuela - Pompeo,1
+Venezuela - Pompeo - Energy & Oil,1
+Venezuela-Guyana,1
+Venice,3
+Veracruz,3
+Verbund,2
+Veresen,1
+Verizon,2
+Vermont,7
+Versailles,1
+Victoria,8
+Vienna,42
+Vietnam,70
+Villeroy,1
+Vilnius,5
+Virgin Atlantic,1
+Virginia,17
+Vishakhapatnam,3
+Vitol,35
+Vizag,1
+Vladivostok,5
+VnExpressreportedon,1
+Volgograd,2
+Volnovakha,1
+Volubev,1
+Voronezh,1
+WA,2
+WAM,2
+Waha,4
+Waikato,1
+Wake,2
+Wales,7
+Wall St,1
+War,3
+War With Ukraine,1
+Warmer,1
+Warrensaidon,1
+Warsaw,5
+Washin,1
+Washington,228
+Washington D.C.,4
+Washington DC,1
+Watch Germany,1
+Waynesboro,1
+Wednesdayen,1
+Weizhou,1
+Wesseling,2
+West Africa,35
+West Africa - Energy,1
+West Africa Bloc,2
+West Africa's,1
+West Bank,2
+West Coast,4
+West Hackberry,1
+West Kazakhstan,1
+West London,2
+West Midlands,1
+West Qurna 1,1
+West Te,1
+West Texas,11
+West Virginia,11
+West Virginia s,2
+West of England,1
+Western Ukraine's,1
+Whitehaven,1
+Whitehaven Coal,2
+Whitehorse,1
+Whitewater,1
+Whiting,1
+Will County,1
+Williston,2
+Winnie,1
+Winter,1
+Wisconsin,13
+Wise County,1
+Wood Mackenzie,6
+Woods,1
+Woodside,12
+Wuhan,3
+Wyo,1
+Wyoming,28
+X. Cyprus,1
+Xclusiv,1
+Xi'an,1
+Xinhua,6
+Xinjiang,14
+Xinxing,1
+Xpeng,2
+Xthread,1
+Yaas,1
+Yacht,1
+Yanbu,2
+Yantai,1
+Yemen,128
+Yen,1
+Yerevan,2
+Yggdrasil,4
+Yokohama,1
+Yoon,1
+Yorkshire,4
+YouTube,1
+Yuan,4
+Yukos,2
+Yulong,1
+Zagreb,1
+Zama,8
+Zambia,14
+Zaporizhzhia,21
+Zelensky,1
+Zhejiang,4
+Zhengzhou,1
+Zhenhai,2
+Zhoushan,3
+Zhytomyr,3
+Zilkens,1
+Zimbabwe,29
+Zolfaghar,1
+Zoox,1
+Zueitina,1
+Zurich,1
+"a235,000",1
+aReutersinterview,1
+al-Hamra,1
+al-Sirrah,1
+andU.S.,1
+anew,11
+apologizedon,1
+aquarterly reportlast month,1
+around28,1
+astatementtoday,1
+at11.1 millionbpd,2
+atStatista Germany,1
+banksaidon,1
+billin,1
+boe,17
+by$0.40,1
+by$0.56 (,1
+byBusinessGreen,1
+couldsaveas,1
+covid-19,3
+deadlyRussian,1
+eagles,1
+emirates,1
+enjoyi,1
+ex-Soviet Union,1
+ex-Sudan,1
+expectedto,2
+fla,1
+foru,1
+here;having,1
+historyof,1
+iPhone City,1
+interestin Namibia s,1
+iran,1
+isfocusedon,1
+itsFacebook,1
+itsMereyfalling,1
+itsannual,1
+itsreport,2
+jump17,1
+la,2
+las llamaspic.twitter.com/thIOl8PLQo,1
+launchedon,2
+mn,2
+mo,1
+nationaddresstoday,1
+nearly600,1
+non-EU,2
+non-OECD,6
+non-OPEC,7
+non-Russia,1
+non-U.S.,1
+"of567,000",1
+officialto,1
+oilRussia,3
+oilin,5
+onmedia,1
+pricesjumpedas,1
+pro-Iran Houthi,1
+pro-Russia,1
+professi,1
+provideNew York State,1
+republics,1
+risenin,1
+russia,1
+s. Azerbaijan,1
+s. France,1
+some2.27,1
+st,1
+summit city,1
+supplyto,2
+surveyof,1
+technopark,1
+the Baltic States,1
+the Bolivarian Republic of Venezuela,1
+the City of Los Angeles,1
+the City of North Vancouver,1
+the Czech Republic,40
+the Czech Republic s,4
+the Democratic Republic of Congo,6
+the Democratic Republic of the,1
+the Democratic Republic of the Congo,3
+the District of Columbia,9
+the District of Columbia Circuit,1
+the District of Delaware,1
+the Donbas Region Matter,1
+the Eastern United States,2
+the Falkland Islands,1
+the Gaza Strip,13
+the Islamic Republic,53
+the Islamic Republic Iran,1
+the Islamic Republic of Iran,1
+the Islamic Republic's,3
+the Jerusalem Postreported,1
+the Jewish State,1
+the Kingdom ended,1
+the Kingdom of Bahrain,1
+the Kingdom of Saudi Arabia,6
+"the Kingdom, Trade Arabia",1
+the Korea Economic Dailyreports,1
+the Kurdistan Region,8
+the Kurdistan Region of Iraq,2
+the Marshall Islands,3
+the Motor City,1
+the Netherlands Slows,1
+the Niger Delta,6
+the Norwegian Shelf,1
+the People s Republic of China,4
+the Province of Sindh,1
+the Republic of Azerbaijan,1
+the Republic of Bashkiria,1
+the Republic of Congo,1
+the Republic of Iraq,1
+the Republic of Kazakhstan,1
+the Republic of Moldova,1
+the Republic of the Congo,1
+the Russian Black Sea,1
+the Russian Federation,11
+the Russian Railways,1
+the Slovak Republic,1
+the Soviet Union,6
+the State of Israel,3
+the State of Kuwait,1
+the Sudan Postreported,1
+the United Arab Emirates,34
+the United Arab Emirates (UAE,74
+the United Kingdom,24
+the United State,1
+the United States,1477
+the United States Gulf Coast,1
+the United States Maritime Administration,1
+the United States Office of Foreign Assets Control,3
+the United States Oil Fund,1
+the United States Oil Fund LP,1
+the United States Treasury,1
+the United States of America,2
+the United States',3
+the United States-Mexico-Canada Agreement,3
+the United Statesand,1
+the United Statesas,2
+the United Statesat,1
+the United Statesbecame,1
+the United Statesexported,1
+the United Statesfell,1
+the United Stateshas,2
+the United Statesin,2
+the United Statesissued,1
+the United Statesmore,1
+the United Statesreversingin,1
+the United Statesroseagain,1
+the United Statessanctionedlast month,1
+the United Statessignaledthat,1
+the United Statesswelled,1
+the United Statestook,9
+the United Stateswarnedthat,1
+the United Stateswere,1
+the United Stateswill,1
+the West Bank,2
+the West Census Region,1
+the west coast,1
+theEIA saidon,1
+theEU,1
+theHariga,1
+theU.S.,4
+theWar Zone,1
+theconflictbetween Armenia,1
+to$1.6,1
+toStatistics,1
+unh,1
+upby 22%compared,1
+warnedon,1
+west Kimberley,1
+west coast,1
+whereshe,1
+whosaidearlier,1
+wi,5
+withFT,1
+yuan,1
+"~$112,600",1
