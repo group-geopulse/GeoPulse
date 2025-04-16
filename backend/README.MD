@@ -32,12 +32,12 @@ It is recommended to use a virtual environment to isolate dependencies:
 Activate the virtual environment:
 - On Windows:
     ```bash
-    > python -m venv venv
+    > venv\Scripts\activate
     ```
 
 - On macOS/Linux: 
     ```bash
-    > python -m venv venv
+    > source venv/bin/activate
     ```
 
 ### **3. Install Dependencies**
@@ -63,6 +63,27 @@ Run the following to check PyTorch version:
 ```bash
 > python -c "import torch; print(torch.__version__)"
 ```
+
+### **4. Set up Environment Variables**
+
+Place the following in a file called .env in the backend folder:
+
+```bash
+# MongoDB connection string
+MONGO_URI=mongo-uri-goes-here-see-teams_
+
+# API key for external services
+API_KEY=api-key-goes-here-see-teams_
+
+# Search engine ID for Google Custom Search
+SEARCH_ENGINE_ID=search-engine-id-goes-here-see-teams_
+
+# API request limit
+API_REQUEST_LIMIT=100
+```
+
+- Replace the placeholders (_mongo-uri-goes-here-see-teams_, etc.) with the actual values provided on Teams.
+- Never commit the .env file to version control. Make sure your .gitignore file in the root of your local repository ignores this file.
 
 ## **Debugging**
 

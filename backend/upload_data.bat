@@ -6,8 +6,8 @@ REM Activate the virtual environment
 call venv\Scripts\activate.bat
 
 REM Run the Python scripts
-python upload_price.py >> upload_data.log 2>&1
-python upload_news.py >> upload_data.log 2>&1
+python upload_price_local.py >> upload_data.log 2>&1
+python upload_news_local.py >> upload_data.log 2>&1
 
 REM Deactivate the virtual environment
 deactivate

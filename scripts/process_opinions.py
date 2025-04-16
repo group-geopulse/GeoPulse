@@ -7,6 +7,14 @@ from mongodb_utils import get_existing_dates_from_mongodb
 import re
 import os
 from news_processing import get_next_available_date
+from dotenv import load_dotenv
+import os
+
+# Load .env file
+load_dotenv()
+
+# Get MongoDB connection URI from environment variable
+URI = os.getenv("URI")
 
 def extract_date_from_snippet(snippet):
     today = datetime.today()
@@ -58,7 +66,7 @@ if __name__ == "__main__":
     logging.basicConfig(filename='process_prod_prices.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
     # Fetch existing dates from the price database
-    existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices")
+    existing_dates = get_existing_dates_from_mongodb(db_name="ProdPricesDB", collection_name="Prices", uri=URI)
 
     if existing_dates is None:
         logging.error("Failed to fetch existing dates from MongoDB.")
