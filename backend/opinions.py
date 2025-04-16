@@ -236,20 +236,15 @@ def scrape_headlines():
             full_content, article_author = get_article_details(link)
             final_author = author if author != "Unknown Author" else article_author
             full_info = improved_summary(full_content)
-            entities = extract_entities(full_info, final_author)
+            # entities = extract_entities(full_info, final_author)
 
             headlines.append({
-                "title": title,
-                "link": link,
-                "date": date,
-                "description": description,
-                "author": final_author,
-                "full_info": full_info,
-                "locations": entities["Locations"],
-                "organizations": entities["Organizations"],
-                "people": entities["People"],
-                "topics": entities["Topics"],
-                "events": entities["Events"]
+                "Headline": title,
+                "Link": link,
+                "Date": date,
+                "Description": description,
+                "Author": final_author,
+                "Full_info": full_info
             })
 
         if not stop_scraping:
@@ -257,16 +252,3 @@ def scrape_headlines():
             time.sleep(2)
 
     return headlines
-
-# save to csv for last 24 hours
-filename = "new_oil_price_articles.csv"
-headlines = scrape_headlines()
-with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-    fieldnames = ["title", "link", "date", "description", "author", "full_info",
-                  "locations", "organizations", "people", "topics", "events"]
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for h in headlines:
-        writer.writerow(h)
-
-print(f"scraping completed! Data saved to {filename}")

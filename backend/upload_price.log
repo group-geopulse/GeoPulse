@@ -1,0 +1,6 @@
+2025-04-15 23:22:34,495 Starting upload_price.py script
+2025-04-15 23:22:35,220 Data fetched from Yahoo Finance
+2025-04-15 23:22:35,226 Data collected has been filtered and formatted.
+2025-04-15 23:22:36,656 Fetched recent records from MongoDB.
+2025-04-15 23:22:36,669 Daily and weekly percentage changes calculated.
+2025-04-15 23:22:37,761 Uploaded data: [{'_id': '2025-04-15', 'CL=F Open': 64.04000091552734, 'BZ=F Open': 61.540000915527344, 'CL=F Close': 64.79000091552734, 'BZ=F Close': 61.439998626708984, 'CL=F Daily % Change': 0.6055891000122271, 'BZ=F Daily % Change': 0.6553042352263283, 'CL=F Weekly % Change': -13.451776132408622, 'BZ=F Weekly % Change': -14.213911937274915}]

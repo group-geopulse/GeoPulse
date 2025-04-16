@@ -13,7 +13,7 @@ db = client["ProdPricesDB"]
 collection = db["Prices"] 
 
 # Load CSV data
-csv_file_path = "wti_brent_crude_oil_prices_1Jan2020_25March2025_with_delta.csv"  
+csv_file_path = "wti_brent_crude_oil_prices_1Jan2020_16April2025_with_delta.csv"  
 df = pd.read_csv(csv_file_path)
 
 # Convert DataFrame to dictionary

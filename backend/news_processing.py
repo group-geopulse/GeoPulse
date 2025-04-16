@@ -45,6 +45,30 @@ def fix_dates(articles, existing_dates):
     logging.info('Dates fixed and unnecessary columns removed.')
     return articles
 
+def fix_dates_opinions(articles, existing_dates):
+    """Fix dates in the articles DataFrame."""
+    # Step 1: Preserve the original 'Date' column as 'Original_Date'
+    articles['Original_Date'] = articles['Date']
+
+    # Step 2: Convert 'Date' to a standardized format (YYYY-MM-DD)
+    articles['Date'] = pd.to_datetime(articles['Date']).dt.strftime('%Y-%m-%d')
+
+    # Step 3: Calculate 'Updated_Date' based on the next available date
+    articles['Updated_Date'] = pd.to_datetime(articles['Date']).apply(lambda x: get_next_available_date(x, existing_dates))
+    logging.info('Updated_Date calculated based on existing dates.')
+
+    # Step 4: Drop rows where 'Updated_Date' is None (invalid or missing dates)
+    articles = articles.dropna(subset=['Updated_Date'])
+
+    # Step 5: Convert 'Updated_Date' back to string format
+    articles['Updated_Date'] = articles['Updated_Date'].dt.strftime('%Y-%m-%d')
+    
+    # Select the required columns and rename them
+    articles = articles[['Original_Date', 'Headline', 'Link', 'Description', 'Author', 'Full_info', 'Date', 'Updated_Date' ]]
+
+    logging.info('Dates fixed and unnecessary columns removed.')
+    return articles
+
 # Sentiment analysis functions
 # Load FinSentGPT model
 sentiment_pipeline = pipeline("text-classification", model="ProsusAI/finbert")
@@ -114,6 +138,14 @@ def process_articles(articles, existing_dates):
     articles = extract_entities_from_df(articles)
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
     logging.info('Articles processed: duplicates removed, dates fixed, sentiment analyzed.')
+    return articles
+
+def process_opinions(articles, existing_dates):
+    """Process articles DataFrame to fix dates, remove duplicates, filter by keywords, and analyze sentiment."""
+    articles = fix_dates_opinions(articles, existing_dates)
+    articles = extract_entities_from_df_opinions(articles)
+    articles = articles[['Original_Date', 'Headline', 'Link', 'Description', 'Author', 'Full_info', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Date', 'Updated_Date']]
+    logging.info('Opinions processed: duplicates removed, dates fixed, entities extracted.')
     return articles
 
 def extract_date_from_snippet(snippet):
@@ -242,3 +274,14 @@ def extract_entities_from_df(articles):
     logging.info('Entities extracted from snippets.')
     return articles
 
+def extract_entities_from_df_opinions(articles):
+    
+    articles["Locations"] = articles["Full_info"].apply(lambda x: extract_entities(x)["Locations"])
+    articles["Organizations"] = articles["Full_info"].apply(lambda x: extract_entities(x)["Organizations"])
+    articles["People"] = articles["Full_info"].apply(lambda x: extract_entities(x)["People"])
+    articles["Topics"] = articles["Full_info"].apply(lambda x: extract_entities(x)["Topics"])
+    articles["Events"] = articles["Full_info"].apply(lambda x: extract_entities(x)["Events"])
+    
+    articles = articles[['Original_Date', 'Headline', 'Link', 'Description', 'Author', 'Full_info', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Date', 'Updated_Date']]
+    logging.info('Entities extracted from full_info.')
+    return articles

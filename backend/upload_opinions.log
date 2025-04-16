@@ -1,0 +1,17 @@
+2025-04-16 16:02:22,932 Starting upload_opinions.py script
+2025-04-16 16:02:53,710 Error in upload_news.py: localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 67ffc67f90d971d45bb6fab3, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27017: [WinError 10061] No connection could be made because the target machine actively refused it (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-04-16 16:04:31,290 Starting upload_opinions.py script
+2025-04-16 16:04:32,183 Error in upload_news.py: name 'base_url' is not defined
+2025-04-16 16:05:26,257 Starting upload_opinions.py script
+2025-04-16 16:05:26,960 Error in upload_news.py: name 'requests' is not defined
+2025-04-16 16:06:26,000 Starting upload_opinions.py script
+2025-04-16 16:06:27,692 Error in upload_news.py: name 'parse_date' is not defined
+2025-04-16 16:07:36,824 Starting upload_opinions.py script
+2025-04-16 16:07:38,957 Error in upload_news.py: name 'sent_tokenize' is not defined
+2025-04-16 16:11:27,748 Starting upload_opinions.py script
+2025-04-16 16:11:34,183 Updated_Date calculated based on existing dates.
+2025-04-16 16:11:34,190 Dates fixed and unnecessary columns removed.
+2025-04-16 16:11:34,790 Entities extracted from full_info.
+2025-04-16 16:11:34,790 Opinions processed: duplicates removed, dates fixed, entities extracted.
+2025-04-16 16:11:34,790 Number of Opinions after processing today: 7
+2025-04-16 16:11:34,801 Successfully uploaded real-time news data to MongoDB.
