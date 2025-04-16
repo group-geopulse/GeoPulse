@@ -2,7 +2,7 @@ name: Production Upload Scripts on main branch
 
 on:
   schedule:
-    - cron: '0 19 * * *'  # Runs daily at 7:00 PM UTC (8:00 PM BST)
+    - cron: '23 19 * * *'  # Runs daily at 7:23 PM UTC (8:23 PM BST)
   workflow_dispatch:       # Allows manual triggering
 
 jobs:
