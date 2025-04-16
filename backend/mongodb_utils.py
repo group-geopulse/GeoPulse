@@ -2,15 +2,13 @@ import pandas as pd
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
+import logging
 
-# MongoDB connection details
-URI = "mongodb+srv://geopulse5530:x1GJ55GaO0p87U2I@geopulse.oniyq.mongodb.net/?retryWrites=true&w=majority&appName=GeoPulse"
-
-def get_mongo_client(uri=URI):
+def get_mongo_client(uri):
     """Create a MongoDB client connection."""
     return MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 
-def upload_to_mongodb(data, db_name, collection_name, uri=URI):
+def upload_to_mongodb(data, db_name, collection_name, uri):
     """Upload data to MongoDB."""
     client = get_mongo_client(uri)
     db = client[db_name]
@@ -24,7 +22,7 @@ def upload_to_mongodb(data, db_name, collection_name, uri=URI):
     finally:
         client.close()
         
-def get_existing_dates_from_mongodb(db_name, collection_name, uri=URI):
+def get_existing_dates_from_mongodb(db_name, collection_name, uri):
     """Fetch existing dates from the specified collection in MongoDB."""
     client = get_mongo_client(uri)
     db = client[db_name]
@@ -33,7 +31,7 @@ def get_existing_dates_from_mongodb(db_name, collection_name, uri=URI):
     client.close()
     return sorted(pd.to_datetime(dates))
 
-def get_recent_records(db_name, collection_name, limit=7, uri=URI):
+def get_recent_records(db_name, collection_name, uri, limit=7):
     """Fetch the most recent records from the specified collection in MongoDB."""
     client = get_mongo_client(uri)
     db = client[db_name]

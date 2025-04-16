@@ -4,6 +4,7 @@ import requests
 import re
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
+import logging
 
 def get_next_available_date(date, existing_dates):
     """Find the next available date in existing_dates."""
@@ -30,6 +31,7 @@ def fix_dates(articles, existing_dates):
 
     # Step 3: Calculate 'Updated_Date' based on the next available date
     articles['Updated_Date'] = pd.to_datetime(articles['Date']).apply(lambda x: get_next_available_date(x, existing_dates))
+    logging.info('Updated_Date calculated based on existing dates.')
 
     # Step 4: Drop rows where 'Updated_Date' is None (invalid or missing dates)
     articles = articles.dropna(subset=['Updated_Date'])
@@ -40,6 +42,7 @@ def fix_dates(articles, existing_dates):
     # Select the required columns and rename them
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Date', 'Updated_Date' ]]
 
+    logging.info('Dates fixed and unnecessary columns removed.')
     return articles
 
 # Sentiment analysis functions
@@ -101,6 +104,7 @@ def analyze_sentiment(articles):
         
         
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet',  'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
+    logging.info('Sentiment analysis completed.')
     return articles
 
 def process_articles(articles, existing_dates):
@@ -109,7 +113,7 @@ def process_articles(articles, existing_dates):
     articles = analyze_sentiment(articles)
     articles = extract_entities_from_df(articles)
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
-    articles.to_csv("real_time_news_FINAL.csv", index=False)
+    logging.info('Articles processed: duplicates removed, dates fixed, sentiment analyzed.')
     return articles
 
 def extract_date_from_snippet(snippet):
@@ -191,6 +195,7 @@ def fetch_real_time_news(API_KEY, SEARCH_ENGINE_ID, sources, keywords, API_REQUE
                 print(f"Error fetching results from {site}: {e}")
                 continue
             
+    logging.info(f"Fetched {len(data)} articles from Google News API.")        
     return data
 
 # entity extraction
@@ -206,16 +211,16 @@ TOPIC_KEYWORDS = ["sanctions", "pipeline", "inflation", "OPEC", "trade war", "em
     "trade tariffs", "tensions", "crude", "oil prices", "oil supply", "disruption", "brent", 
     "petroleum", "fuel", "energy", "climate", "global warming"]
 
-def extract_entities(headline):
+def extract_entities(snippet):
 
-    doc = nlp(headline)
+    doc = nlp(snippet)
 
     locations = [ent.text for ent in doc.ents if ent.label_ == "GPE"]
     organizations = [ent.text for ent in doc.ents if ent.label_ == "ORG"]
     people = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
     events = [ent.text for ent in doc.ents if ent.label_ == "EVENT"]
 
-    topics = [word for word in TOPIC_KEYWORDS if word.lower() in headline.lower()]
+    topics = [word for word in TOPIC_KEYWORDS if word.lower() in snippet.lower()]
 
     return {
         "Locations": locations,
@@ -227,12 +232,13 @@ def extract_entities(headline):
 
 def extract_entities_from_df(articles):
     
-    articles["Locations"] = articles["Headline"].apply(lambda x: extract_entities(x)["Locations"])
-    articles["Organizations"] = articles["Headline"].apply(lambda x: extract_entities(x)["Organizations"])
-    articles["People"] = articles["Headline"].apply(lambda x: extract_entities(x)["People"])
-    articles["Topics"] = articles["Headline"].apply(lambda x: extract_entities(x)["Topics"])
-    articles["Events"] = articles["Headline"].apply(lambda x: extract_entities(x)["Events"])
+    articles["Locations"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Locations"])
+    articles["Organizations"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Organizations"])
+    articles["People"] = articles["Snippet"].apply(lambda x: extract_entities(x)["People"])
+    articles["Topics"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Topics"])
+    articles["Events"] = articles["Snippet"].apply(lambda x: extract_entities(x)["Events"])
     
     articles = articles[['Original_Date', 'Source', 'Headline', 'Link', 'Snippet', 'Locations', 'Organizations', 'People', 'Topics', 'Events', 'Headline Sentiment', 'Sentiment Confidence', 'Article Sentiment', 'Date', 'Updated_Date']]
+    logging.info('Entities extracted from snippets.')
     return articles
 

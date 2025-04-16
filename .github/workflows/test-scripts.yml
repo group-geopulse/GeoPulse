@@ -1,0 +1,52 @@
+---
+    name: Test Upload Scripts on debug-automation branch
+    on:
+      workflow_dispatch: # Manual trigger only on debug automation
+        branches:
+          - debug-automation # Trigger on push to debug-automation branch
+    jobs:
+      test-scripts:
+        runs-on: ubuntu-latest
+        environment: testing
+        env:
+          URI: ${{ secrets.URI }}
+          API_KEY: ${{ secrets.API_KEY }}
+          SEARCH_ENGINE_ID: ${{ secrets.SEARCH_ENGINE_ID }}
+          API_REQUEST_LIMIT: ${{ vars.API_REQUEST_LIMIT }}
+        steps:
+          - name: Checkout Code
+            uses: actions/checkout@v3
+
+          - name: Set Up Python
+            uses: actions/setup-python@v4
+            with:
+              python-version: "3.11"
+              
+          - name: Verify Secrets and Variables
+            run: |
+              echo "Checking environment variables..."
+              echo "URI is set: ${{ secrets.URI != '' }}"
+              echo "API_KEY is set: ${{ secrets.API_KEY != '' }}"
+              echo "SEARCH_ENGINE_ID is set: ${{ secrets.SEARCH_ENGINE_ID != '' }}"
+              echo "API_REQUEST_LIMIT: $API_REQUEST_LIMIT"
+
+          - name: Install Dependencies
+            run: |
+              python -m pip install --upgrade pip
+              pip install -r backend/requirements.txt
+
+          - name: Upload Price
+            run: |
+              python backend/upload_price.py 
+
+          - name: Display Price Log
+            run: |
+              cat backend/upload_price.log
+
+          - name: Upload News
+            run: |
+              python backend/upload_news.py
+
+          - name: Display News Log
+            run: |
+              cat backend/upload_news.log
