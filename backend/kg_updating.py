@@ -22,7 +22,6 @@ def get_neo4j_driver(test=True):
     NEO4J_USER = "neo4j"
     return GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
 
-# logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPricesTEST"))
 def update_oilprice_nodes(database, collection, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
     mongo_client = get_mongo_client(URI)
@@ -72,8 +71,6 @@ def update_oilprice_nodes(database, collection, use_testKG=True):
 
     return f"Created {len(new_prices)} new OilPrice nodes & emptied '{collection}'"
 
-# entity_cols = {"Locations": "LocationsTEST", "Organizations": "OrganizationsTEST", "People": "PeopleTEST", "Topics": "TopicsTEST", "Events": "EventsTEST"}
-# logging.info(update_entity_db_and_nodes("RealTimeNews", "Entities", "StagingNewsTEST", entity_cols))
 def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entity_cols, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
     mongo_client = get_mongo_client(URI)
@@ -130,7 +127,6 @@ def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entit
 
     return f"Created {new_entities} new entity nodes; {total_entities} entities detected overall"
 
-# logging.info(update_news_nodes("RealTimeNews", "StagingNewsTEST"))
 def update_news_nodes(database, collection, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
     mongo_client = get_mongo_client(URI)
@@ -162,7 +158,7 @@ def update_news_nodes(database, collection, use_testKG=True):
             # Link to OilPrice (if exists)
             session.run(
                 """
-                MATCH (n:News {headline: $headline}), (o:OilPrice {date: $updated_date})
+                MATCH (n:News {headline: $headline, date: $updated_date}), (o:OilPrice {date: $updated_date})
                 MERGE (o)-[:HAS_NEWS]->(n)
                 """,
                 headline=news["Headline"], updated_date=news["Updated_Date"]
@@ -172,49 +168,135 @@ def update_news_nodes(database, collection, use_testKG=True):
             for loc in news["Locations"]:
                 session.run(
                     """
-                    MATCH (n:News {headline: $headline}), (l:Location {name: $loc})
+                    MATCH (n:News {headline: $headline, date: $updated_date}), (l:Location {name: $loc})
                     MERGE (n)-[:MENTIONS]->(l)
                     """,
-                    headline=news["Headline"], loc=loc
+                    headline=news["Headline"], updated_date=news["Updated_Date"], loc=loc
                 )
 
             for org in news["Organizations"]:
                 session.run(
                     """
-                    MATCH (n:News {headline: $headline}), (o:Organization {name: $org})
+                    MATCH (n:News {headline: $headline, date: $updated_date}), (o:Organization {name: $org})
                     MERGE (n)-[:MENTIONS]->(o)
                     """,
-                    headline=news["Headline"], org=org
+                    headline=news["Headline"], updated_date=news["Updated_Date"], org=org
                 )
 
             for topic in news["Topics"]:
                 session.run(
                     """
-                    MATCH (n:News {headline: $headline}), (t:Topic {name: $topic})
+                    MATCH (n:News {headline: $headline, date: $updated_date}), (t:Topic {name: $topic})
                     MERGE (n)-[:MENTIONS]->(t)
                     """,
-                    headline=news["Headline"], topic=topic
+                    headline=news["Headline"], updated_date=news["Updated_Date"], topic=topic
                 )
 
             for event in news["Events"]:
                 session.run(
                     """
-                    MATCH (n:News {headline: $headline}), (e:Event {name: $event})
+                    MATCH (n:News {headline: $headline, date: $updated_date}), (e:Event {name: $event})
                     MERGE (n)-[:MENTIONS]->(e)
                     """,
-                    headline=news["Headline"], event=event
+                    headline=news["Headline"], updated_date=news["Updated_Date"], event=event
                 )
 
             for person in news["People"]:
                 session.run(
                     """
-                    MATCH (n:News {headline: $headline}), (p:Person {name: $person})
+                    MATCH (n:News {headline: $headline, date: $updated_date}), (p:Person {name: $person})
                     MERGE (n)-[:MENTIONS]->(p)
                     """,
-                    headline=news["Headline"], person=person
+                    headline=news["Headline"], updated_date=news["Updated_Date"], person=person
                 )
 
         # Remove records from collection
         news_db[collection].delete_many({})
     
     return f"Created {unique_news} new News nodes (processed {len(new_news)}) & emptied '{collection}'"
+
+def update_article_nodes(database, collection, use_testKG=True):
+    neo4j_driver = get_neo4j_driver(use_testKG)
+    mongo_client = get_mongo_client()
+    opinions_db = mongo_client[database]
+
+    # Find new news articles
+    new_opinions = list(opinions_db[collection].find())
+
+    if not new_opinions:
+        return f"No new Opinion Article nodes were created (collection '{collection}' was empty)"
+    
+    unique_articles = pd.DataFrame(new_opinions).groupby(['Headline', 'Updated_Date']).ngroups
+
+    with neo4j_driver.session() as session:
+        for article in new_opinions:
+            # Insert Article Node
+            session.run(
+                """
+                MERGE (a:Article {headline: $headline, date: $updated_date})
+                SET a.link = $link, a.info = $full_info
+                """,
+                headline=article["Headline"], updated_date=article["Updated_Date"],
+                link=article["Link"], full_info=article["Full_info"]
+            )
+
+            # Link to OilPrice (if exists)
+            session.run(
+                """
+                MATCH (a:Article {headline: $headline, date: $updated_date}), (o:OilPrice {date: $updated_date})
+                MERGE (o)-[:HAS_ARTICLE]->(a)
+                """,
+                headline=article["Headline"], updated_date=article["Updated_Date"]
+            )
+
+            # Link Article to Entities
+            for loc in article["Locations"]:
+                session.run(
+                    """
+                    MATCH (a:Article {headline: $headline, date: $updated_date}), (l:Location {name: $loc})
+                    MERGE (a)-[:MENTIONS]->(l)
+                    """,
+                    headline=article["Headline"], updated_date=article["Updated_Date"], loc=loc
+                )
+
+            for org in article["Organizations"]:
+                session.run(
+                    """
+                    MATCH (a:Article {headline: $headline, date: $updated_date}), (o:Organization {name: $org})
+                    MERGE (a)-[:MENTIONS]->(o)
+                    """,
+                    headline=article["Headline"], updated_date=article["Updated_Date"], org=org
+                )
+
+            for topic in article["Topics"]:
+                session.run(
+                    """
+                    MATCH (a:Article {headline: $headline, date: $updated_date}), (t:Topic {name: $topic})
+                    MERGE (a)-[:MENTIONS]->(t)
+                    """,
+                    headline=article["Headline"], updated_date=article["Updated_Date"], topic=topic
+                )
+
+            for event in article["Events"]:
+                session.run(
+                    """
+                    MATCH (a:Article {headline: $headline, date: $updated_date}), (e:Event {name: $event})
+                    MERGE (a)-[:MENTIONS]->(e)
+                    """,
+                    headline=article["Headline"], updated_date=article["Updated_Date"], event=event
+                )
+
+            for person in article["People"]:
+                session.run(
+                    """
+                    MATCH (a:Article {headline: $headline, date: $updated_date}), (p:Person {name: $person})
+                    MERGE (a)-[:MENTIONS]->(p)
+                    """,
+                    headline=article["Headline"], updated_date=article["Updated_Date"], person=person
+                )
+
+        # Remove records from collection
+        opinions_db[collection].delete_many({})
+    
+    return f"Created {unique_articles} new Opinion Article nodes (processed {len(new_opinions)}) & emptied '{collection}'"
+
