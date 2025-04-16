@@ -50,3 +50,11 @@
           - name: Display News Log
             run: |
               cat backend/upload_news.log
+
+          - name: Upload Opinions
+            run: |
+              python backend/upload_opinions.py
+
+          - name: Display Opinion Log
+            run: |
+              cat backend/upload_opinions.log
