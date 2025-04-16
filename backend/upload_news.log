@@ -1,8 +1,0 @@
-2025-04-15 23:23:11,322 Starting upload_news.py script
-2025-04-15 23:23:20,484 Fetched 150 articles from Google News API.
-2025-04-15 23:23:20,721 Updated_Date calculated based on existing dates.
-2025-04-15 23:23:20,746 Dates fixed and unnecessary columns removed.
-2025-04-15 23:24:20,018 Sentiment analysis completed.
-2025-04-15 23:24:48,710 Entities extracted from snippets.
-2025-04-15 23:24:48,713 Articles processed: duplicates removed, dates fixed, sentiment analyzed.
-2025-04-15 23:24:48,714 Number of articles after processing today: 150
