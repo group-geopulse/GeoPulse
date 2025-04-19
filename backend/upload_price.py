@@ -23,7 +23,7 @@ try:
     end_date = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
 
     # Fetch historical data
-    data = yf.download(symbols, start=start_date, end=end_date)
+    data = yf.download(symbols, start=start_date, end=end_date, interval="1d")
     if data.empty:
         logging.info('No data fetched from Yahoo Finance. Market may be closed.')
         print(f"\nNo data fetched from Yahoo Finance. Market may be closed.")
