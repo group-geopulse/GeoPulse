@@ -84,8 +84,8 @@ try:
     data_dict = filtered_data.to_dict(orient="records")
 
     # Upload data to MongoDB
-    #upload_to_mongodb(data=data_dict, db_name="ProdPricesDB", collection_name="Prices", uri=URI)
-    #upload_to_mongodb(data=data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
+    upload_to_mongodb(data=data_dict, db_name="ProdPricesDB", collection_name="Prices", uri=URI)
+    upload_to_mongodb(data=data_dict, db_name="ProdPricesDB", collection_name="StagingPrices", uri=URI)
 
     print(f'Uploaded data: {data_dict}')
     print(f"Price data successfully uploaded to MongoDB at {datetime.now()}")
@@ -96,7 +96,7 @@ try:
     # logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPricesTEST", use_testKG=True))
     
     # Production:
-    #logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPrices", use_testKG=False))    
+    logging.info(update_oilprice_nodes("ProdPricesDB", "StagingPrices", use_testKG=False))    
 
 except Exception as e:
     logging.error(f'Error in upload_price.py: {e}')
