@@ -27,12 +27,13 @@ try:
     print(f"Existing dates from MongoDB")    
 
     real_time_opinions = scrape_headlines()
-    real_time_opinions = pd.DataFrame(real_time_news)
+    real_time_opinions = pd.DataFrame(real_time_opinions)
     print(f"Opinions fetched.")
     
     processed_real_time_opinions = process_opinions(real_time_opinions, existing_dates)
     logging.info(f"Number of Opinions after processing today: {len(processed_real_time_opinions)}")
     print(f"Opinions processed.")
+    print(processed_real_time_opinions.head())
     
     # Save to file for testing
     processed_real_time_opinions.to_csv("processed_real_time_opinions.csv", index=False)
