@@ -6,18 +6,35 @@ const driver = neo4j.driver(
   neo4j.auth.basic("neo4j", "lCbxlWMtzgFJJdPJiSrDGCRleJ9vKX67ry0Ro4sp_Cw")
 );
 
-export async function GET() {
+export async function GET(req: Request) {
   const session = driver.session();
 
   try {
-    const query = `
+    const url = new URL(req.url);
+    const startDate = url.searchParams.get("startDate");
+    const endDate = url.searchParams.get("endDate");
+
+    let query = `
       MATCH (n)-[r]->(m)
+      WHERE
+        (n.date IS NULL OR (
+          ${startDate ? "date(n.date) >= date($startDate)" : "true"} AND
+          ${endDate ? "date(n.date) <= date($endDate)" : "true"}
+        )) AND
+        (m.date IS NULL OR (
+          ${startDate ? "date(m.date) >= date($startDate)" : "true"} AND
+          ${endDate ? "date(m.date) <= date($endDate)" : "true"}
+        ))
       RETURN n, r, m LIMIT 500
     `;
-    const result = await session.run(query);
+
+    const result = await session.run(query, {
+      startDate,
+      endDate,
+    });
 
     const nodesMap = new Map();
-    const links: any[] = [];
+    const relations: any[] = [];
 
     result.records.forEach((record) => {
       const startNode = record.get("n");
@@ -34,7 +51,7 @@ export async function GET() {
         }
       });
 
-      links.push({
+      relations.push({
         source: startNode.identity.toString(),
         target: endNode.identity.toString(),
         label: relationship.type,
@@ -43,7 +60,7 @@ export async function GET() {
 
     return NextResponse.json({
       nodes: Array.from(nodesMap.values()),
-      links,
+      relations,
     });
   } catch (error) {
     console.error("Neo4j graph fetch error:", error);
