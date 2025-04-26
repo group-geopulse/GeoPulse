@@ -129,7 +129,7 @@ def summarize_results_with_llm(user_question, cypher_query, query_results):
  
     def serialize(obj):
         return obj.isoformat() if hasattr(obj, 'isoformat') else str(obj)
-    results_json = json.dumps(query_results, indent=2, default=serialize)
+    results_json = json.dumps(query_results, indent=2, default=serialize)>>>>>>> main
     prompt = f"""
 You are GeoPulse, an expert AI financial analyst.
  

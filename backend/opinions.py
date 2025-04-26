@@ -14,6 +14,9 @@ from collections import Counter
 from mongodb_utils import upload_to_mongodb
 
 nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
 
 try:
     nlp = spacy.load("en_core_web_lg")
@@ -81,78 +84,6 @@ def parse_date(date_str):
     except ValueError as e:
         print(f"Failed to parse date '{date_str}': {e}")
         return None
-
-def extract_entities(text, author):
-    # extract named entities and topics from text
-    if not text or not isinstance(text, str):
-        return {"Locations": [], "Organizations": [], "People": [], "Topics": [], "Events": []}
-
-    ner_results = ner_pipeline(text)
-    doc = nlp(text)
-    text_lower = text.lower()
-
-    locations = set()
-    organizations = set()
-    people = set()
-    topics = set()
-    events = set()
-
-    for entity in ner_results:
-        if entity['entity_group'] == "LOC":
-            locations.add(entity['word'])
-    for ent in doc.ents:
-        if ent.label_ == "GPE":
-            locations.add(ent.text)
-
-    for entity in ner_results:
-        if entity['entity_group'] == "ORG":
-            organizations.add(entity['word'])
-    for ent in doc.ents:
-        if ent.label_ == "ORG":
-            organizations.add(ent.text)
-
-    for entity in ner_results:
-        if entity['entity_group'] == "PER" and entity['word'].lower() != author.lower():
-            people.add(entity['word'])
-    for ent in doc.ents:
-        if ent.label_ == "PERSON" and ent.text.lower() != author.lower():
-            people.add(ent.text)
-    if not people:
-        for token in doc:
-            if token.pos_ == "NOUN" and token.lower_ in ["minister", "official", "leader", "executive"]:
-                people.add(token.text)
-
-    for keyword in TOPIC_KEYWORDS:
-        pattern = rf'\b{re.escape(keyword)}(s)?\b'
-        if re.search(pattern, text_lower):
-            topics.add(keyword)
-    for token in doc:
-        if (token.lower_ in geo_oil_keywords or token.head.lower_ in geo_oil_keywords) and token.pos_ == "NOUN":
-            topics.add(token.text.lower())
-    if not topics:
-        noun_counts = Counter([token.text.lower() for token in doc if token.pos_ == "NOUN"])
-        topics.update([noun for noun, count in noun_counts.most_common(3)])
-
-    event_keywords = ["war", "spill", "shutdown", "crisis", "conflict", "disruption", "strike",
-                      "attack", "protest", "deal", "summit", "shortage"]
-    for ent in doc.ents:
-        if ent.label_ in ["EVENT", "DATE"] or any(kw in ent.text.lower() for kw in event_keywords):
-            events.add(ent.text)
-    for chunk in doc.noun_chunks:
-        if any(kw in chunk.text.lower() for kw in event_keywords):
-            events.add(chunk.text)
-    if not events:
-        for token in doc:
-            if token.pos_ == "VERB" and token.dep_ in ["ROOT", "conj"] and any(kw in token.subtree for kw in doc if kw.lower_ in geo_oil_keywords):
-                events.add(" ".join([t.text for t in token.subtree if t.pos_ in ["NOUN", "VERB"]]))
-
-    return {
-        "Locations": list(locations),
-        "Organizations": list(organizations),
-        "People": list(people),
-        "Topics": list(topics),
-        "Events": list(events)
-    }
 
 def get_article_details(url):
     # fetch and parse article content and author from url
