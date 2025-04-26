@@ -217,7 +217,7 @@ def update_news_nodes(database, collection, use_testKG=True):
 
 def update_article_nodes(database, collection, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
-    mongo_client = get_mongo_client()
+    mongo_client = get_mongo_client(URI)
     opinions_db = mongo_client[database]
 
     # Find new news articles
