@@ -129,7 +129,7 @@ def summarize_results_with_llm(user_question, cypher_query, query_results):
  
     def serialize(obj):
         return obj.isoformat() if hasattr(obj, 'isoformat') else str(obj)
-    results_json = json.dumps(query_results[:15], indent=2, default=serialize)
+    results_json = json.dumps(query_results, indent=2, default=serialize)>>>>>>> main
     prompt = f"""
 You are GeoPulse, an expert AI financial analyst.
  
@@ -139,13 +139,13 @@ Data Sample (JSON):
 {results_json}
  
 Instructions:
-- Only use the data sample provided above
+- Only use the JSON data sample provided above
 - Provide a detailed and structured analysis of how the event(s) affected global oil prices.
 - Identify specific dates and describe what happened to oil prices before and after those events.
 - Use numbers in your summary (price surges, peaks, drops, exact dates).
 - Mention major contributing factors (e.g. sanctions, wars, supply cuts, production boosts).
 - Structure your response with a timeline, a cause-effect summary, and supporting news headlines.
- 
+- DO NOT INVENT OR ALTER ANY HEADLINES
 Format:
 Summary:
 [summary - including timeline, peak/trough prices, and attribution to causes like war, sanctions, production changes.]
@@ -154,7 +154,7 @@ Relevant Headlines:
 - Headline 1 (Date) — Price movement and interpretation
 - Headline 2 (Date) — Price movement and interpretation
 """
-    response = call_together_ai(prompt, key=TOGETHER_API_KEY_2, max_tokens=1024, temperature=0.3)
+    response = call_together_ai(prompt, key=TOGETHER_API_KEY_2, max_tokens=4096, temperature=0)
     if not response:
         return "⚠️ LLM failed to generate summary.", []
  
@@ -187,7 +187,7 @@ Validation Instructions:
 
 Respond with only VALID or INVALID. No other text.
 """
-    result = call_together_ai(prompt, key=TOGETHER_API_KEY_3, max_tokens=10, temperature=0)
+    result = call_together_ai(prompt, key=TOGETHER_API_KEY_3, max_tokens=1000, temperature=0)
     if result:
         print(result)
         return result.strip().upper() == "VALID"
