@@ -8,20 +8,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
  
-
-try:
-    nltk.data.find("tokenizers/punkt_tab/english")
-except LookupError:
-    nltk.download("punkt", quiet=True)
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt", quiet=True)
-try:
-    nltk.data.find("corpora/stopwords")
-except LookupError:
-    nltk.download("stopwords", quiet=True)
- 
 # --- Configuration ---
 TOGETHER_API_KEY = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
 TOGETHER_API_URL = "https://api.together.xyz/v1/chat/completions"
@@ -34,15 +20,11 @@ NEO4J_PASSWORD = "lCbxlWMtzgFJJdPJiSrDGCRleJ9vKX67ry0Ro4sp_Cw"
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
  
 def extract_keywords(text):
-    try:
-        words = word_tokenize(text.lower())
-        stop_words = set(stopwords.words('english'))
-        keywords = [w for w in words if w.isalnum() and w not in stop_words]
-        return keywords
-    except Exception as e:
-        logging.warning(f"⚠️ Fallback keyword extraction used: {e}")
-        # Fallback if NLTK fails
-        return [w for w in re.findall(r'\\b\\w+\\b', text.lower()) if len(w) > 2]
+    text = text.replace('-', ' ')  # Replace hyphens with spaces
+    words = word_tokenize(text.lower())
+    stop_words = set(stopwords.words('english'))
+    keywords = [w for w in words if w.isalnum() and w not in stop_words]
+    return keywords
  
 def call_together_ai(prompt, max_tokens=1024, temperature=0.2):
     headers = {
@@ -152,13 +134,11 @@ You are GeoPulse, an expert AI financial analyst.
  
 User Question: "{user_question}"
  
-Cypher Query Used:
-{cypher_query}
- 
 Data Sample (JSON):
 {results_json}
  
 Instructions:
+- Only use the data sample provided above
 - Provide a detailed and structured analysis of how the event(s) affected global oil prices.
 - Identify specific dates and describe what happened to oil prices before and after those events.
 - Use numbers in your summary (price surges, peaks, drops, exact dates).
@@ -191,8 +171,11 @@ Relevant Headlines:
 def process_user_query(user_question):
     logging.info(f"Processing: {user_question}")
     keywords = extract_keywords(user_question)
+    print("\n🔍 Extracted Keywords:", keywords)
     cypher = generate_cypher_query(user_question, keywords)
-    if not cypher:
+    if cypher:
+        print("\n🧩 Generated Cypher Query:\n", cypher)
+    else:
         return "⚠️ Cypher generation failed.", []
     results = execute_neo4j_query(cypher)
     if not results:
