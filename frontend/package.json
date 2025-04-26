@@ -27,7 +27,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-force-graph": "^1.47.6",
-    "react-force-graph-2d": "^1.27.1"
+    "react-force-graph-2d": "^1.27.1",
+    "react-force-graph-3d": "^1.26.1",
+    "three": "^0.176.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

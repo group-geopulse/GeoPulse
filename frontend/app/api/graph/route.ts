@@ -25,7 +25,7 @@ export async function GET(req: Request) {
           ${startDate ? "date(m.date) >= date($startDate)" : "true"} AND
           ${endDate ? "date(m.date) <= date($endDate)" : "true"}
         ))
-      RETURN n, r, m LIMIT 500
+      RETURN n, r, m 
     `;
 
     const result = await session.run(query, {
