@@ -9,39 +9,29 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import sys
  
-try:
-    nltk.data.find("tokenizers/punkt_tab/english")
-except LookupError:
-    nltk.download("punkt", quiet=True)
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt", quiet=True)
-try:
-    nltk.data.find("corpora/stopwords")
-except LookupError:
-    nltk.download("stopwords", quiet=True)
 # --- Configuration ---
-TOGETHER_API_KEY = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
+TOGETHER_API_KEY_1 = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
+TOGETHER_API_KEY_2 = "73797637da89e7d501dbd1c5f9ba5d0eae46673ad78ba304df02fc71b5928d4f"
+TOGETHER_API_KEY_3 = "4d2eb041798e64e95537e7b4be526f6d5ffd5c4304ac39c1355b6cb1d60da65a"
 TOGETHER_API_URL = "https://api.together.xyz/v1/chat/completions"
 LLM_MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+ 
 NEO4J_URI = "neo4j+s://408cc9a3.databases.neo4j.io"
 NEO4J_USER = "neo4j"
 NEO4J_PASSWORD = "lCbxlWMtzgFJJdPJiSrDGCRleJ9vKX67ry0Ro4sp_Cw"
+ 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+ 
 def extract_keywords(text):
-    try:
-        words = word_tokenize(text.lower())
-        stop_words = set(stopwords.words('english'))
-        keywords = [w for w in words if w.isalnum() and w not in stop_words]
-        return keywords
-    except Exception as e:
-        logging.warning(f"⚠️ Fallback keyword extraction used: {e}")
-        # Fallback if NLTK fails
-        return [w for w in re.findall(r'\\b\\w+\\b', text.lower()) if len(w) > 2]
-def call_together_ai(prompt, max_tokens=1024, temperature=0.2):
+    text = text.replace('-', ' ')  # Replace hyphens with spaces
+    words = word_tokenize(text.lower())
+    stop_words = set(stopwords.words('english'))
+    keywords = [w for w in words if w.isalnum() and w not in stop_words]
+    return keywords
+ 
+def call_together_ai(prompt, key, max_tokens=1024, temperature=0):
     headers = {
-        "Authorization": f"Bearer {TOGETHER_API_KEY}",
+        "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
     }
     payload = {
@@ -62,6 +52,7 @@ def call_together_ai(prompt, max_tokens=1024, temperature=0.2):
     except Exception as e:
         logging.error(f"Error calling Together AI API: {e}")
         return None
+ 
 SCHEMA_GUIDANCE = """
 Graph Schema:
 - (:News)-[:MENTIONS]->(:Organization|:Event|:Location|:Person|:Topic)
@@ -70,6 +61,7 @@ Graph Schema:
 - (:Article {date})
 - (:OilPrice {date, CL_F_Close, BZ_F_Close, CL_F_Daily_Change, BZ_F_Daily_Change})
 - (:OilPrice)-[:NEXT_DAY]->(:OilPrice)
+ 
 Cypher Query Template for GeoPulse:
 MATCH (n)-[:MENTIONS]->(e)
 WHERE (n:News OR n:Article) AND (e:Organization OR e:Event OR e:Location OR e:Person OR e:Topic) AND (toLower(e.name) CONTAINS toLower('<keyword>'))
@@ -78,13 +70,16 @@ MATCH (p:OilPrice) WHERE n.date = p.date
 OPTIONAL MATCH (p)-[:NEXT_DAY]->(p2:OilPrice)
 RETURN n.headline, n.date, p.CL_F_Close, p.BZ_F_Close, p.CL_F_Daily_Change, p.BZ_F_Daily_Change,
        p2.CL_F_Close AS next_day_CL_F_Close, p2.BZ_F_Close AS next_day_BZ_F_Close
-ORDER BY n.date DESC LIMIT 20
+ORDER BY n.date DESC LIMIT 50
 """
+ 
 def generate_cypher_query(user_question, keywords):
     keyword_list = ', '.join([f'"{k}"' for k in keywords])
     prompt = f"""
 You are a Neo4j Cypher expert. Based ONLY on the graph schema and the user question, generate an optimized query.
+ 
 {SCHEMA_GUIDANCE}
+ 
 Instructions:
 - Filter news and entities using any of these keywords: [{keyword_list}]
 - STRICTLY use: MATCH (n)-[:MENTIONS]->(e)
@@ -93,18 +88,21 @@ Instructions:
 - Include next-day oil prices (OPTIONAL MATCH)
 - Use correct labels: News, Organization, Event, Location, Person, Topic, OilPrice, Article
 - DO NOT use invalid labels like Entity or Keyword
+ 
 User Question:
 \"\"\"{user_question}\"\"\"
-
+ 
+ 
 Cypher Query:
 """
-    cypher = call_together_ai(prompt)
+    cypher = call_together_ai(prompt, key=TOGETHER_API_KEY_1)
     if cypher:
         cypher = re.sub(r"^```cypher|```$", "", cypher).strip()
         if cypher.upper().startswith(("MATCH", "OPTIONAL MATCH")):
             logging.info(f"Generated Cypher: {cypher}")
             return cypher
     return None
+ 
 def execute_neo4j_query(cypher_query):
     if not cypher_query:
         return []
@@ -125,35 +123,42 @@ def execute_neo4j_query(cypher_query):
         return []
     finally:
         driver.close()
+ 
 def summarize_results_with_llm(user_question, cypher_query, query_results):
     if not query_results:
         return "⚠️ No data returned from the graph.", []
+ 
     def serialize(obj):
         return obj.isoformat() if hasattr(obj, 'isoformat') else str(obj)
-    results_json = json.dumps(query_results[:15], indent=2, default=serialize)
+    results_json = json.dumps(query_results, indent=2, default=serialize)
     prompt = f"""
 You are GeoPulse, an expert AI financial analyst.
+ 
 User Question: "{user_question}"
-Cypher Query Used:
-{cypher_query}
+ 
 Data Sample (JSON):
 {results_json}
+ 
 Instructions:
+- Only use the JSON data sample provided above
 - Provide a detailed and structured analysis of how the event(s) affected global oil prices.
 - Identify specific dates and describe what happened to oil prices before and after those events.
 - Use numbers in your summary (price surges, peaks, drops, exact dates).
 - Mention major contributing factors (e.g. sanctions, wars, supply cuts, production boosts).
 - Structure your response with a timeline, a cause-effect summary, and supporting news headlines.
+- DO NOT INVENT OR ALTER ANY HEADLINES
 Format:
 Summary:
 [summary - including timeline, peak/trough prices, and attribution to causes like war, sanctions, production changes.]
+ 
 Relevant Headlines:
 - Headline 1 (Date) — Price movement and interpretation
 - Headline 2 (Date) — Price movement and interpretation
 """
-    response = call_together_ai(prompt, max_tokens=1024, temperature=0.3)
+    response = call_together_ai(prompt, key=TOGETHER_API_KEY_2, max_tokens=4096, temperature=0.7)
     if not response:
         return "⚠️ LLM failed to generate summary.", []
+ 
     summary = "Summary could not be parsed."
     headlines = []
     try:
@@ -164,11 +169,43 @@ Relevant Headlines:
     except Exception as e:
         logging.warning(f"Failed to parse LLM response: {e}")
     return summary, headlines
+ 
+def validate_llm_response(user_question, data_json, llm_summary):
+    prompt = f"""
+You are a validation agent. Your job is to critically check if the AI's summary meets strict criteria.
+ 
+User Question:
+\"\"\"{user_question}\"\"\"
+ 
+LLM Summary:
+\"\"\"{llm_summary}\"\"\"
+ 
+Validation Instructions:
+- Does the summary answer the user's question?
+- Does it avoid adding new facts not found in the data?
+- If YES to all, respond with exactly: VALID
+- If NO to any, respond with exactly: INVALID
+ 
+Respond with only VALID or INVALID. No other text.
+"""
+    result = call_together_ai(prompt, key=TOGETHER_API_KEY_3, max_tokens=4096, temperature=0)
+    if result:
+        print(result, file=sys.stderr)
+        return result.strip().upper() == "VALID"
+ 
+    else:
+        print("-----------------------No validaion response-------------------------", file=sys.stderr)
+    return False
+ 
+ 
 def process_user_query(user_question):
     logging.info(f"Processing: {user_question}")
     keywords = extract_keywords(user_question)
+    print("\n🔍 Extracted Keywords:", keywords, file=sys.stderr)
     cypher = generate_cypher_query(user_question, keywords)
-    if not cypher:
+    if cypher:
+        print("\n🧩 Generated Cypher Query:\n", cypher, file=sys.stderr)
+    else:
         return "⚠️ Cypher generation failed.", []
     results = execute_neo4j_query(cypher)
     if not results:
@@ -178,19 +215,36 @@ def process_user_query(user_question):
         "- 'How did the Russia-Ukraine war affect oil prices?' \n" +
         "- 'What was the effect of G7 summits on oil?'"), []
     summary, headlines = summarize_results_with_llm(user_question, cypher, results)
+    # Validate the summary
+    data_json = json.dumps(results[:15], indent=2)
+    is_valid = validate_llm_response(user_question, data_json, summary)
+    if not is_valid:
+        return ("It seems your question is not directly related to the contents of this knowledge graph...\n" +
+        " This graph focuses on oil prices and their relation to geopolitical events.\n " +
+        "Try asking about: \n" +
+        "- 'How did the Russia-Ukraine war affect oil prices?' \n" +
+        "- 'What was the effect of G7 summits on oil?'"), []
+    
     return summary, headlines
  
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print(json.dumps({"summary": "⚠️ No question provided.", "headlines": []}))
-        sys.exit(1)
+    # --- API mode: if a question is passed as first arg, do one JSON response and exit ---
+    if len(sys.argv) > 1:
+        question = sys.argv[1]
+        summary, headlines = process_user_query(question)
+        # print exactly one JSON object for the API to parse:
+        print(json.dumps({"summary": summary, "headlines": headlines}))
+        sys.exit(0)
  
-    user_input = sys.argv[1]
-    summary, headlines = process_user_query(user_input)
- 
-    output = {
-        "summary": summary,
-        "headlines": headlines
-    }
- 
-    print(json.dumps(output))
+    while True:
+        user_input = input("\n🗣️ Ask a question (or type 'exit'): ")
+        if user_input.lower() in ("exit", "quit"):
+            break
+        summary, headlines = process_user_query(user_input)
+        print("\n📝 Summary:\n", summary)
+        if headlines:
+            print("\n📰 Relevant Headlines:")
+            for h in headlines:
+                print(f"- {h}")
+        else:
+            print("\n📰 Relevant Headlines: None listed.")

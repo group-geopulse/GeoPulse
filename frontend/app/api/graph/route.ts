@@ -13,25 +13,53 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     const startDate = url.searchParams.get("startDate");
     const endDate = url.searchParams.get("endDate");
+    const keywords = url.searchParams.get("keywords"); // new
 
-    let query = `
-      MATCH (n)-[r]->(m)
-      WHERE
-        (n.date IS NULL OR (
-          ${startDate ? "date(n.date) >= date($startDate)" : "true"} AND
-          ${endDate ? "date(n.date) <= date($endDate)" : "true"}
-        )) AND
-        (m.date IS NULL OR (
-          ${startDate ? "date(m.date) >= date($startDate)" : "true"} AND
-          ${endDate ? "date(m.date) <= date($endDate)" : "true"}
-        ))
-      RETURN n, r, m 
-    `;
+    const keywordList = keywords
+      ? keywords.split(",").map((k) => k.trim()).filter((k) => k.length > 0)
+      : [];
 
-    const result = await session.run(query, {
-      startDate,
-      endDate,
-    });
+    let query = "";
+    let params: any = { startDate, endDate };
+
+    if (!startDate && !endDate && keywordList.length === 0) {
+      // No filters - fetch latest 500 nodes
+      query = `
+        MATCH (n)-[r]->(m)
+        RETURN n, r, m
+        LIMIT 500
+      `;
+    } else {
+      query = `
+        MATCH (n)-[r]->(m)
+        WHERE
+          (${startDate && endDate
+            ? `(n.date IS NULL OR (date(n.date) >= date($startDate) AND date(n.date) <= date($endDate))) 
+              AND (m.date IS NULL OR (date(m.date) >= date($startDate) AND date(m.date) <= date($endDate)))`
+            : "true"
+          })
+          AND
+          (${keywordList.length > 0
+            ? keywordList.map((_, idx) => `
+                (
+                  toLower(n.name) CONTAINS $keyword${idx} OR
+                  toLower(m.name) CONTAINS $keyword${idx} OR
+                  toLower(n.headline) CONTAINS $keyword${idx} OR
+                  toLower(m.headline) CONTAINS $keyword${idx}
+                )
+              `).join(" OR ")
+            : "true"
+          })
+        RETURN n, r, m
+        LIMIT 500
+      `;
+
+      keywordList.forEach((kw, idx) => {
+        params[`keyword${idx}`] = kw.toLowerCase();
+      });
+    }
+
+    const result = await session.run(query, params);
 
     const nodesMap = new Map();
     const relations: any[] = [];
