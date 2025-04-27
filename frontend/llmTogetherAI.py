@@ -13,14 +13,20 @@ import sys
 TOGETHER_API_KEY_1 = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
 TOGETHER_API_KEY_2 = "73797637da89e7d501dbd1c5f9ba5d0eae46673ad78ba304df02fc71b5928d4f"
 TOGETHER_API_KEY_3 = "4d2eb041798e64e95537e7b4be526f6d5ffd5c4304ac39c1355b6cb1d60da65a"
+TOGETHER_API_KEY_1 = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
+TOGETHER_API_KEY_2 = "73797637da89e7d501dbd1c5f9ba5d0eae46673ad78ba304df02fc71b5928d4f"
+TOGETHER_API_KEY_3 = "4d2eb041798e64e95537e7b4be526f6d5ffd5c4304ac39c1355b6cb1d60da65a"
 TOGETHER_API_URL = "https://api.together.xyz/v1/chat/completions"
 LLM_MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+ 
  
 NEO4J_URI = "neo4j+s://408cc9a3.databases.neo4j.io"
 NEO4J_USER = "neo4j"
 NEO4J_PASSWORD = "lCbxlWMtzgFJJdPJiSrDGCRleJ9vKX67ry0Ro4sp_Cw"
  
+ 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+ 
  
 def extract_keywords(text):
     text = text.replace('-', ' ')  # Replace hyphens with spaces
@@ -30,7 +36,15 @@ def extract_keywords(text):
     return keywords
  
 def call_together_ai(prompt, key, max_tokens=1024, temperature=0):
+    text = text.replace('-', ' ')  # Replace hyphens with spaces
+    words = word_tokenize(text.lower())
+    stop_words = set(stopwords.words('english'))
+    keywords = [w for w in words if w.isalnum() and w not in stop_words]
+    return keywords
+ 
+def call_together_ai(prompt, key, max_tokens=1024, temperature=0):
     headers = {
+        "Authorization": f"Bearer {key}",
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
     }

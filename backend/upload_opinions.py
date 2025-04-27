@@ -27,12 +27,19 @@ try:
     print(f"Existing dates from MongoDB")    
 
     real_time_opinions = scrape_headlines()
-    real_time_opinions = pd.DataFrame(real_time_news)
+    real_time_opinions = pd.DataFrame(real_time_opinions)
     print(f"Opinions fetched.")
+    
+    if real_time_opinions.empty:
+        # No new opinions at datetme.now()
+        print(f"No new opinions to process at {datetime.now()}.")
+        logging.info(f"No new opinions to process today at {datetime.now()}.")
+        exit(0)
     
     processed_real_time_opinions = process_opinions(real_time_opinions, existing_dates)
     logging.info(f"Number of Opinions after processing today: {len(processed_real_time_opinions)}")
     print(f"Opinions processed.")
+    print(processed_real_time_opinions.head())
     
     # Save to file for testing
     processed_real_time_opinions.to_csv("processed_real_time_opinions.csv", index=False)
@@ -69,6 +76,6 @@ try:
     logging.info("Real-time opinion task completed successfully!")
     
 except Exception as e:
-    logging.error(f'Error in upload_news.py: {e}')
-    print(f"Error in upload_news.py: {e}")
+    logging.error(f'Error in upload_opinions.py: {e}')
+    print(f"Error in upload_opinions.py: {e}")
 

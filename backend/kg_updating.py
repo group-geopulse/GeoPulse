@@ -3,6 +3,15 @@ from neo4j import GraphDatabase
 import pandas as pd
 import os
 import logging
+import ast
+
+def convert_to_list(value):
+    if isinstance(value, str):
+        try:
+            return ast.literal_eval(value)
+        except:
+            return []
+    return value
 
 URI = os.getenv("URI")
 # Suppress only informational messages from Neo4j, but allow warnings and errors
@@ -31,6 +40,7 @@ def update_oilprice_nodes(database, collection, use_testKG=True):
     new_prices = list(prices_db[collection].find())
 
     if not new_prices:
+        print(f"No new OilPrice nodes were created ({collection} was empty)")
         return f"No new OilPrice nodes were created (collection '{collection}' was empty)"
 
     with neo4j_driver.session() as session:
@@ -69,6 +79,7 @@ def update_oilprice_nodes(database, collection, use_testKG=True):
         # Remove records from collection
         prices_db[collection].delete_many({})
 
+    print(f"Created {len(new_prices)} new OilPrice nodes & emptied '{collection}'")
     return f"Created {len(new_prices)} new OilPrice nodes & emptied '{collection}'"
 
 def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entity_cols, use_testKG=True):
@@ -82,6 +93,7 @@ def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entit
     news_articles = news_collection.find({}, {entity: 1 for entity in entity_cols})  # Fetch only entity columns
 
     if not news_articles:
+        print(f"No entity records/nodes were updated ({news_col} was empty)")
         return f"No entity records/nodes were updated (collection '{news_col}' was empty)"
     
     # Define node name for each entity type
@@ -93,6 +105,12 @@ def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entit
     # Create new Neo4j session
     with neo4j_driver.session() as session:
         for article in news_articles:
+            # Convert entity columns to lists
+            article["Locations"] = convert_to_list(article["Locations"])
+            article["Organizations"] = convert_to_list(article["Organizations"])
+            article["Topics"] = convert_to_list(article["Topics"])
+            article["Events"] = convert_to_list(article["Events"])
+            article["People"] = convert_to_list(article["People"])
             for entity_type in entity_cols:
                 entity_collection = entities_db[entity_cols[entity_type]]
                 for entity_value in article[entity_type]:
@@ -125,6 +143,7 @@ def update_entity_db_and_nodes(news_db_name, entitities_db_name, news_col, entit
                         
                         new_entities += 1
 
+    print(f"Created {new_entities} new entity nodes; {total_entities} entities detected overall")
     return f"Created {new_entities} new entity nodes; {total_entities} entities detected overall"
 
 def update_news_nodes(database, collection, use_testKG=True):
@@ -136,12 +155,19 @@ def update_news_nodes(database, collection, use_testKG=True):
     new_news = list(news_db[collection].find())
 
     if not new_news:
+        print(f"No new News nodes were created ({collection} was empty)")
         return f"No new News nodes were created (collection '{collection}' was empty)"
     
     unique_news = pd.DataFrame(new_news).groupby(['Headline', 'Updated_Date']).ngroups
 
     with neo4j_driver.session() as session:
         for news in new_news:
+            news["Locations"] = convert_to_list(news["Locations"])
+            news["Organizations"] = convert_to_list(news["Organizations"])
+            news["Topics"] = convert_to_list(news["Topics"])
+            news["Events"] = convert_to_list(news["Events"])
+            news["People"] = convert_to_list(news["People"])
+            
             # Insert News Node
             session.run(
                 """
@@ -213,23 +239,31 @@ def update_news_nodes(database, collection, use_testKG=True):
         # Remove records from collection
         news_db[collection].delete_many({})
     
+    print(f"Created {unique_news} new News nodes (processed {len(new_news)}) & emptied '{collection}'")
     return f"Created {unique_news} new News nodes (processed {len(new_news)}) & emptied '{collection}'"
 
 def update_article_nodes(database, collection, use_testKG=True):
     neo4j_driver = get_neo4j_driver(use_testKG)
-    mongo_client = get_mongo_client()
+    mongo_client = get_mongo_client(URI)
     opinions_db = mongo_client[database]
 
     # Find new news articles
     new_opinions = list(opinions_db[collection].find())
 
     if not new_opinions:
+        print(f"No new Opinion Articles nodes were created ({collection} was empty)")
         return f"No new Opinion Article nodes were created (collection '{collection}' was empty)"
     
     unique_articles = pd.DataFrame(new_opinions).groupby(['Headline', 'Updated_Date']).ngroups
 
     with neo4j_driver.session() as session:
         for article in new_opinions:
+            article["Locations"] = convert_to_list(article["Locations"])
+            article["Organizations"] = convert_to_list(article["Organizations"])
+            article["Topics"] = convert_to_list(article["Topics"])
+            article["Events"] = convert_to_list(article["Events"])
+            article["People"] = convert_to_list(article["People"])
+            
             # Insert Article Node
             session.run(
                 """
@@ -298,5 +332,6 @@ def update_article_nodes(database, collection, use_testKG=True):
         # Remove records from collection
         opinions_db[collection].delete_many({})
     
+    print(f"Created {unique_articles} new Opinion Article nodes (processed {len(new_opinions)}) & emptied '{collection}'")
     return f"Created {unique_articles} new Opinion Article nodes (processed {len(new_opinions)}) & emptied '{collection}'"
 

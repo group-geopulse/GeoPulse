@@ -1,24 +1,36 @@
-import { NextRequest, NextResponse } from "next/server";
-import { exec } from "child_process";
-import util from "util";
+import { spawn } from "child_process";
+import { NextResponse } from "next/server";
 
-const path = require('path');
- 
-const scriptPath = path.join(process.cwd(), 'llmTogetherAI.py'); 
+export async function POST(request: Request) {
+  const { user_question } = await request.json();
 
-const execAsync = util.promisify(exec);
- 
-export async function POST(req: NextRequest) {
-  try {
-    const { user_question } = await req.json();
- 
-    const { stdout } = await execAsync(`python "${scriptPath}" "${user_question}"`);
-    const response = JSON.parse(stdout);
- 
-    return NextResponse.json(response);
-  } catch (error) {
-    console.error("Server error:", error);
-    return NextResponse.json({ summary: "⚠️ Error processing your question.", headlines: [] }, { status: 500 });
-  }
+  return new Promise<NextResponse>((resolve, reject) => {
+    const py = spawn("python3", ["./llmTogetherAI.py", user_question], {
+      cwd: process.cwd(),
+      env: process.env,
+    });
+
+    let stdout = "", stderr = "";
+
+    py.stdout.on("data", (c) => (stdout += c.toString()));
+    py.stderr.on("data", (c) => (stderr += c.toString()));
+
+    py.on("close", (code) => {
+      if (code !== 0) {
+        console.error("Python error:", stderr);
+        return reject(
+          NextResponse.json({ error: "Backend error" }, { status: 500 })
+        );
+      }
+      try {
+        const payload = JSON.parse(stdout);
+        return resolve(NextResponse.json(payload));
+      } catch (e) {
+        console.error("JSON parse error:", e, stdout);
+        return reject(
+          NextResponse.json({ error: "Invalid response format" }, { status: 500 })
+        );
+      }
+    });
+  });
 }
-
