@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function ChatPage() {
   const [userInput, setUserInput] = useState("");
@@ -8,6 +8,8 @@ export default function ChatPage() {
     { role: string; message: string; headlines?: string[] }[]
   >([]);
   const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -36,11 +38,49 @@ export default function ChatPage() {
     }
   };
 
+  const toggleListening = () => {
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const SpeechRecognition =
+        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = "en-US";
+
+      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+        const transcript = event.results[0][0].transcript;
+        setUserInput(transcript);
+        setListening(false);
+      };
+
+      recognitionRef.current.onerror = () => {
+        setListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setListening(false);
+      };
+    }
+
+    if (!listening) {
+      recognitionRef.current.start();
+      setListening(true);
+    } else {
+      recognitionRef.current.stop();
+      setListening(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-      <h1 className="text-3xl font-bold mb-4">GeoPulse Chat</h1>
-      <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-4 space-y-4">
-        <div className="h-96 overflow-y-auto border-b border-gray-300 p-2">
+    <div className="flex flex-col h-screen w-screen bg-gray-100">
+      <h1 className="text-3xl font-bold p-4">GeoPulse Chat</h1>
+      <div className="flex flex-col flex-1 bg-white shadow-inner rounded-t-lg p-4 mx-4 mb-2">
+        <div className="flex-1 overflow-y-auto border-b border-gray-300 p-2">
           {chatHistory.map((chat, i) => (
             <div
               key={i}
@@ -65,7 +105,7 @@ export default function ChatPage() {
             </div>
           ))}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 pt-2 pl-12">
           <input
             type="text"
             className="flex-grow border p-2 rounded-md"
@@ -74,6 +114,14 @@ export default function ChatPage() {
             onChange={(e) => setUserInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           />
+          <button
+            onClick={toggleListening}
+            className={`px-3 py-2 rounded-md ${
+              listening ? "bg-red-500" : "bg-gray-300"
+            } text-white`}
+          >
+            🎤
+          </button>
           <button
             onClick={sendMessage}
             className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
@@ -84,5 +132,5 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
-  );
+  );  
 }
