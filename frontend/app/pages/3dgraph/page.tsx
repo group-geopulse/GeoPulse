@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
+
 const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), { ssr: false });
 
 export default function GraphPage() {
@@ -28,6 +29,19 @@ export default function GraphPage() {
       return;
     }
 
+    // Check date range is within two weeks
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffTime = Math.abs(end.getTime() - start.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays > 14) {
+        setError("Date range cannot exceed two weeks.");
+        setIsLoading(false);
+        return;
+      }
+    }
+
     const params = new URLSearchParams();
     if (startDate) params.append("startDate", startDate);
     if (endDate)   params.append("endDate",   endDate);
@@ -51,34 +65,6 @@ export default function GraphPage() {
   useEffect(() => {
     fetchGraph();
   }, []);
-
-  // Align OilPrice nodes
-  useEffect(() => {
-    if (graphData.nodes.length && !graphData.nodesUpdated) {
-      const oil = graphData.nodes
-        .filter(n => n.label === "OilPrice")
-        .sort((a, b) => new Date(a.properties.date).valueOf() - new Date(b.properties.date).valueOf());
-  
-      const oilIdToPosition = new Map<string, number>();
-      oil.forEach((node, idx) => {
-        oilIdToPosition.set(node.id, idx);
-      });
-  
-      const updated = graphData.nodes.map(n => {
-        if (n.label === "OilPrice") {
-          const pos = oilIdToPosition.get(n.id) ?? 0;
-          return { ...n, x: pos * 100, y: 0, z: 0 };
-        }
-        return n;
-      });
-  
-      setGraphData(prevData => ({
-        ...prevData,
-        nodes: updated,
-        nodesUpdated: true,
-      }));
-    }
-  }, [graphData.nodes]);
   
 
   useEffect(() => {
@@ -108,12 +94,12 @@ export default function GraphPage() {
     Location: "yellow",
     Organization: "green",
     Person: "red",
-    Event: "#CCC",
+    Event: "#73c6b6",
     Topic: "hotpink",
   }[n.label] || "gray");
 
   const handleNodeClick = (node: any) => {
-    const distance = 50; // How far the camera should stand from the node
+    const distance = 25; // How far the camera should stand from the node
     const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
 
     graphRef.current.cameraPosition(
@@ -122,6 +108,7 @@ export default function GraphPage() {
       1000  // 1 second transition
     );
   };
+  
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -175,10 +162,10 @@ export default function GraphPage() {
             nodeLabel={getNodeLabel}
             nodeColor={getNodeColor}
             linkLabel={l => l.label}
-            linkDirectionalArrowLength={6}
+            linkDirectionalArrowLength={5}
             linkDirectionalArrowRelPos={1}
             fov={60}
-            forceEngine="none"
+            forceEngine="d3"
             onNodeClick={handleNodeClick}
           />
         ) : (
