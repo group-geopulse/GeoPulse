@@ -10,8 +10,8 @@ from nltk.tokenize import word_tokenize
 import sys
  
 # --- Configuration ---
-TOGETHER_API_KEY_1 = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
-TOGETHER_API_KEY_2 = "73797637da89e7d501dbd1c5f9ba5d0eae46673ad78ba304df02fc71b5928d4f"
+TOGETHER_API_KEY_1 = "3ee678e3dba20cff1ba40e41b693fbea2e3449622fc4ed75a6722bc2dae3b99e"
+TOGETHER_API_KEY_2 = "a40ef44062516020a6d57f17024acc55c824ed2d2ee3c9708cb14e05ea508234"
 TOGETHER_API_KEY_3 = "4d2eb041798e64e95537e7b4be526f6d5ffd5c4304ac39c1355b6cb1d60da65a"
 TOGETHER_API_URL = "https://api.together.xyz/v1/chat/completions"
 LLM_MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1"

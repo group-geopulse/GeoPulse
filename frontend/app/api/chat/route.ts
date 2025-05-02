@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   const { user_question } = await request.json();
 
   return new Promise<NextResponse>((resolve, reject) => {
-    const py = spawn("python3", ["./llmTogetherAI.py", user_question], {
+    const py = spawn("python", ["./llmTogetherAI.py", user_question], {
       cwd: process.cwd(),
       env: process.env,
     });
