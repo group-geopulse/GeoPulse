@@ -1,119 +1,171 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
-// Dynamically import the graph to avoid SSR issues
+// Swap 3D for 2D version
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), { ssr: false });
 
-export default function GraphPage() {
-  const [graphData, setGraphData] = useState<{ nodes: any[]; relations: any[] }>({
+export default function GraphPage2D() {
+  const [graphData, setGraphData] = useState<{ nodes: any[]; relations: any[], nodesUpdated: boolean }>({
     nodes: [],
     relations: [],
+    nodesUpdated: false,
   });
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [keywords, setKeywords] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const graphRef = useRef<any>(null);
 
-  // Fetch the graph data when both dates are provided
   const fetchGraph = async () => {
-    setIsLoading(true); // Set loading state to true while fetching data
-    setError(""); // Clear any previous errors
-
-    // Only fetch if both startDate and endDate are set
-    if (!startDate || !endDate) {
+    setIsLoading(true);
+    setError("");
+    if ((startDate && !endDate) || (!startDate && endDate)) {
       setError("Please provide both start and end dates.");
       setIsLoading(false);
       return;
     }
 
-    const queryParams = new URLSearchParams();
-    queryParams.append("startDate", startDate);
-    queryParams.append("endDate", endDate);
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffTime = Math.abs(end.getTime() - start.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays > 14) {
+        setError("Date range cannot exceed two weeks.");
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    const params = new URLSearchParams();
+    if (startDate) params.append("startDate", startDate);
+    if (endDate) params.append("endDate", endDate);
+    if (keywords.trim()) params.append("keywords", keywords.trim());
 
     try {
-      const res = await fetch(`/api/graph?${queryParams.toString()}`);
-      const data = await res.json();
-
-      // Ensure the data has nodes and relations
-      if (data && Array.isArray(data.nodes) && Array.isArray(data.relations)) {
-        console.log("Fetched graph data:", data); // Debugging
-        setGraphData(data);
+      const res = await fetch(`/api/graph?${params}`);
+      const json = await res.json();
+      if (Array.isArray(json.nodes) && Array.isArray(json.relations)) {
+        setGraphData({ ...json, nodesUpdated: false });
       } else {
-        console.error("Malformed graph data:", data); // Debugging
-        setError("Malformed graph data received from the server.");
-        setGraphData({ nodes: [], relations: [] }); // Default to empty arrays if data is malformed
+        setError("Malformed graph data from server.");
       }
-    } catch (error) {
-      console.error("Error fetching graph data:", error);
-      setGraphData({ nodes: [], relations: [] }); // Fallback to empty data on error
+    } catch {
+      setError("Error fetching graph data.");
     } finally {
-      setIsLoading(false); // Set loading state to false once data is fetched
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    // Don't fetch the graph unless both startDate and endDate are available
-    if (startDate && endDate) {
-      fetchGraph();
+    fetchGraph();
+  }, []);
+
+  useEffect(() => {
+    if (graphData.nodesUpdated) {
+      setGraphData(prevData => ({ ...prevData, nodesUpdated: false }));
     }
-  }, [startDate, endDate]);
+  }, [graphData.nodesUpdated]);
+
+  const getNodeLabel = (n: any) => {
+    const p = n.properties;
+    switch (n.label) {
+      case "News":
+        return `News: ${p.headline}\nDate: ${p.date}\nLink: ${p.link}\nSentiment: ${p.headline_sentiment}`;
+      case "Article":
+        return `Article: ${p.headline}\nDate: ${p.date}\nLink: ${p.link}`;
+      case "OilPrice":
+        return `Oil on ${p.date}\nWTI Δ%: ${p.CL_F_Daily_Change}\nBrent Δ%: ${p.BZ_F_Daily_Change}`;
+      default:
+        return `${n.label}: ${p.name || ""}`;
+    }
+  };
+
+  const getNodeColor = (n: any) => ({
+    News: "blue",
+    Article: "purple",
+    OilPrice: "white",
+    Location: "yellow",
+    Organization: "green",
+    Person: "red",
+    Event: "#73c6b6",
+    Topic: "hotpink",
+  }[n.label] || "gray");
+
+  const handleNodeClick = (node: any) => {
+    // For 2D, use pan/zoom to center node (optional)
+    const context = graphRef.current;
+    if (context && node.x && node.y) {
+      context.centerAt(node.x, node.y, 1000);
+      context.zoom(12, 1000);
+    }
+  };
 
   return (
-    <div className="w-full h-screen">
-      {/* Date Filters UI */}
-      <div className="flex gap-4 mb-4">
-        <div>
-          <label className="block text-sm font-medium">Start Date</label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="border px-2 py-1 rounded"
-          />
+    <div className="w-full h-screen flex flex-col">
+      {error && <div className="p-2 text-red-400">{error}</div>}
+      {isLoading && <div className="p-2 text-gray-400">Loading...</div>}
+
+      <div className="flex-1 relative">
+        {/* Floating Filters */}
+        <div className="absolute top-4 left-4 bg-gray-900 bg-opacity-80 p-4 rounded-lg shadow-lg text-white flex flex-wrap gap-4 z-10">
+          <div>
+            <label className="text-sm">Start Date</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={e => setStartDate(e.target.value)}
+              className="ml-2 p-1 rounded text-black"
+            />
+          </div>
+          <div>
+            <label className="text-sm">End Date</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={e => setEndDate(e.target.value)}
+              className="ml-2 p-1 rounded text-black"
+            />
+          </div>
+          <div>
+            <label className="text-sm">Keywords</label>
+            <input
+              type="text"
+              placeholder="e.g. oil, inflation"
+              value={keywords}
+              onChange={e => setKeywords(e.target.value)}
+              className="ml-2 p-1 rounded text-black"
+            />
+          </div>
+          <button
+            onClick={fetchGraph}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
+          >
+            Apply Filter
+          </button>
         </div>
-        <div>
-          <label className="block text-sm font-medium">End Date</label>
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="border px-2 py-1 rounded"
+
+        {/* Graph */}
+        {graphData.nodes.length ? (
+          <ForceGraph2D
+            ref={graphRef}
+            graphData={{ nodes: graphData.nodes, links: graphData.relations }}
+            nodeLabel={getNodeLabel}
+            nodeColor={getNodeColor}
+            linkLabel={l => l.label}
+            linkDirectionalArrowLength={5}
+            linkDirectionalArrowRelPos={1}
+            onNodeClick={handleNodeClick}
+            // Set color for links
+            linkColor={() => "rgba(255, 255, 255, 0.06)"}
           />
-        </div>
-        <button
-          onClick={fetchGraph}
-          className="self-end px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Apply Filter
-        </button>
+        ) : (
+          !isLoading && <div className="text-center mt-8 text-gray-500">No data to display.</div>
+        )}
       </div>
-
-      {/* Error Message */}
-      {error && <div className="text-red-500 mb-4">{error}</div>}
-
-      {/* Loading State */}
-      {isLoading && <div>Loading...</div>}
-
-      {/* Graph Rendering */}
-      {/* Only render the graph if we have valid graphData */}
-      {!isLoading && graphData.nodes && graphData.relations && graphData.nodes.length > 0 && graphData.relations.length > 0 ? (
-        <ForceGraph2D
-        graphData={{
-          nodes: graphData.nodes,
-          links: graphData.relations, // <-- Remap to what the library expects
-        }}
-          nodeLabel={(node: any) => `${node.label}: ${node.properties?.name || node.properties?.headline || ""}`}
-          nodeAutoColorBy="label"
-          linkLabel={(link: any) => link.label}
-          linkDirectionalArrowLength={6}
-          linkDirectionalArrowRelPos={1}
-          linkColor={() => "#ffffff"}
-        />
-      ) : (
-        !isLoading && <div className="text-center text-gray-500">No data available for the selected filter.</div>
-      )}
     </div>
   );
 }
