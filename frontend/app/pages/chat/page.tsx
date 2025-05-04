@@ -55,7 +55,8 @@ export default function ChatPage() {
               >
                 {chat.message}
               </span>
-              {chat.role === "bot" && chat.headlines?.length > 0 && (
+              {chat.role === "bot" && Array.isArray(chat.headlines) && chat.headlines.length > 0 && (
+
                 <ul className="mt-2 list-disc list-inside text-sm text-gray-700">
                   {chat.headlines.map((hl, idx) => (
                     <li key={idx}>{hl}</li>

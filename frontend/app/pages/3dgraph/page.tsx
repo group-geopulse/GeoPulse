@@ -87,16 +87,21 @@ export default function GraphPage() {
     }
   };
 
-  const getNodeColor = (n: any) => ({
-    News: "blue",
-    Article: "purple",
-    OilPrice: "white",
-    Location: "yellow",
-    Organization: "green",
-    Person: "red",
-    Event: "#73c6b6",
-    Topic: "hotpink",
-  }[n.label] || "gray");
+  const getNodeColor = (n: { [key: string]: any }): string => {
+    const colorMap: Record<string, string> = {
+      News: "blue",
+      Article: "purple",
+      OilPrice: "white",
+      Location: "yellow",
+      Organization: "green",
+      Person: "red",
+      Event: "#73c6b6",
+      Topic: "hotpink",
+    };
+  
+    return colorMap[n.label] || "gray";
+  };  
+
 
   const handleNodeClick = (node: any) => {
     const distance = 25; // How far the camera should stand from the node
@@ -108,6 +113,14 @@ export default function GraphPage() {
       1000  // 1 second transition
     );
   };
+
+  useEffect(() => {
+    if (graphRef.current?.camera) {
+      graphRef.current.camera.fov = 60;
+      graphRef.current.camera.updateProjectionMatrix();
+    }
+  }, []);
+  
   
 
   return (
@@ -164,7 +177,6 @@ export default function GraphPage() {
             linkLabel={l => l.label}
             linkDirectionalArrowLength={5}
             linkDirectionalArrowRelPos={1}
-            fov={60}
             forceEngine="d3"
             onNodeClick={handleNodeClick}
           />

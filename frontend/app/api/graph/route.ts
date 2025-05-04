@@ -70,9 +70,10 @@ export async function GET(req: Request) {
 
     // Combine results
     const nodesMap = new Map();
-    const relations = [];
+    const relations: any[] = [];
 
-    const addNode = (node) => {
+
+    const addNode = (node: any) => {
       const id = node.identity.toString();
       if (!nodesMap.has(id)) {
         nodesMap.set(id, {
@@ -83,8 +84,8 @@ export async function GET(req: Request) {
       }
     };
     
-    const processResultsNews = (result) => {
-      result.records.forEach((rec) => {
+    const processResultsNews = (result: any) => {
+      result.records.forEach((rec: any) => {
         const p = rec.get("p"); // OilPrice
         const n = rec.get("n"); // News
         const e = rec.get("e"); // Entity (e.g., Location, Person, etc.)
@@ -114,8 +115,8 @@ export async function GET(req: Request) {
       });
     };
     
-    const processResultsArticles = (result) => {
-      result.records.forEach((rec) => {
+    const processResultsArticles = (result: any) => {
+      result.records.forEach((rec: any) => {
         const p = rec.get("p"); // OilPrice
         const a = rec.get("a"); // Article
         const ae = rec.get("ae"); // Entity (e.g., Location, Person, etc.)

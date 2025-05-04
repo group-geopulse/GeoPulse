@@ -84,16 +84,20 @@ export default function GraphPage2D() {
     }
   };
 
-  const getNodeColor = (n: any) => ({
-    News: "blue",
-    Article: "purple",
-    OilPrice: "white",
-    Location: "yellow",
-    Organization: "green",
-    Person: "red",
-    Event: "#73c6b6",
-    Topic: "hotpink",
-  }[n.label] || "gray");
+  const getNodeColor = (n: { [key: string]: any }): string => {
+    const colorMap: Record<string, string> = {
+      News: "blue",
+      Article: "purple",
+      OilPrice: "white",
+      Location: "yellow",
+      Organization: "green",
+      Person: "red",
+      Event: "#73c6b6",
+      Topic: "hotpink",
+    };
+  
+    return colorMap[n.label] || "gray";
+  }; 
 
   const handleNodeClick = (node: any) => {
     // For 2D, use pan/zoom to center node (optional)
