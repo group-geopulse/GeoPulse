@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
 
 export default function Home() {
   const router = useRouter();
@@ -35,19 +37,21 @@ export default function Home() {
             : "opacity-0 scale-90"
         }`}
       >
-        <img
-          src="/logo.png" // Ensure your logo is at this path
-          alt="Logo"
-          className="w-full h-full object-contain animate-floatEffect"
-        />
-      </button>
+        <Image
+        src="/logo.png"           // Path to your image
+        alt="Logo"                 // Alt text for accessibility
+        className="object-contain animate-floatEffect"
+        width={300}                // Specify the width of the image
+        height={300}               // Specify the height of the image
+      />
+    </button>
 
       {/* Button for Chat */}
       <button
         onClick={() => router.push("/pages/chat")}
-        className="z-10 flex items-center justify-between w-72 px-8 py-4 text-2xl font-semibold text-gray-500 border-2 border-black rounded-xl shadow-md transition hover:bg-gray-100 bg-white opacity-90 mt-14"
+        className="z-10 flex items-center justify-between w-72 px-8 py-4 text-xl font-semibold text-black border-2 border-black rounded-xl shadow-md transition hover:bg-gray-100 bg-white opacity-90 mt-14"
       >
-        <span>Ask me anything</span>
+        <span>Chat with GeoPulse</span>
         <span className="text-2xl">➜</span>
       </button>
     </div>

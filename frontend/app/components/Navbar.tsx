@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -16,28 +15,29 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-4 right-4 z-50">
-      <details className="relative group">
-        {/* Hamburger icon */}
-        <summary
-          className="cursor-pointer list-none text-4xl text-foreground"
-          onClick={toggleMenu}
-        >
-          &#9776;
-        </summary>
+  <details className="relative group">
+    {/* Hamburger icon */}
+    <summary
+      className="cursor-pointer list-none text-4xl text-foreground"
+      onClick={toggleMenu}
+    >
+      &#9776;
+    </summary>
 
-        {/* Sliding menu */}
-        <div
-          className={`absolute right-0 mt-2 flex flex-col items-end space-y-2 bg-background text-foreground p-4 rounded-lg shadow-lg opacity-0 scale-95 transform transition-all duration-300 ease-out ${
-            isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
-        >
-          <NavLink href="/" currentPath={pathname} label="Home" onClick={handleLinkClick} />
-          <NavLink href="/pages/chat" currentPath={pathname} label="Chat" onClick={handleLinkClick} />
-          <NavLink href="/pages/graph" currentPath={pathname} label="Graph" onClick={handleLinkClick} />
-          <NavLink href="/pages/3dgraph" currentPath={pathname} label="3D Graph" onClick={handleLinkClick} />
-        </div>
-      </details>
-    </nav>
+    {/* Sliding menu */}
+    <div
+      className={`absolute right-0 mt-2 flex flex-col items-end space-y-2 bg-background text-foreground p-4 rounded-lg shadow-lg opacity-0 scale-95 transform transition-all duration-300 ease-out z-50 ${
+        isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+      }`}
+    >
+      <NavLink href="/" currentPath={pathname} label="Home" onClick={handleLinkClick} />
+      <NavLink href="/pages/chat" currentPath={pathname} label="Chat" onClick={handleLinkClick} />
+      <NavLink href="/pages/graph" currentPath={pathname} label="Graph" onClick={handleLinkClick} />
+      <NavLink href="/pages/3dgraph" currentPath={pathname} label="3D Graph" onClick={handleLinkClick} />
+    </div>
+  </details>
+</nav>
+
   );
 }
 
