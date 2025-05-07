@@ -14,4 +14,3 @@ torchvision --index-url https://download.pytorch.org/whl/cpu
 torchaudio --index-url https://download.pytorch.org/whl/cpu
 nltk
 beautifulsoup4
-ast

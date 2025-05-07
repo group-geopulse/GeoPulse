@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function ChatPage() {
   const [userInput, setUserInput] = useState("");
@@ -8,6 +8,8 @@ export default function ChatPage() {
     { role: string; message: string; headlines?: string[] }[]
   >([]);
   const [loading, setLoading] = useState(false);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const sendMessage = async () => {
     if (!userInput.trim()) return;
@@ -33,6 +35,44 @@ export default function ChatPage() {
       ]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const toggleListening = () => {
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const SpeechRecognition =
+        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = "en-US";
+
+      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
+        const transcript = event.results[0][0].transcript;
+        setUserInput(transcript);
+        setListening(false);
+      };
+
+      recognitionRef.current.onerror = () => {
+        setListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setListening(false);
+      };
+    }
+
+    if (!listening) {
+      recognitionRef.current.start();
+      setListening(true);
+    } else {
+      recognitionRef.current.stop();
+      setListening(false);
     }
   };
 
@@ -77,7 +117,7 @@ export default function ChatPage() {
             </div>
           ))}
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 pt-2 pl-12">
           <input
             type="text"
             className="flex-grow border p-2 rounded-md text-black"
@@ -86,6 +126,14 @@ export default function ChatPage() {
             onChange={(e) => setUserInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           />
+          <button
+            onClick={toggleListening}
+            className={`px-3 py-2 rounded-md ${
+              listening ? "bg-red-500" : "bg-gray-300"
+            } text-white`}
+          >
+            🎤
+          </button>
           <button
             onClick={sendMessage}
             className="bg-blue-500 text-white px-4 py-2 rounded-md disabled:opacity-50"
@@ -96,5 +144,5 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
-  );
+  );  
 }
