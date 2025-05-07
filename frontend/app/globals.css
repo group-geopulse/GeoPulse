@@ -2,20 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* FORCE dark mode colors */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a; /* dark background */
+  --foreground: #ededed; /* light text */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Pop-in animation */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Floating effect */
+@keyframes floatEffect {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-popIn {
+  animation: popIn 1s ease-out forwards; /* Pop-in effect */
+}
+
+/* Apply floating effect */
+.animate-floatEffect {
+  animation: floatEffect 4s ease-in-out infinite; /* Soft floating effect */
+}
+
+/* Ensure the button has no background, only the logo fills it */
+button {
+  background: transparent;
+  border: none;
 }

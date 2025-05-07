@@ -27,7 +27,7 @@ export default function ChatPage() {
         ...prev,
         { role: "bot", message: data.summary, headlines: data.headlines },
       ]);
-      setUserInput("");
+      setUserInput(""); // This clears the input field after sending
     } catch {
       setChatHistory((prev) => [
         ...prev,
@@ -77,10 +77,22 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-gray-100">
-      <h1 className="text-3xl font-bold p-4">GeoPulse Chat</h1>
-      <div className="flex flex-col flex-1 bg-white shadow-inner rounded-t-lg p-4 mx-4 mb-2">
-        <div className="flex-1 overflow-y-auto border-b border-gray-300 p-2">
+    <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10 opacity-30"
+      >
+        <source src="/background_video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <h1 className="text-3xl font-bold mb-4 z-10">GeoPulse Chat</h1>
+      <div className="w-full max-w-2xl bg-[var(--background)] shadow-md rounded-lg p-4 space-y-4 z-10">
+        <div className="h-96 overflow-y-auto border-b border-gray-300 p-2">
           {chatHistory.map((chat, i) => (
             <div
               key={i}
@@ -95,7 +107,7 @@ export default function ChatPage() {
               >
                 {chat.message}
               </span>
-              {chat.role === "bot" && chat.headlines?.length > 0 && (
+              {chat.role === "bot" && Array.isArray(chat.headlines) && chat.headlines.length > 0 && (
                 <ul className="mt-2 list-disc list-inside text-sm text-gray-700">
                   {chat.headlines.map((hl, idx) => (
                     <li key={idx}>{hl}</li>
@@ -108,7 +120,7 @@ export default function ChatPage() {
         <div className="flex items-center space-x-2 pt-2 pl-12">
           <input
             type="text"
-            className="flex-grow border p-2 rounded-md"
+            className="flex-grow border p-2 rounded-md text-black"
             placeholder="Ask about oil prices..."
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}

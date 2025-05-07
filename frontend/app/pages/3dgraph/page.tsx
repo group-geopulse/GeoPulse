@@ -1,190 +1,190 @@
 "use client";
- 
+
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
- 
-// Import the 3D graph
+
+
 const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), { ssr: false });
- 
+
 export default function GraphPage() {
-  const [graphData, setGraphData] = useState<{ nodes: any[]; relations: any[] }>({
+  const [graphData, setGraphData] = useState<{ nodes: any[]; relations: any[], nodesUpdated: boolean }>({
     nodes: [],
     relations: [],
+    nodesUpdated: false,
   });
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [keywords, setKeywords] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
- 
   const graphRef = useRef<any>(null);
- 
+
+  // Fetch graph
   const fetchGraph = async () => {
     setIsLoading(true);
     setError("");
- 
-    if (!startDate || !endDate) {
+    if ((startDate && !endDate) || (!startDate && endDate)) {
       setError("Please provide both start and end dates.");
       setIsLoading(false);
       return;
     }
- 
-    const queryParams = new URLSearchParams();
-    queryParams.append("startDate", startDate);
-    queryParams.append("endDate", endDate);
- 
-    try {
-      const res = await fetch(`/api/graph?${queryParams.toString()}`);
-      const data = await res.json();
- 
-      if (data && Array.isArray(data.nodes) && Array.isArray(data.relations)) {
-        console.log("Fetched graph data:", data);
-        setGraphData(data);
-      } else {
-        console.error("Malformed graph data:", data);
-        setError("Malformed graph data received from the server.");
-        setGraphData({ nodes: [], relations: [] });
+
+    // Check date range is within two weeks
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffTime = Math.abs(end.getTime() - start.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays > 14) {
+        setError("Date range cannot exceed two weeks.");
+        setIsLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error("Error fetching graph data:", error);
-      setGraphData({ nodes: [], relations: [] });
+    }
+
+    const params = new URLSearchParams();
+    if (startDate) params.append("startDate", startDate);
+    if (endDate)   params.append("endDate",   endDate);
+    if (keywords.trim()) params.append("keywords", keywords.trim());
+
+    try {
+      const res = await fetch(`/api/graph?${params}`);
+      const json = await res.json();
+      if (Array.isArray(json.nodes) && Array.isArray(json.relations)) {
+        setGraphData({ ...json, nodesUpdated: false });
+      } else {
+        setError("Malformed graph data from server.");
+      }
+    } catch {
+      setError("Error fetching graph data.");
     } finally {
       setIsLoading(false);
     }
   };
- 
+
   useEffect(() => {
-    if (startDate && endDate) {
-      fetchGraph();
-    }
-  }, [startDate, endDate]);
- 
-  // 🌍 Auto-Rotate the Graph
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!graphRef.current) return;
-      const camera = graphRef.current.camera();
-      const distance = 300;
-      const angle = Date.now() * 0.0001;
-      camera.position.x = distance * Math.sin(angle);
-      camera.position.z = distance * Math.cos(angle);
-      camera.lookAt(0, 0, 0);
-    }, 50);
- 
-    return () => clearInterval(interval);
+    fetchGraph();
   }, []);
- 
-  // Node Label Formatter
-  const getNodeLabel = (node: any) => {
-    const { label, properties } = node;
- 
-    switch (label) {
+  
+
+  useEffect(() => {
+    if (graphData.nodesUpdated) {
+      setGraphData(prevData => ({ ...prevData, nodesUpdated: false }));
+    }
+  }, [graphData.nodesUpdated]);
+
+  const getNodeLabel = (n: any) => {
+    const p = n.properties;
+    switch (n.label) {
       case "News":
-        return `News: ${properties?.headline || ""}\nDate: ${properties?.date || ""}\nLink: ${properties?.link || ""}\nSentiment: ${properties?.headline_sentiment || ""}`;
+        return `News: ${p.headline}\nDate: ${p.date}\nLink: ${p.link}\nSentiment: ${p.headline_sentiment}`;
       case "Article":
-        return `Article: ${properties?.headline || ""}\nDate: ${properties?.date || ""}\nLink: ${properties?.link || ""}`;
+        return `Article: ${p.headline}\nDate: ${p.date}\nLink: ${p.link}`;
       case "OilPrice":
-        return `OilPrice: ${properties?.date || ""}\n% Increase in WTI: ${properties?.CL_F_Daily_Change || ""}\n% Increase in Brent: ${properties?.BZ_F_Daily_Change || ""}`;
-      case "Location":
-        return `Location: ${properties?.name || ""}`;
-      case "Organization":
-        return `Organization: ${properties?.name || ""}`;
-      case "Person":
-        return `Person: ${properties?.name || ""}`;
-      case "Event":
-        return `Event: ${properties?.name || ""}`;
-      case "Topic":
-        return `Topic: ${properties?.name || ""}`;
+        return `Oil on ${p.date}\nWTI Δ%: ${p.CL_F_Daily_Change}\nBrent Δ%: ${p.BZ_F_Daily_Change}`;
       default:
-        return label;
+        return `${n.label}: ${p.name || ""}`;
     }
   };
- 
-  // Node Color Formatter
-  const getNodeColor = (node: any) => {
-    switch (node.label) {
-      case "News":
-        return "blue";
-      case "Article":
-        return "purple";
-      case "OilPrice":
-        return "white";
-      case "Location":
-        return "yellow";
-      case "Organization":
-        return "green";
-      case "Person":
-        return "red";
-      case "Event":
-        return "#CCCCFF"; // Lilac
-      case "Topic":
-        return "hotpink"; // Bright Pink
-      default:
-        return "gray";
-    }
+
+  const getNodeColor = (n: { [key: string]: any }): string => {
+    const colorMap: Record<string, string> = {
+      News: "blue",
+      Article: "purple",
+      OilPrice: "white",
+      Location: "yellow",
+      Organization: "green",
+      Person: "red",
+      Event: "#73c6b6",
+      Topic: "hotpink",
+    };
+  
+    return colorMap[n.label] || "gray";
+  };  
+
+
+  const handleNodeClick = (node: any) => {
+    const distance = 25; // How far the camera should stand from the node
+    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+    graphRef.current.cameraPosition(
+      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
+      node, // Look at the node
+      1000  // 1 second transition
+    );
   };
- 
+
+  useEffect(() => {
+    if (graphRef.current?.camera) {
+      graphRef.current.camera.fov = 60;
+      graphRef.current.camera.updateProjectionMatrix();
+    }
+  }, []);
+  
+  
+
   return (
-<div className="w-full h-screen">
-      {/* Date Filters UI */}
-<div className="flex gap-4 mb-4">
-<div>
-<label className="block text-sm font-medium">Start Date</label>
-<input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="border px-2 py-1 rounded"
+    <div className="w-full h-screen flex flex-col">
+      {error && <div className="p-2 text-red-400">{error}</div>}
+      {isLoading && <div className="p-2 text-gray-400">Loading...</div>}
+  
+      <div className="flex-1 relative"> {/* Make container relative */}
+        {/* Floating Filters */}
+        <div className="absolute top-4 left-4 bg-gray-900 bg-opacity-80 p-4 rounded-lg shadow-lg text-white flex flex-wrap gap-4 z-10">
+          <div>
+            <label className="text-sm">Start Date</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={e => setStartDate(e.target.value)}
+              className="ml-2 p-1 rounded text-black"
+            />
+          </div>
+          <div>
+            <label className="text-sm">End Date</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={e => setEndDate(e.target.value)}
+              className="ml-2 p-1 rounded text-black"
+            />
+          </div>
+          <div>
+            <label className="text-sm">Keywords</label>
+            <input
+              type="text"
+              placeholder="e.g. oil, inflation"
+              value={keywords}
+              onChange={e => setKeywords(e.target.value)}
+              className="ml-2 p-1 rounded text-black"
+            />
+          </div>
+          <button
+            onClick={fetchGraph}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded"
+          >
+            Apply Filter
+          </button>
+        </div>
+  
+        {/* Graph */}
+        {graphData.nodes.length ? (
+          <ForceGraph3D
+            ref={graphRef}
+            graphData={{ nodes: graphData.nodes, links: graphData.relations }}
+            nodeLabel={getNodeLabel}
+            nodeColor={getNodeColor}
+            linkLabel={l => l.label}
+            linkDirectionalArrowLength={5}
+            linkDirectionalArrowRelPos={1}
+            forceEngine="d3"
+            onNodeClick={handleNodeClick}
           />
-</div>
-<div>
-<label className="block text-sm font-medium">End Date</label>
-<input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="border px-2 py-1 rounded"
-          />
-</div>
-<button
-          onClick={fetchGraph}
-          className="self-end px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
->
-          Apply Filter
-</button>
-</div>
- 
-      {/* Error Message */}
-      {error && <div className="text-red-500 mb-4">{error}</div>}
- 
-      {/* Loading State */}
-      {isLoading && <div>Loading...</div>}
- 
-      {/* Graph Rendering */}
-      {!isLoading &&
-      graphData.nodes &&
-      graphData.relations &&
-      graphData.nodes.length > 0 &&
-      graphData.relations.length > 0 ? (
-<ForceGraph3D
-          ref={graphRef}
-          graphData={{
-            nodes: graphData.nodes,
-            links: graphData.relations,
-          }}
-          nodeLabel={getNodeLabel}
-          nodeAutoColorBy={null}
-          nodeColor={getNodeColor}
-          linkLabel={(link: any) => link.label}
-          linkDirectionalArrowLength={6}
-          linkDirectionalArrowRelPos={1}
-        />
-      ) : (
-        !isLoading && (
-<div className="text-center text-gray-500">
-            No data available for the selected filter.
-</div>
-        )
-      )}
-</div>
+        ) : (
+          !isLoading && <div className="text-center mt-8 text-gray-500">No data to display.</div>
+        )}
+      </div>
+    </div>
   );
+  
 }

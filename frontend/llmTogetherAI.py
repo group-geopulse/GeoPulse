@@ -10,8 +10,8 @@ from nltk.tokenize import word_tokenize
 import sys
  
 # --- Configuration ---
-TOGETHER_API_KEY_1 = "fc08bc662bc0c7f4e8ed64805409c1dfc05e4c27775b2a15b653b0f7f1c23f80"
-TOGETHER_API_KEY_2 = "73797637da89e7d501dbd1c5f9ba5d0eae46673ad78ba304df02fc71b5928d4f"
+TOGETHER_API_KEY_1 = "3ee678e3dba20cff1ba40e41b693fbea2e3449622fc4ed75a6722bc2dae3b99e"
+TOGETHER_API_KEY_2 = "a40ef44062516020a6d57f17024acc55c824ed2d2ee3c9708cb14e05ea508234"
 TOGETHER_API_KEY_3 = "4d2eb041798e64e95537e7b4be526f6d5ffd5c4304ac39c1355b6cb1d60da65a"
 TOGETHER_API_URL = "https://api.together.xyz/v1/chat/completions"
 LLM_MODEL = "mistralai/Mixtral-8x7B-Instruct-v0.1"
@@ -169,35 +169,35 @@ Relevant Headlines:
     except Exception as e:
         logging.warning(f"Failed to parse LLM response: {e}")
     return summary, headlines
-
+ 
 def validate_llm_response(user_question, data_json, llm_summary):
     prompt = f"""
 You are a validation agent. Your job is to critically check if the AI's summary meets strict criteria.
-
+ 
 User Question:
 \"\"\"{user_question}\"\"\"
-
+ 
 LLM Summary:
 \"\"\"{llm_summary}\"\"\"
-
+ 
 Validation Instructions:
 - Does the summary answer the user's question?
 - Does it avoid adding new facts not found in the data?
 - If YES to all, respond with exactly: VALID
 - If NO to any, respond with exactly: INVALID
-
+ 
 Respond with only VALID or INVALID. No other text.
 """
     result = call_together_ai(prompt, key=TOGETHER_API_KEY_3, max_tokens=4096, temperature=0)
     if result:
         print(result, file=sys.stderr)
         return result.strip().upper() == "VALID"
-
+ 
     else:
         print("-----------------------No validaion response-------------------------", file=sys.stderr)
     return False
-
-
+ 
+ 
 def process_user_query(user_question):
     logging.info(f"Processing: {user_question}")
     keywords = extract_keywords(user_question)
@@ -235,7 +235,7 @@ if __name__ == "__main__":
         # print exactly one JSON object for the API to parse:
         print(json.dumps({"summary": summary, "headlines": headlines}))
         sys.exit(0)
-
+ 
     while True:
         user_input = input("\n🗣️ Ask a question (or type 'exit'): ")
         if user_input.lower() in ("exit", "quit"):
