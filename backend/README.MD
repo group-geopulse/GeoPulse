@@ -47,17 +47,7 @@ Install all required Python libraries using the [requirements.txt](http://_vscod
 > pip install -r requirements.txt
 ```
 
-This will install the following key dependencies:
-
-- pandas for data manipulation
-- numpy for numerical operations
-- spacy for natural language processing
-- transformers for sentiment analysis
-- pymongo for MongoDB integration
-- gdeltdoc for fetching GDELT data
-- requests for making HTTP requests
-
-Additionally, the en_core_web_lg language model for spaCy will also be installed.
+This will install key dependencies. Additionally, the en_core_web_lg language model for spaCy will also be installed.
 
 Run the following to check PyTorch version:
 ```bash
