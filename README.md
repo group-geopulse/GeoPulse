@@ -12,10 +12,10 @@
   <p align="center">
     An AI-powered system to analyze the impact of geopolitical events on crude oil pricing.
     <br />
-    <a href="https://github.com/group-geopulse/GeoPulse"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/group-geopulse/GeoPulse"><strong>Explore the repo»</strong></a>
     <br />
     <br />
-    <a href="https://github.com/group-geopulse/GeoPulse">View Demo</a>
+    <a href="https://youtu.be/Fa4aPGJKzLA">View Demo</a>
     ·
     <a href="https://github.com/group-geopulse/GeoPulse/issues">Report Bug</a>
     ·
@@ -61,7 +61,8 @@ GeoPulse is built for policymakers, analysts, and researchers seeking a clearer 
 
 ### Built With
 
-[![tools](https://skillicons.dev/icons?i=py,nextjs,tailwind,mongodb,neo4j)](https://skillicons.dev)
+[![tools](https://skillicons.dev/icons?i=py,nextjs,tailwind,mongodb,react)](https://skillicons.dev)
+![neo4j](https://skills-icons.vercel.app/api/icons?i=neo4j)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -70,7 +71,6 @@ GeoPulse is built for policymakers, analysts, and researchers seeking a clearer 
 ## Getting Started
 
 To get a local copy up and running, follow these steps:
-*Note*: Windows steps assume that you're using PowerShell from within the [Windows Terminal](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=en-gb&gl=gb&rtc=1) app.
 
 ### Cloning the repository
 
@@ -80,7 +80,7 @@ To get a local copy up and running, follow these steps:
 
 ### Setting up the repository to run the application
 
-TBD
+Follow the relevant instructions in the dedicated READMEs in the backend and frontend folders.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -111,6 +111,6 @@ See the [open issues](https://github.com/group-geopulse/GeoPulse/issues) for a f
 ### Project Links:
 
 * [Project Repository](https://github.com/group-geopulse/GeoPulse)
-* [Project Wiki](https://github.com/group-geopulse/GeoPulse/wiki)
+* [Project Demo Video](https://youtu.be/Fa4aPGJKzLA)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
